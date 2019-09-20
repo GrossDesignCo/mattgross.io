@@ -1,0 +1,12 @@
+# Dependency directories
+node_modules/
+jspm_packages/
+
+node_modules
+npm-debug.log
+dist/**
+.DS_Store
+.idea
+
+# dist
+app/dist/
