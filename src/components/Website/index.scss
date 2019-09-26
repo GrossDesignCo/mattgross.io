@@ -1,0 +1,55 @@
+/**
+ * Website Container Styles
+ * --------------------------------------------------------
+ */
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.container > * {
+  padding: var(--spacer) var(--spacer-2x);
+}
+
+@media (max-width: 800px) {
+  .container > :first-child {
+    padding-top: var(--spacer-2x);
+  }
+
+  .container > :last-child {
+    padding-bottom: var(--spacer-2x);
+  }
+}
+
+@media (min-width: 800px) {
+  .container {
+    flex-direction: row;
+  }
+
+  .container > * {
+    padding: 0 var(--spacer-2x);
+  }
+
+  .container > * > :first-child {
+    padding-top: var(--spacer-2x);
+  }
+
+  .container > * > :not(:first-child) {
+    padding-top: var(--spacer-half);
+  }
+
+  .container > * > :last-child {
+    padding-bottom: var(--spacer-2x);
+  }
+
+  .container > * > :not(:last-child) {
+    padding-bottom: var(--spacer-half);
+  }
+}
+
+/* Loader */
+.container .loader {
+  text-align: center;
+  padding: 1.5em;
+  width: 100%;
+}

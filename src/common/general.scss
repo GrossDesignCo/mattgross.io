@@ -1,0 +1,132 @@
+/**
+ * General Styles
+ * --------------------------------------------------------
+ */
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  transition: 0.3s ease;
+  color: var(--color);
+}
+
+* + * {
+  margin-top: var(--spacer);
+}
+
+h1 + *,
+h2 + *,
+h3 + *,
+h4 + * {
+  margin-top: 0;
+}
+
+.margin-half > * + * {
+  margin-top: var(--spacer-half);
+}
+
+.margin-off > * + * {
+  margin-top: 0;
+}
+div + div {
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--color-high-contrast);
+  font-weight: 600;
+  line-height: 1.5em;
+}
+
+h1 {
+  font-size: 2.25em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3,
+h4 {
+  font-size: 1em;
+}
+
+a {
+  color: var(--color-high-contrast);
+  text-decoration: none;
+  box-shadow: 0 1px 0 var(--color-shadow);
+}
+
+a:hover,
+a:focus {
+  box-shadow: 0 2px 0 var(--color);
+}
+
+ul,
+ol {
+  padding-left: var(--spacer);
+}
+
+body {
+  background: var(--background);
+  margin-top: 0;
+
+  font-family: proxima-nova, sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+section {
+  padding: var(--spacer) 0;
+}
+
+.cap-width {
+  max-width: 40em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text-light {
+  font-weight: 300;
+}
+
+.separate {
+  border-left: 1px solid var(--color-shadow);
+  padding-left: 0.5em;
+  margin-left: 0.25em;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.bg-alt {
+  background-color: var(--background-high-contrast);
+}
+
+@media (min-width: 800px) {
+  .height-half {
+    min-height: var(--spacer-vh-third);
+  }
+
+  .align-bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .sticky {
+    position: sticky;
+    top: 0;
+  }
+
+  .height-half + .sticky {
+    top: var(--spacer-vh-third);
+  }
+}

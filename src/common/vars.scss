@@ -1,0 +1,25 @@
+:root {
+  /* Colors */
+  --background: #f8f8f8;
+  --background-high-contrast: #fff;
+  --color: #333;
+
+  --color-high-contrast: #222;
+  --color-shadow: #ccc;
+
+  /* Dark Mode */
+  @media (prefers-color-scheme: dark) {
+    --background: #333;
+    --background-high-contrast: #222;
+    --color: #f8f8f8;
+
+    --color-high-contrast: #fff;
+    --color-shadow: #777;
+  }
+
+  /* Layout */
+  --spacer-half: 0.75em;
+  --spacer: 1.5em;
+  --spacer-2x: 3em;
+  --spacer-vh-third: 33.33vh;
+}

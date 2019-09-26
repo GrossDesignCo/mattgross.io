@@ -5,6 +5,7 @@
   "scripts": {
     "build:dev": "webpack --progress --colors --devMode",
     "build": "webpack --progress --colors",
+    "push:aws": "aws s3 cp ./dist/index.html s3://static.mattgross.io/index.html --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers full=emailaddress=mattgrosspersonal@gmail.com && aws s3 cp ./dist/ s3://static.mattgross.io/dist/ --recursive --exclude 'index.html' --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers full=emailaddress=mattgrosspersonal@gmail.com",
     "start": "nodemon ./server/server.js"
   },
   "nodemonConfig": {

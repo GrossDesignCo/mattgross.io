@@ -54,14 +54,14 @@ module.exports = devMode => {
           use: [
             MiniCssExtractPlugin.loader, // extract css into it's own bundle
             "css-loader", // css
-            "sass-loader" // scss
-            // "postcss-loader",
-            // {
-            //   loader: "postcss-loader",
-            //   options: {
-            //     plugins: [require("autoprefixer")]
-            //   }
-            // }
+            "sass-loader", // scss
+            "postcss-loader",
+            {
+              loader: "postcss-loader",
+              options: {
+                plugins: [require("autoprefixer")]
+              }
+            }
           ]
         },
         {

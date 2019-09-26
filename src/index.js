@@ -2,10 +2,9 @@
 import React from "react"
 import { render } from "react-dom"
 
-import App from "./components/App"
-import "./styles/vars.scss"
-import "./styles/index.scss"
+import "./common/vars.scss"
+import "./common/general.scss"
 
-console.log("MattGross.io is running...")
+import Website from "./components/Website"
 
-render(<App />, document.getElementById("root"))
+render(<Website />, document.getElementById("root"))
