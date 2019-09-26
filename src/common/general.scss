@@ -110,10 +110,6 @@ main {
   white-space: nowrap;
 }
 
-.bg-alt {
-  background-color: var(--background-high-contrast);
-}
-
 @media (min-width: 800px) {
   .height-half {
     min-height: var(--spacer-vh-third);

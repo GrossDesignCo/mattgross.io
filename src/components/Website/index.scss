@@ -11,6 +11,10 @@
   padding: var(--spacer) var(--spacer-2x);
 }
 
+.container > *:nth-child(odd) {
+  background-color: var(--background-high-contrast);
+}
+
 @media (max-width: 800px) {
   .container > :first-child {
     padding-top: var(--spacer-2x);

@@ -3,7 +3,7 @@ import React from "react"
 function CV() {
   return (
     <article className="margin-off cap-width">
-      <h1>Matt Gross: CV</h1>
+      <h1>CV</h1>
 
       {/* Tesla */}
       <section>

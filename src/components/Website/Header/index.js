@@ -7,6 +7,7 @@ function Header() {
     const taglines = [
       "Codes for Jesus",
       "Works at Tesla",
+      "Serves the Lord",
       "Builds the Internet",
       "Really likes Coffee",
       "Loves his Wife :)"
@@ -17,7 +18,7 @@ function Header() {
   }
 
   return (
-    <header className="nowrap height-half align-bottom sticky bg-alt">
+    <header className="nowrap height-half align-bottom sticky">
       <div className="cap-width">
         <h3>
           <a href="/">Matt Gross</a>

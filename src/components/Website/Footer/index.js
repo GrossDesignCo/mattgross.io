@@ -4,7 +4,7 @@ import "./index.scss"
 
 function Footer() {
   return (
-    <footer className="nowrap sticky bg-alt">
+    <footer className="nowrap sticky">
       <div className="cap-width">
         <div>
           <a href="https://www.linkedin.com/in/m-gross/">LinkedIn</a>

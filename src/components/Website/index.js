@@ -52,7 +52,7 @@ class Website extends Component {
         </If>
 
         <If condition={layoutDesktop}>
-          <aside className="bg-alt margin-off">
+          <aside className="margin-off">
             <Header />
             <Footer />
           </aside>
