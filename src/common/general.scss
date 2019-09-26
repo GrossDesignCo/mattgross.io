@@ -86,6 +86,10 @@ section {
   padding: var(--spacer) 0;
 }
 
+main {
+  flex-grow: 1;
+}
+
 .cap-width {
   max-width: 40em;
   margin-left: auto;
