@@ -3,6 +3,7 @@ import React from "react"
 import { render } from "react-dom"
 
 import "./common/vars.scss"
+import "./common/animation.scss"
 import "./common/general.scss"
 
 import Website from "./components/Website"

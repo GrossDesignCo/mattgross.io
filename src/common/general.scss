@@ -7,7 +7,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  transition: 0.3s ease;
+  transition: var(--transition-basic);
   color: var(--color);
 }
 
@@ -18,7 +18,8 @@
 h1 + *,
 h2 + *,
 h3 + *,
-h4 + * {
+h4 + *,
+h5 + * {
   margin-top: 0;
 }
 
@@ -36,7 +37,8 @@ div + div {
 h1,
 h2,
 h3,
-h4 {
+h4,
+h5 {
   color: var(--color-high-contrast);
   font-weight: 600;
   line-height: 1.5em;
@@ -51,7 +53,8 @@ h2 {
 }
 
 h3,
-h4 {
+h4,
+h5 {
   font-size: 1em;
 }
 
@@ -66,9 +69,24 @@ a:focus {
   box-shadow: 0 2px 0 var(--color);
 }
 
+@media print {
+  a[href*="http"]:not([href*="mattgross.io"])::after {
+    content: " (" attr(href) ")";
+  }
+}
+
 ul,
 ol {
   padding-left: var(--spacer);
+}
+
+hr {
+  background: var(--color-shadow);
+  border: none;
+  height: 5px;
+  max-width: 150px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 body {
@@ -91,6 +109,7 @@ main {
 }
 
 .cap-width {
+  width: 100%;
   max-width: 40em;
   margin-left: auto;
   margin-right: auto;
@@ -100,10 +119,27 @@ main {
   font-weight: 300;
 }
 
-.separate {
-  border-left: 1px solid var(--color-shadow);
-  padding-left: 0.5em;
-  margin-left: 0.25em;
+.text-sub {
+  font-size: 0.67em;
+  line-height: 1.5em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+h2 + div,
+.text-sub {
+  color: var(--color-low-contrast);
+}
+
+.separator {
+  width: 1px;
+  height: 1em;
+  background-color: var(--color-shadow);
+  margin-right: 0.5em;
+  margin-left: 0.5em;
+  margin-top: none;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .nowrap {
