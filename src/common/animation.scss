@@ -1,0 +1,25 @@
+.animated-bg {
+  position: relative;
+
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: calc(-200vh + 50%);
+    width: 200vh;
+    height: 200vh;
+    border-radius: 100%;
+  }
+
+  &::before {
+    animation: 20s var(--swirling-circle);
+    background: var(--background-animated);
+  }
+
+  &::after {
+    animation: 15s var(--swirling-circle);
+    background: var(--background-animated);
+  }
+}
