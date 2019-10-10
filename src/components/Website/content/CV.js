@@ -204,6 +204,10 @@ function CV() {
             <div className="text-sub">Website</div>
           </li>
           <li>
+            <div>ArtSpan & San Francisco Open Studios</div>
+            <div className="text-sub">Website</div>
+          </li>
+          <li>
             <div>Lost Coast Brewery</div>
             <div className="text-sub">Website</div>
           </li>
