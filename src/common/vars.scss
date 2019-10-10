@@ -29,9 +29,26 @@
 
   /* Transitions */
   --transition-basic: 0.3s ease;
+  --swirling-circle: infinite linear swirlingCircle;
+
+  /* Background animation for sidebar */
+  @keyframes swirlingCircle {
+    0% {
+      transform: rotate(0deg) translateX(24px);
+    }
+
+    50% {
+      transform: rotate(180deg) translateX(24px);
+    }
+
+    100% {
+      transform: rotate(360deg) translateX(24px);
+    }
+  }
 
   /* Anti-Vertigo */
   @media (prefers-reduced-motion: reduce) {
     --transition-basic: none;
+    --swirling-circle: none;
   }
 }

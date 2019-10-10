@@ -14,26 +14,12 @@
   }
 
   &::before {
-    animation: 20s infinite linear swirlingCircle;
+    animation: 20s var(--swirling-circle);
     background: var(--background-animated);
   }
 
   &::after {
-    animation: 15s infinite linear swirlingCircle;
+    animation: 15s var(--swirling-circle);
     background: var(--background-animated);
-  }
-}
-
-@keyframes swirlingCircle {
-  0% {
-    transform: rotate(0deg) translateX(24px);
-  }
-
-  50% {
-    transform: rotate(180deg) translateX(24px);
-  }
-
-  100% {
-    transform: rotate(360deg) translateX(24px);
   }
 }
