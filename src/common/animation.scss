@@ -5,9 +5,9 @@
   &::after {
     content: "";
     display: block;
-    position: absolute;
+    position: fixed;
     top: 0;
-    left: calc(-200vh + 50%);
+    left: calc(-200vh + 100px);
     width: 200vh;
     height: 200vh;
     border-radius: 100%;
