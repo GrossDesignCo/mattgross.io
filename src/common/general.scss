@@ -30,6 +30,11 @@ h5 + * {
 .margin-off > * + * {
   margin-top: 0;
 }
+
+.margin-off > li:nth-child(4n) {
+  margin-bottom: 12px;
+}
+
 div + div {
   margin-top: 0;
 }
@@ -46,6 +51,19 @@ h5 {
 
 h1 {
   font-size: 2.25em;
+  position: relative;
+}
+
+h1::before {
+  content: "";
+  display: block;
+  height: 4px;
+  background-color: var(--color-shadow);
+  border-radius: 2px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
 }
 
 h2 {
@@ -80,15 +98,6 @@ ol {
   padding-left: var(--spacer);
 }
 
-hr {
-  background: var(--color-shadow);
-  border: none;
-  height: 5px;
-  max-width: 150px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 body {
   background: var(--background);
   margin-top: 0;
@@ -102,6 +111,17 @@ body {
 
 section {
   padding: var(--spacer) 0;
+  position: relative;
+}
+
+hr {
+  background: var(--color-shadow);
+  border: none;
+  height: 60px;
+  width: 4px;
+  border-radius: 2px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 main {
