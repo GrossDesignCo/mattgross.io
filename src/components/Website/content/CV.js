@@ -3,7 +3,9 @@ import React from "react"
 function CV() {
   return (
     <article className="cap-width">
-      <h1>CV</h1>
+      <h1>Curriculum Vitae</h1>
+
+      <hr />
 
       {/* Tesla */}
       <section>
@@ -14,23 +16,22 @@ function CV() {
         <ul>
           <li>
             <h4>
-              Inventory
+              Inventory & Configurator
               <span className="separator" />
               <span className="text-sub text-light">Current</span>
             </h4>
-
             <p>
               Work with a team to iterate on, collaboratively build and steward
-              the parts tesla.com related to new & used inventory vehicles,
+              the parts tesla.com related to selling new & used vehicles,
               principally inventory search & details systems.
             </p>
             <p>
-              Own the inventory details experience, allowing customers to view
-              photos of vehicles & get further information about a specific one
-              before purchasing. Truly the nitty-gritty of the web development
-              world. :)
+              Own the Inventory Search & Details UI, allowing customers to
+              browse for vehicles, then view photos, specs, and details of any
+              vehicle currently for sale at Tesla.
             </p>
           </li>
+
           <li>
             <h4>
               Tesla Design System
@@ -39,10 +40,12 @@ function CV() {
             </h4>
             <p>
               Contribute to TDS, especially focusing on interactive components &
-              animations (eg. tooltips, modals, transitions).
+              animations (eg. tooltips, modals, transitions). Recently created
+              the elements & animations for CYBERTRUCK's web interfaces.
             </p>
             <p>Currently a top 5 contributor :)</p>
           </li>
+
           <li>
             <h4>Aquisitions & Used Inventory</h4>
             <p>
@@ -64,6 +67,8 @@ function CV() {
           <span className="text-light">Bothell</span>
         </h2>
         <div>September 2017 - June 2018</div>
+
+        <h3>Student</h3>
         <p>High-intensity replacement for a BS in Computer Science</p>
 
         <h3>Coursework</h3>
@@ -143,6 +148,56 @@ function CV() {
               their needs and how we could improve the outcome of our projects
               over time.
             </p>
+
+            <h3>Projects</h3>
+            <ul className="margin-half">
+              <li>
+                <div>EV Common Tools</div>
+                <div className="text-sub">
+                  Themes, D7/D8 Boilerplate, Project Management Utils
+                </div>
+              </li>
+              <li>
+                <div>EvenVision.com</div>
+                <div className="text-sub">Website, Brand Development</div>
+              </li>
+              <li>
+                <div>Ingomar Club</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>ArtSpan & San Francisco Open Studios</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Estancia Ranquilco</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Cathy's Power Skating</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Jacobzoon & Associates</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Singing Tree Gardens Nursery</div>
+                <div className="text-sub">Website, Brand Creation</div>
+              </li>
+              <li>
+                <div>Humboldt Fasteners & Tools</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Orchids for the People</div>
+                <div className="text-sub">Website, Brand Creation</div>
+              </li>
+              <li>
+                <div>Faith of the Fathers</div>
+                <div className="text-sub">Website</div>
+              </li>
+            </ul>
           </li>
 
           <li>
@@ -156,6 +211,114 @@ function CV() {
               developer, working principally on the most complex & interactive
               components of our projects.
             </p>
+
+            <h3>Projects</h3>
+            <ul className="margin-half">
+              <li>
+                <div>Lost Coast Brewery</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Pacific Builders</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Humboldt Botanical Gardens</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>McKinleyville Family Resource Center</div>
+                <div className="text-sub">Website, Brand Creation</div>
+              </li>
+              <li>
+                <div>A Woman's Path</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Johnson Mobile Rentals</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Sunny Brae Church</div>
+                <div className="text-sub">Website, Brand Creation</div>
+              </li>
+              <li>
+                <div>RMI Outdoors</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Maui Sod Farm</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>North Coast Property Management</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Anthony Mantova</div>
+                <div className="text-sub">Website, City-Council Campaign</div>
+              </li>
+              <li>
+                <div>Housing Humboldt</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Arcata Zen Group</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Cafe Brio & Brio Baking</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Mantova's Two Street Music</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>FAAN | Families Advocating Autism Now</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Arcata Economic Development Corp.</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Visual Concepts</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Housing Humboldt</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Humboldt Termite & Pest Control</div>
+                <div className="text-sub">Website, Brand Creation</div>
+              </li>
+              <li>
+                <div>Humboldt Builders Exchange</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Give the Chance</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>California Baptist Foundation</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>SoCal Baptist Ministries</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Redwood Empire Printing & Design</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Emerald City Laundry</div>
+                <div className="text-sub">Website</div>
+              </li>
+            </ul>
           </li>
 
           <li>
@@ -169,6 +332,92 @@ function CV() {
               Spearhead EvenVision’s transition from Fixed-Width to Responsive
               web development.
             </p>
+
+            <h3>Projects</h3>
+            <ul className="margin-half">
+              <li>
+                <div>Redwood Coast Prosperity</div>
+                <div className="text-sub">
+                  Website, Branding, Data-Visualization
+                </div>
+              </li>
+              <li>
+                <div>Phyl'n Cold-Pressed Juice</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Pacific Mindfulness</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Wildberries Market</div>
+                <div className="text-sub">Blog Microsite</div>
+              </li>
+              <li>
+                <div>Patty Stearns Real Estate</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Redwood Region Economic Development Commission</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Northcoast Horticulture Supply</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>HumFresh</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Essential Elements Spa</div>
+                <div className="text-sub">Website, Brand Creation</div>
+              </li>
+              <li>
+                <div>Trinidad Bluffs</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Chapala Cafe</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Sequoia Humane Society</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>LACO Associates</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Curb Appeal Construction</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Trinidad Trading Company</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Jacoby Creek Land Trust</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Redwood Parks Conservancy</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>New Heart Community Church</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Redwood Glass & Windows</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Cafe Nooner</div>
+                <div className="text-sub">Website</div>
+              </li>
+            </ul>
           </li>
 
           <li>
@@ -180,126 +429,71 @@ function CV() {
               mockups in Illustrator to handling the styling & basic dev on
               websites.
             </p>
+
+            <h3>Projects</h3>
+            <ul className="margin-half">
+              <li>
+                <div>Jessicurl</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Cunningham, Malone & Morton</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Callahan Pickups</div>
+                <div className="text-sub">Website, Brand Creation</div>
+              </li>
+              <li>
+                <div>Cloud B</div>
+                <div className="text-sub">Blog Microsite</div>
+              </li>
+              <li>
+                <div>Tika Imports</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Arcata Sunrise Rotary Club</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Humboldt State University | English Dept.</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Wendt Construction</div>
+                <div className="text-sub">Blog Microsite</div>
+              </li>
+              <li>
+                <div>Shred Aware</div>
+                <div className="text-sub">Website</div>
+              </li>
+              <li>
+                <div>Humboldt Folklife</div>
+                <div className="text-sub">Website</div>
+              </li>
+            </ul>
           </li>
         </ol>
+      </section>
 
-        <h3>Projects</h3>
-        <ul className="margin-half">
-          <li>
-            <div>EvenVision.com</div>
-            <div className="text-sub">Website, Brand Development</div>
-          </li>
-          <li>
-            <div>Common Tools</div>
-            <div className="text-sub">
-              Themes, D7/D8 Boilerplate, Project Management Utils
-            </div>
-          </li>
-          <li>
-            <div>Humboldt Botanical Gardens</div>
-            <div className="text-sub">Website</div>
-          </li>
-          <li>
-            <div>Ingomar Club</div>
-            <div className="text-sub">Website</div>
-          </li>
-          <li>
-            <div>ArtSpan & San Francisco Open Studios</div>
-            <div className="text-sub">Website</div>
-          </li>
-          <li>
-            <div>Lost Coast Brewery</div>
-            <div className="text-sub">Website</div>
-          </li>
-          <li>
-            <div>Orchids for the People</div>
-            <div className="text-sub">Website, Brand Creation</div>
-          </li>
-          <li>
-            <div>Jessicurl</div>
-            <div className="text-sub">Website</div>
-          </li>
-          <li>
-            <div>Housing Humboldt</div>
-            <div className="text-sub">Website</div>
-          </li>
-          <li>
-            <div>McKinleyville Family Resource Center</div>
-            <div className="text-sub">Website, Brand Creation</div>
-          </li>
-          <li>
-            <div>Singing Tree Gardens Nursery</div>
-            <div className="text-sub">Website, Brand Creation</div>
-          </li>
-          <li>
-            <div>Estancia Ranquilco</div>
-            <div className="text-sub">Website</div>
-          </li>
-          <li>
-            <div>Redwood Glass & Windows</div>
-            <div className="text-sub">Website</div>
-          </li>
-          <li>
-            <div>Humboldt Pest</div>
-            <div className="text-sub">Website, Brand Creation</div>
-          </li>
-          <li>
-            <div>Cafe Brio & Brio Baking</div>
-            <div className="text-sub">Website</div>
-          </li>
-          <li>
-            <div>Arcata Economic Development Corp.</div>
-            <div className="text-sub">Website</div>
-          </li>
-          <li>
-            <div>Visual Concepts</div>
-            <div className="text-sub">Website</div>
-          </li>
-          <li>
-            <div>Sequoia Humane Society</div>
-            <div className="text-sub">Website</div>
-          </li>
-          <li>
-            <div>Mantova's Two Street Music</div>
-            <div className="text-sub">Website</div>
-          </li>
-          <li>
-            <div>Cunningham, Malone & Morton</div>
-            <div className="text-sub">Website</div>
-          </li>
-          <li>
-            <div>Callahan Pickups</div>
-            <div className="text-sub">Website, Brand Creation</div>
-          </li>
-          <li>
-            <div>LACO Associates</div>
-            <div className="text-sub">Website</div>
-          </li>
-          <li>
-            <div>Redwood Parks Conservancy</div>
-            <div className="text-sub">Website</div>
-          </li>
-          <li>
-            <div>Tika Imports</div>
-            <div className="text-sub">Website</div>
-          </li>
-          <li>
-            <div>Sunny Brae Church</div>
-            <div className="text-sub">Website, Brand Creation</div>
-          </li>
-          <li>
-            <div>New Heart Community Church</div>
-            <div className="text-sub">Website</div>
-          </li>
-          <li>
-            <div>Shred Aware</div>
-            <div className="text-sub">Website</div>
-          </li>
-          <li>
-            <div>Humboldt Folklife</div>
-            <div className="text-sub">Website</div>
-          </li>
-        </ul>
+      <hr />
+
+      {/* Sunny Brae Serving */}
+      <section>
+        <h2>Sunny Brae Church</h2>
+        <div>2009 - 2017</div>
+        <h3>A/V Tech Lead</h3>
+        <p>
+          Live mixing for Worship music, recording, processing audio (especially
+          sermon recordings) and developing visual accompaniment for songs and
+          events.
+        </p>
+        <p>
+          Serving at my home church, every Sunday. Basically just show up and do
+          anything technical, as well as train others to support with slides and
+          A/V Recording as needed :)
+        </p>
       </section>
 
       <hr />
@@ -307,11 +501,32 @@ function CV() {
       {/* Misc Early Freelance Work */}
       <section>
         <h2>Freelance</h2>
-        <div>2012 - 2013</div>
+        <div>2012 - 2014</div>
         <p>
-          Early freelance work, including a variety of small projects, favors
+          Early freelance work, including a variety of small projects & favors
           for friends
         </p>
+
+        <h3>Projects</h3>
+        <ul className="margin-half">
+          <li>
+            <div>Ryan Filgas Photography</div>
+            <div className="text-sub">Logo, Business Cards, Website</div>
+          </li>
+          <li>
+            <div>DMC Home Construction</div>
+            <div className="text-sub">Web Design</div>
+          </li>
+          <li>
+            <div>Jazz at the Graves</div>
+            <div className="text-sub">Event Invites</div>
+          </li>
+          <li>
+            <div>Scotia Band</div>
+            <div className="text-sub">Postcard Design</div>
+          </li>
+        </ul>
+
         <p>More to Come...</p>
       </section>
 
@@ -323,9 +538,8 @@ function CV() {
         <div>May 2012 - June 2013</div>
         <h3>Front-Desk Agent</h3>
         <p>
-          Fresh out of undergrad, armed with an undergrad in Economics, I was
-          forced to deal with the reality that I needed to learn how to answer
-          the phone :)
+          Fresh out of undergrad, armed with a BA in Economics, I faced the
+          reality that I needed to learn how to answer a phone :)
         </p>
       </section>
 
@@ -335,18 +549,49 @@ function CV() {
       <section>
         <h2>Humboldt State University</h2>
         <div>September 2009 - December 2011</div>
-        <p>Undergraduate Education</p>
-        <p>Bachelor of Arts: Economics & Third-World Economic Development</p>
-        <p>More to Come...</p>
+
+        <h3>Student</h3>
+        <p>Bachelor of Arts: Economics & Rural Economic Development</p>
+        <p>Tutored for ECON 311: Intermediate Macroeconomics</p>
+
+        <h3>Coursework</h3>
+        <ul className="margin-off">
+          <li>GEOG 360: Geography of World Economics</li>
+          <li>MUS 361: Music Tech: Recording & Playback</li>
+          <li>NAS 306: Native People of North America</li>
+          <li>PSCI 303: Third World Politics</li>
+
+          <li>ECON 310: Intermediate Microtheory & Strategy</li>
+          <li>ECON 470: Sustainable Rural Economic Development</li>
+          <li>ECON 490: Capstone</li>
+          <li>BIOL 304: Human Genetics</li>
+
+          <li>BA 415: International Business Essentials</li>
+          <li>ECON 306: Economics of the Developing World</li>
+          <li>ECON 435: Principles of Money & Banking</li>
+          <li>ECON 305: International Economics & Globalization</li>
+
+          <li>ECON 323: Economic History of the US</li>
+          <li>GERM 106: German Level II</li>
+          <li>HIST 375: US Foreign Relations 1943-Present</li>
+          <li>BA 332: Intermediate Business Statistics</li>
+
+          <li>CIS 130: Intro to Programming</li>
+          <li>ECON 311: Intermediate Macroeconomics</li>
+          <li>GERM 305: Marx, Nietzche, Freud & German Literature</li>
+          <li>MATH 109: Calculus 1</li>
+        </ul>
       </section>
 
       <hr />
 
-      {/* HSU */}
+      {/* CR */}
       <section>
         <h2>College of the Redwoods</h2>
         <div>September 2006 - June 2009</div>
-        <p>Concurrent with High School</p>
+
+        <h3>Student</h3>
+        <p>Concurrent with Academy of the Redwoods (High School)</p>
         <p>More to Come...</p>
       </section>
 
@@ -356,10 +601,14 @@ function CV() {
       <section>
         <h2>Academy of the Redwoods</h2>
         <div>September 2005 - June 2009</div>
-        <p>Concurrent with College</p>
+
+        <h3>Student</h3>
+        <p>Concurrent with College of the Redwoods (Community College)</p>
         <p>Got my AA Degree the day before my High-School Diploma</p>
         <p>More to Come...</p>
       </section>
+
+      <hr />
     </article>
   )
 }
