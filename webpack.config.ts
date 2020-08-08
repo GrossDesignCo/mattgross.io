@@ -8,18 +8,18 @@ interface Config extends webpack.Configuration {
 }
 
 const config: Config = {
-  mode: 'development',
+  mode: 'production',
 
   entry: ['./src/index.tsx'],
 
   output: {
     filename: 'bundle.min.js',
-    path: __dirname + 'dist',
+    path: __dirname + '/dist',
     publicPath: '/dist'
   },
 
   devServer: {
-    contentBase: __dirname + 'dist',
+    contentBase: __dirname + '/dist',
     port: 2771
   },
 
