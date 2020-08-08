@@ -14,39 +14,54 @@ export const CV = () => (
 
       <ul>
         <li>
-          <h4>
-            Inventory & Configurator
+          <h3>
+            Tesla Design System
             <span className="separator" />
             <span className="text-sub text-light">Current</span>
-          </h4>
+          </h3>
           <p>
-            Work with a team to iterate on, collaboratively build and steward
+            Collaborate with designers & engineers on re-usable components,
+            patterns, and tools to support teams across Tesla.
+          </p>
+          <p>
+            Advocate for excellent & accessible experiences that can be
+            interacted with via multiple interfaces.
+          </p>
+          <p>
+            Provide feedback to designers on modularity & flexibility of design
+            patterns, and design micro-interactions for the digital ecosystem
+            around products like Cybertruck.
+          </p>
+          <p>
+            Own TDS React, a library of React components built to help engineers
+            work with the design system.
+          </p>
+        </li>
+
+        <li>
+          <h3>
+            Configurator & Inventory
+            <span className="separator" />
+            <span className="text-sub text-light">Current</span>
+          </h3>
+          <p>
+            Collaborate with design & engineering teams to design & prototype
+            new experiences in vehicle configuration.
+          </p>
+          <p>
+            Work with a team to iterate on, collaboratively build and maintain
             the parts tesla.com related to selling new & used vehicles,
             principally inventory search & details systems.
           </p>
           <p>
-            Own the Inventory Search & Details UI, allowing customers to browse
-            for vehicles, then view photos, specs, and details of any vehicle
-            currently for sale at Tesla.
+            Own the Inventory Search & Details UI for 2019, allowing customers
+            to browse for vehicles, then view photos, specs, and details of any
+            vehicle currently for sale at Tesla.
           </p>
         </li>
 
         <li>
-          <h4>
-            Tesla Design System
-            <span className="separator" />
-            <span className="text-sub text-light">Current</span>
-          </h4>
-          <p>
-            Contribute to TDS, especially focusing on interactive components &
-            animations (eg. tooltips, modals, transitions). Recently created the
-            elements & animations for CYBERTRUCK's web interfaces.
-          </p>
-          <p>Currently a top 5 contributor :)</p>
-        </li>
-
-        <li>
-          <h4>Aquisitions & Used Inventory</h4>
+          <h3>Aquisitions & Used Inventory</h3>
           <p>
             My first team at Tesla, we created the tesla.com vehicle trade-in
             experience from scratch, and owned the user experience when shopping
