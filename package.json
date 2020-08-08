@@ -1,38 +1,26 @@
 {
   "name": "mattgross.io",
-  "version": "0.1.0",
-  "description": "",
+  "version": "1.0.0",
+  "description": "Personal website",
   "scripts": {
-    "build:dev": "webpack --progress --colors --devMode",
-    "build": "webpack --progress --colors",
+    "build": "cross-env TS_NODE_PROJECT=\"tsconfig.bs.json\" webpack --progress --colors",
     "push:aws": "aws s3 cp ./dist/index.html s3://mattgross.io/index.html --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers full=emailaddress=mattgrosspersonal@gmail.com && aws s3 cp ./dist/ s3://mattgross.io/dist/ --recursive --exclude 'index.html' --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers full=emailaddress=mattgrosspersonal@gmail.com",
-    "start": "nodemon ./server/server.js"
+    "start": "cross-env TS_NODE_PROJECT=\"tsconfig.bs.json\" webpack-dev-server --watch"
   },
-  "nodemonConfig": {
-    "ignore": [
-      "node_modules/*"
-    ]
-  },
-  "browserslist": [
-    "> 1%",
-    "IE 10"
-  ],
-  "author": "",
-  "license": "ISC",
+  "main": "./dist/bundle.min.js",
+  "author": "Matt Gross <mattgrosswork@gmail.com>",
+  "license": "UNLICENSED",
   "devDependencies": {
-    "@babel/core": "^7.4.3",
-    "@babel/plugin-proposal-class-properties": "^7.4.x",
-    "@babel/plugin-proposal-function-bind": "^7.2.x",
-    "@babel/preset-env": "^7.4.3",
-    "@babel/preset-react": "^7.x.x",
-    "@babel/preset-stage-0": "^7.x.x",
+    "@types/html-webpack-plugin": "3.2.3",
+    "@types/mini-css-extract-plugin": "0.9.1",
+    "@types/react": "16.9.43",
+    "@types/react-dom": "16.9.8",
+    "@types/webpack": "4.41.21",
+    "@types/webpack-dev-server": "^3.11.0",
     "autoprefixer": "^9.4.4",
-    "babel-eslint": "^10.0.1",
-    "babel-loader": "^8.0.5",
-    "babel-plugin-jsx-control-statements": "^4.x.x",
-    "babel-preset-react": "^6.24.1",
     "body-parser": "^1.18.3",
-    "clean-webpack-plugin": "^1.0.0",
+    "chalk": "^2.4.1",
+    "cross-env": "^7.0.2",
     "css-loader": "^2.1.1",
     "eslint": "^5.15.3",
     "eslint-config-airbnb": "17.1.x",
@@ -44,29 +32,24 @@
     "eslint-plugin-react": "^7.13.x",
     "express": "^4.16.4",
     "file-loader": "^3.0.1",
-    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "^4.3.0",
+    "install": "^0.13.0",
     "mini-css-extract-plugin": "^0.5.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.14.1",
+    "npm": "^6.14.7",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss-loader": "^3.0.0",
     "prettier": "^1.18.x",
-    "sass-loader": "^7.1.0",
-    "terser-webpack-plugin": "^1.2.3",
-    "webpack": "^4.28.3",
-    "webpack-bundle-analyzer": "^3.1.x",
-    "webpack-cli": "^3.3.x",
-    "webpack-dev-middleware": "^3.6.1",
-    "webpack-hot-middleware": "^2.24.3",
-    "webpack-merge": "^4.2.1"
-  },
-  "dependencies": {
-    "@babel/polyfill": "^7.4.3",
-    "chalk": "^2.4.1",
-    "core-js": "^3.0.1",
-    "ejs": "^2.7.1",
-    "helmet": "^3.21.0",
-    "prop-types": "^15.6.1",
     "react": "^16.8.6",
-    "react-dom": "^16.0.0"
-  }
+    "react-dom": "^16.0.0",
+    "sass-loader": "^7.1.0",
+    "ts-loader": "8.0.1",
+    "ts-node": "8.10.2",
+    "tslib": "2.0.0",
+    "typescript": "3.9.7",
+    "webpack": "^4.44.x",
+    "webpack-cli": "^3.3.x",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {}
 }
