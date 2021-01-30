@@ -39,11 +39,7 @@ export const CV = () => (
         </li>
 
         <li>
-          <h3>
-            Configurator & Inventory
-            <span className="separator" />
-            <span className="text-sub text-light">Current</span>
-          </h3>
+          <h3>Configurator & Inventory</h3>
           <p>
             Collaborate with design & engineering teams to design & prototype
             new experiences in vehicle configuration.
@@ -58,6 +54,22 @@ export const CV = () => (
             to browse for vehicles, then view photos, specs, and details of any
             vehicle currently for sale at Tesla.
           </p>
+
+          <h3>Highlights</h3>
+          <ul className="margin-half">
+            <li>
+              <div>2020 Configurator App Redesign</div>
+              <div className="text-sub">Redesign, UX, Collab</div>
+            </li>
+            <li>
+              <div>2019 Cybertruck Launch</div>
+              <div className="text-sub">UX, Microinteractions, Collab</div>
+            </li>
+            <li>
+              <div>2019 Inventory App Redesign</div>
+              <div className="text-sub">Redesign, UX, Collab</div>
+            </li>
+          </ul>
         </li>
 
         <li>
@@ -341,8 +353,8 @@ export const CV = () => (
             needs, capabilities, and define project scopes.
           </p>
           <p>
-            Spearhead EvenVision’s transition from Fixed-Width to Responsive
-            web development.
+            Spearhead EvenVision’s transition from Fixed-Width to Responsive web
+            development.
           </p>
 
           <h3>Projects</h3>
