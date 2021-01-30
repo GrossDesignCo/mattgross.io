@@ -15,7 +15,7 @@ const config: Config = {
   output: {
     filename: 'bundle.min.js',
     path: __dirname + '/dist',
-    publicPath: '/'
+    publicPath: '/dist' // dist needed here so that webpack will correctly set file permissions before the push to AWS
   },
 
   devServer: {
