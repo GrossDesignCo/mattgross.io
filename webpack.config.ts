@@ -15,7 +15,7 @@ const config: Config = {
   output: {
     filename: 'bundle.min.js',
     path: __dirname + '/dist',
-    publicPath: '/dist'
+    publicPath: '/'
   },
 
   devServer: {
@@ -62,7 +62,7 @@ const config: Config = {
       {
         test: /.(jpg|jpeg|png|pdf|svg)/,
         include: /assets/,
-        loader: 'file-loader'
+        type: 'asset/resource'
       }
     ]
   },
