@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export const CV = () => (
   <article className="cap-width">
@@ -57,6 +57,10 @@ export const CV = () => (
 
           <h3>Highlights</h3>
           <ul className="margin-half">
+            <li>
+              <div>2021 Intl Packages</div>
+              <div className="text-sub">Infrastructure, Standards, Lead</div>
+            </li>
             <li>
               <div>2020 Configurator App Redesign</div>
               <div className="text-sub">Redesign, UX, Collab</div>
@@ -550,8 +554,6 @@ export const CV = () => (
           <div className="text-sub">Postcard Design</div>
         </li>
       </ul>
-
-      <p>More to Come...</p>
     </section>
 
     <hr />
@@ -616,7 +618,6 @@ export const CV = () => (
 
       <h3>Student</h3>
       <p>Concurrent with Academy of the Redwoods (High School)</p>
-      <p>More to Come...</p>
     </section>
 
     <hr />
@@ -629,7 +630,6 @@ export const CV = () => (
       <h3>Student</h3>
       <p>Concurrent with College of the Redwoods (Community College)</p>
       <p>Got my AA Degree the day before my High-School Diploma</p>
-      <p>More to Come...</p>
     </section>
 
     <hr />
