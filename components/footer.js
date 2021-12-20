@@ -1,7 +1,3 @@
-import React from 'react';
-
-import './index.scss';
-
 export const Footer = () => (
   <footer className="nowrap sticky">
     <div className="cap-width">
@@ -14,6 +10,7 @@ export const Footer = () => (
           GitHub
         </a>
       </div>
+
       <div>© {new Date().getFullYear()}</div>
     </div>
   </footer>

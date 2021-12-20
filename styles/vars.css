@@ -1,0 +1,58 @@
+:root {
+  /* Colors */
+  --background: #f4f4f4;
+  --background-high-contrast: #fff;
+  --background-animated: rgba(200, 200, 200, 0.1);
+
+  --color: #444;
+  --color-high-contrast: #222;
+  --color-low-contrast: #777;
+  --color-shadow: #ccc;
+
+  /* Layout */
+  --spacer-half: 0.75em;
+  --spacer: 1.5em;
+  --spacer-2x: 3em;
+  --spacer-vh-third: 33.33vh;
+
+  /* Transitions */
+  --transition-basic: 0.3s ease;
+  --swirling-circle: infinite linear swirlingCircle;
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #333;
+    --background-high-contrast: #222;
+    --background-animated: rgba(0, 0, 0, 0.15);
+
+    --color: #ddd;
+    --color-high-contrast: #fff;
+    --color-low-contrast: #aaa;
+    --color-shadow: #555;
+  }
+}
+
+/* Background animation for sidebar */
+@keyframes swirlingCircle {
+  0% {
+    transform: rotate(0deg) translateX(24px);
+  }
+
+  50% {
+    transform: rotate(180deg) translateX(24px);
+  }
+
+  100% {
+    transform: rotate(360deg) translateX(24px);
+  }
+}
+
+/* Anti-Vertigo */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-basic: none;
+    --swirling-circle: none;
+  }
+}
