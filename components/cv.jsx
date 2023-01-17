@@ -1,5 +1,3 @@
-import React from "react";
-
 export const CV = () => (
   <article className="cap-width">
     <h1>Curriculum Vitae</h1>
@@ -19,6 +17,7 @@ export const CV = () => (
             <span className="separator" />
             <span className="text-sub text-light">Current</span>
           </h3>
+          <p>Team-lead: Rebuild the team after the June 2022 purge of remote workers removed 80% of staff. Scale and overhaul infrastructure for ease of maintenance by a small team.</p>
           <p>
             Collaborate with designers & engineers on re-usable components,
             patterns, and tools to support teams across Tesla.
@@ -33,9 +32,24 @@ export const CV = () => (
             around products like Cybertruck.
           </p>
           <p>
-            Own TDS React, a library of React components built to help engineers
-            work with the design system.
+            Owned TDS React (component library) as first 
           </p>
+
+          <h3>Highlights</h3>
+          <ul className="margin-half">
+            <li>
+              <div>2022 Team Reconstruction</div>
+              <div className="text-sub">Management, Architecture</div>
+            </li>
+            <li>
+              <div>2022 Dropdown Patterns</div>
+              <div className="text-sub">Components, Collab, Lead</div>
+            </li>
+            <li>
+              <div>2021/2022 Global tesla.com Navigation</div>
+              <div className="text-sub">Components, Collab, Lead</div>
+            </li>
+          </ul>
         </li>
 
         <li>
@@ -202,7 +216,7 @@ export const CV = () => (
               <div className="text-sub">Website</div>
             </li>
             <li>
-              <div>Cathy's Power Skating</div>
+              <div>Cathy’s Power Skating</div>
               <div className="text-sub">Website</div>
             </li>
             <li>
@@ -259,7 +273,7 @@ export const CV = () => (
               <div className="text-sub">Website, Brand Creation</div>
             </li>
             <li>
-              <div>A Woman's Path</div>
+              <div>A Woman’s Path</div>
               <div className="text-sub">Website</div>
             </li>
             <li>
@@ -299,7 +313,7 @@ export const CV = () => (
               <div className="text-sub">Website</div>
             </li>
             <li>
-              <div>Mantova's Two Street Music</div>
+              <div>Mantova’s Two Street Music</div>
               <div className="text-sub">Website</div>
             </li>
             <li>
