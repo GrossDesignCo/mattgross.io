@@ -1,42 +1,36 @@
-import Head from "next/head";
-import { Header } from "../components/header";
-import { Footer } from "../components/footer";
-import { CV } from "../components/cv";
-import { useIsDesktop } from "../hooks/isDesktop";
+import Head from 'next/head';
+import { useTagline } from '../hooks/useTagline';
+import { Header } from '../components/header';
+import { Nav } from '../components/nav';
+import { Footer } from '../components/footer';
+import styles from './index.module.css';
 
-export default function Home() {
-  const { isDesktop } = useIsDesktop();
-
+export default function Home({ tagline }) {
   return (
-    <div className="margin-off container">
-      <Head>
-        <title>Matt Gross</title>
-        <meta name="description" content="Matt Gross personal site" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <>
+      <div className={`root ${styles.index} frame spaced-stack`}>
+        <Head>
+          <title>Matt Gross</title>
+          <meta name="description" content={`Matt Gross - ${tagline}`} />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
 
-      {isDesktop ? (
-        <>
-          <aside className="margin-off animated-bg">
-            <Header />
-            <Footer />
-          </aside>
+        <Header tagline={tagline} />
 
-          <main>
-            <CV />
-          </main>
-        </>
-      ) : (
-        <>
-          <Header />
+        <main>
+          <Nav />
+        </main>
+      </div>
 
-          <main>
-            <CV />
-          </main>
-
-          <Footer />
-        </>
-      )}
-    </div>
+      {/* Absolute / out of flow */}
+      <Footer />
+    </>
   );
+}
+
+// Load tagline SSR to randomly show one each pageload
+export async function getServerSideProps() {
+  const tagline = useTagline();
+
+  return { props: { tagline } };
 }

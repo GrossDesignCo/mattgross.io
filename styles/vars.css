@@ -1,13 +1,13 @@
 :root {
   /* Colors */
-  --background: #f4f4f4;
-  --background-high-contrast: #fff;
-  --background-animated: rgba(200, 200, 200, 0.1);
+  --bg: #f4f4f4;
+  --bg-high-contrast: #fff;
+  --bg-animated: rgba(200, 200, 200, 0.1);
 
-  --color: #444;
-  --color-high-contrast: #222;
-  --color-low-contrast: #777;
-  --color-shadow: #ccc;
+  --fg: #444;
+  --fg-high-contrast: #222;
+  --fg-low-contrast: #777;
+  --fg-shadow: #ccc;
 
   /* Layout */
   --spacer-half: 0.75em;
@@ -23,14 +23,14 @@
 /* Dark Mode */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #333;
-    --background-high-contrast: #222;
-    --background-animated: rgba(0, 0, 0, 0.15);
+    --bg: #333;
+    --bg-high-contrast: #222;
+    --bg-animated: rgba(0, 0, 0, 0.15);
 
-    --color: #ddd;
-    --color-high-contrast: #fff;
-    --color-low-contrast: #aaa;
-    --color-shadow: #555;
+    --fg: #ddd;
+    --fg-high-contrast: #fff;
+    --fg-low-contrast: #aaa;
+    --fg-shadow: #555;
   }
 }
 
@@ -52,7 +52,6 @@
 /* Anti-Vertigo */
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --transition-basic: none;
     --swirling-circle: none;
   }
 }

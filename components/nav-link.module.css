@@ -1,0 +1,13 @@
+.nav-link {
+  display: inline-flex;
+  gap: 0.5em;
+  text-decoration: none;
+  padding: 0.5em 0.8em;
+  border-radius: 4px;
+  transition: 0.3s ease;
+}
+
+.nav-link:is(:hover, :focus) {
+  box-shadow: 0 0 10px 0 #999;
+  outline: none;
+}

@@ -4,7 +4,7 @@
 
 .animated-bg::before,
 .animated-bg::after {
-  content: "";
+  content: '';
   display: block;
   position: fixed;
   top: 0;
@@ -16,10 +16,10 @@
 
 .animated-bg::before {
   animation: 20s var(--swirling-circle);
-  background: var(--background-animated);
+  background: var(--bg-animated);
 }
 
 .animated-bg::after {
   animation: 15s var(--swirling-circle);
-  background: var(--background-animated);
+  background: var(--bg-animated);
 }

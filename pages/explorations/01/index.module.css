@@ -1,0 +1,229 @@
+/* Longform definitions to allow directly animating in @keyframes */
+@property --hue {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 240;
+}
+
+@property --chroma {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 22;
+}
+
+@property --circumference {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: min(50vh, 90vw);
+}
+
+.root {
+  --height: min(60vh, 100vw);
+  --width: min(40vh, 60vw);
+
+  --bg: light-dark(
+    lch(99% calc(var(--chroma) * 0.1) var(--hue)),
+    lch(1% calc(var(--chroma) * 0.1) var(--hue))
+  );
+  --color: lch(69% var(--chroma) var(--hue));
+  /* Set an adjaent color on the wheel */
+  --tint-forward: lch(100% calc(var(--chroma) * 1.5) calc(var(--hue) + 60));
+  --bg-circle: linear-gradient(var(--color), var(--tint-forward));
+
+  /* Tint the shadow/glow */
+  --bg-glow: light-dark(
+    lch(75% calc(var(--chroma) * 0.25) var(--hue)),
+    lch(50% calc(var(--chroma) * 0.75) var(--hue))
+  );
+
+  --bezier: cubic-bezier(0.9, 0.1, 0.1, 0.9);
+
+  height: 100vh;
+  width: 100vw;
+  font-family: monospace;
+  background: var(--bg);
+  animation: 10s linear rotate-hue infinite, 16s ease rotate-chroma infinite;
+}
+
+@keyframes rotate-hue {
+  0% {
+    --hue: 240;
+  }
+
+  100% {
+    /* Neat slight of hand, hue accepts any int value so we can just rotate up to 600 instead of being limited to 0-360 */
+    --hue: calc(240 + 360);
+  }
+}
+
+@keyframes rotate-chroma {
+  0% {
+    --chroma: 20;
+  }
+
+  33% {
+    --chroma: 30;
+  }
+
+  66% {
+    --chroma: 50;
+  }
+
+  100% {
+    --chroma: 20;
+  }
+}
+
+.frame {
+  overflow: hidden;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  inset-block: 0;
+  inset-inline: 0;
+  border-radius: 0;
+  border: 0 solid var(--bg);
+  box-shadow: 0 0 0 0 transparent, 0 0 100px 0 transparent;
+  animation: 2s 3s frame-in var(--bezier) forwards,
+    1.5s 4.5s frame-shadow ease forwards;
+}
+
+@keyframes frame-in {
+  0% {
+    height: 100vh;
+    width: 100vw;
+    inset-block: 0;
+    inset-inline: 0;
+    border-radius: 0;
+    border: 0px solid transparent;
+  }
+
+  100% {
+    height: var(--height);
+    width: var(--width);
+    inset-block: 10vh;
+    inset-inline: calc(50vw - var(--width) / 2);
+    border-radius: 4px;
+    /* Always use the light bg for the frame border */
+    border: 16px solid lch(99% calc(var(--chroma) * 0.1) var(--hue));
+  }
+}
+
+@keyframes frame-shadow {
+  0% {
+    box-shadow: 0 0 0 0 transparent, 0 0 100px 0 transparent;
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 var(--bg), 0 0 100px 0 var(--bg-glow);
+  }
+}
+
+.bg {
+  transform: translateY(0px);
+  background: var(--color);
+  height: 100%;
+  width: 100%;
+}
+
+.bg::before,
+.bg::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: var(--circumference);
+  height: var(--circumference);
+  top: calc(50% - var(--circumference) / 2);
+  left: calc(50% - var(--circumference) / 2);
+  border-radius: 100%;
+  opacity: 0;
+}
+
+.bg::before {
+  animation: 20s circle-swirl infinite linear, 2s 1s circle-in ease forwards,
+    2s 3s frame-circle var(--bezier) forwards;
+  background: var(--bg-circle);
+}
+
+.bg::after {
+  animation: 15s circle-swirl infinite linear, 3s 1.5s circle-in ease forwards,
+    2s 3s frame-circle var(--bezier) forwards;
+  background: var(--bg-circle);
+}
+
+@keyframes circle-swirl {
+  0% {
+    transform: rotate(0deg) translateX(24px);
+  }
+
+  50% {
+    transform: rotate(180deg) translateX(24px);
+  }
+
+  100% {
+    transform: rotate(360deg) translateX(24px);
+  }
+}
+
+@keyframes circle-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes frame-circle {
+  0% {
+    --circumference: min(50vh, 90vw);
+
+    width: var(--circumference);
+    height: var(--circumference);
+    top: calc(50% - var(--circumference) / 2);
+    left: calc(50% - var(--circumference) / 2);
+  }
+
+  100% {
+    --circumference: min(100vh, 180vw);
+
+    width: var(--circumference);
+    height: var(--circumference);
+    top: calc(var(--circumference) * -0.15);
+    left: calc(var(--circumference) * -0.75);
+  }
+}
+
+/* Meta */
+.meta {
+  font-size: 0.75em;
+  position: absolute;
+  bottom: 32px;
+  inset-inline: 24px;
+  opacity: 0;
+  transform: translateY(16px);
+
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  animation: 2.5s 5s meta-in var(--bezier) forwards;
+}
+
+@keyframes meta-in {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+@media (max-width: 600px) {
+  .meta {
+    flex-direction: column;
+  }
+}
