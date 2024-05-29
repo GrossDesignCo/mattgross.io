@@ -21,28 +21,32 @@
   --height: min(60vh, 100vw);
   --width: min(40vh, 60vw);
 
-  --bg: light-dark(
-    lch(99% calc(var(--chroma) * 0.1) var(--hue)),
-    lch(1% calc(var(--chroma) * 0.1) var(--hue))
-  );
+  --bg: lch(99% calc(var(--chroma) * 0.1) var(--hue));
   --color: lch(69% var(--chroma) var(--hue));
   /* Set an adjaent color on the wheel */
   --tint-forward: lch(100% calc(var(--chroma) * 1.5) calc(var(--hue) + 60));
   --bg-circle: linear-gradient(var(--color), var(--tint-forward));
 
   /* Tint the shadow/glow */
-  --bg-glow: light-dark(
-    lch(75% calc(var(--chroma) * 0.25) var(--hue)),
-    lch(50% calc(var(--chroma) * 0.75) var(--hue))
-  );
+  --bg-glow: lch(75% calc(var(--chroma) * 0.25) var(--hue));
 
-  --bezier: cubic-bezier(0.9, 0.1, 0.1, 0.9);
+  --bezier: cubic-bezier(1, 0, 0.1, 0.9);
 
   height: 100vh;
   width: 100vw;
   font-family: monospace;
   background: var(--bg);
   animation: 10s linear rotate-hue infinite, 16s ease rotate-chroma infinite;
+}
+
+/* Originally used light-dark() function but breaks animations in Chrome */
+@media (prefers-color-scheme: dark) {
+  .root {
+    --bg: lch(1% calc(var(--chroma) * 0.1) var(--hue));
+
+    /* Tint the shadow/glow */
+    --bg-glow: lch(50% calc(var(--chroma) * 0.75) var(--hue));
+  }
 }
 
 @keyframes rotate-hue {
@@ -83,7 +87,7 @@
   inset-inline: 0;
   border-radius: 0;
   border: 0 solid var(--bg);
-  box-shadow: 0 0 0 0 transparent, 0 0 100px 0 transparent;
+  box-shadow: 0 0 0 0 var(--bg), 0 0 100px 0 var(--bg);
   animation: 2s 3s frame-in var(--bezier) forwards,
     1.5s 4.5s frame-shadow ease forwards;
 }
@@ -95,7 +99,7 @@
     inset-block: 0;
     inset-inline: 0;
     border-radius: 0;
-    border: 0px solid transparent;
+    border: 0px solid var(--bg);
   }
 
   100% {
@@ -111,7 +115,7 @@
 
 @keyframes frame-shadow {
   0% {
-    box-shadow: 0 0 0 0 transparent, 0 0 100px 0 transparent;
+    box-shadow: 0 0 0 0 var(--bg), 0 0 100px 0 var(--bg);
   }
 
   100% {
@@ -197,7 +201,6 @@
 
 /* Meta */
 .meta {
-  font-size: 0.75em;
   position: absolute;
   bottom: 32px;
   inset-inline: 24px;
