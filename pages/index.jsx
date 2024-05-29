@@ -4,6 +4,7 @@ import { Header } from '../components/header';
 import { Nav } from '../components/nav';
 import { Footer } from '../components/footer';
 import styles from './index.module.css';
+import { Favicon } from '../components/favicon';
 
 export default function Home({ tagline }) {
   return (
@@ -12,7 +13,7 @@ export default function Home({ tagline }) {
         <Head>
           <title>Matt Gross</title>
           <meta name="description" content={`Matt Gross - ${tagline}`} />
-          <link rel="icon" href="/favicon.ico" />
+          <Favicon />
         </Head>
 
         <Header tagline={tagline} />

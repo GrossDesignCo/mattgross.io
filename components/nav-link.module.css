@@ -1,5 +1,6 @@
 .nav-link {
   display: inline-flex;
+  align-items: center;
   gap: 0.5em;
   text-decoration: none;
   padding: 0.5em 0.8em;

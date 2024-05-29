@@ -1,0 +1,236 @@
+@property --circumference {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: min(50vh, 90vw);
+}
+
+.root {
+  --height: min(60vh, 100vw);
+  --width: min(40vh, 60vw);
+
+  --bezier: cubic-bezier(1, 0, 0.1, 0.9);
+
+  --bg: #fff;
+  --bg-glow: lch(75% 0 0);
+
+  /* Color stops */
+  --pink: lch(60 95 350);
+  --yellow: lch(95 100 100);
+  --navy: lch(25 40 280);
+
+  height: 100vh;
+  width: 100vw;
+  font-family: monospace;
+  background: var(--bg);
+  animation: 0.5s ease root-in;
+}
+
+/* Originally used light-dark() function but breaks animations in Chrome */
+@media (prefers-color-scheme: dark) {
+  .root {
+    --bg: lch(1% 0 0);
+
+    /* Tint the shadow/glow */
+    --bg-glow: lch(25% 0 0);
+  }
+}
+
+.frame {
+  overflow: hidden;
+  position: fixed;
+  height: 0px;
+  width: 0px;
+  inset-block: 50%;
+  inset-inline: 50%;
+  border-radius: 100%;
+  border: 0 solid var(--bg);
+  box-shadow: 0 0 0 0 var(--bg), 0 0 100px 0 var(--bg);
+  animation: 2s frame-in var(--bezier) forwards,
+    1s 2s frame-shadow ease forwards;
+}
+
+@keyframes frame-in {
+  0% {
+    height: 0px;
+    width: 0px;
+    inset-block: 50%;
+    inset-inline: 50%;
+    border-radius: 100%;
+    border: 0 solid var(--bg);
+  }
+
+  100% {
+    height: var(--height);
+    width: var(--width);
+    inset-block: 10vh;
+    inset-inline: calc(50vw - var(--width) / 2);
+    border-radius: 4px;
+    border: calc(var(--height) * 0.02) solid var(--bg);
+  }
+}
+
+@keyframes frame-shadow {
+  0% {
+    box-shadow: 0 0 0 0 var(--bg), 0 0 100px 0 var(--bg);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 var(--bg), 0 0 100px 0 var(--bg-glow);
+  }
+}
+
+:where(.frame) [class*='bg'] {
+  border-radius: 100%;
+  background: conic-gradient(
+    from var(--start),
+    var(--pink) 0deg,
+    var(--yellow) 75deg,
+    #000 75.5deg,
+    #fff 150deg,
+    var(--pink) 200deg,
+    var(--yellow) 200.5deg,
+    #fff 230deg,
+    #111 230.5deg,
+    var(--navy) 260deg,
+    #fff 359.5deg
+  );
+
+  position: absolute;
+  width: var(--circumference);
+  height: var(--circumference);
+  top: calc(50% - var(--circumference) / 2);
+  left: calc(50% - var(--circumference) / 2);
+}
+
+.bg12 {
+  --start: 850deg;
+  --circumference: calc(var(--height) * 1.2);
+
+  animation: 3s ease bg-in, 39s linear spin infinite;
+}
+
+.bg11 {
+  --start: 765deg;
+  --circumference: calc(var(--height) * 1.1);
+
+  animation: 2.9s ease bg-in, 38s linear spin infinite;
+}
+
+.bg10 {
+  --start: 680deg;
+  --circumference: calc(var(--height) * 1);
+
+  animation: 2.8s ease bg-in, 37s linear spin infinite;
+}
+
+.bg9 {
+  --start: 595deg;
+  --circumference: calc(var(--height) * 0.9);
+
+  animation: 2.7s ease bg-in, 36s linear spin infinite reverse;
+}
+
+.bg8 {
+  --start: 510deg;
+  --circumference: calc(var(--height) * 0.8);
+
+  animation: 2.6s ease bg-in, 36s linear spin infinite;
+}
+
+.bg7 {
+  --start: 425deg;
+  --circumference: calc(var(--height) * 0.7);
+
+  animation: 2.5s ease bg-in, 35s linear spin infinite reverse;
+}
+
+.bg6 {
+  --start: 340deg;
+  --circumference: calc(var(--height) * 0.6);
+
+  animation: 2.4s ease bg-in, 34s linear spin infinite;
+}
+
+.bg5 {
+  --start: 255deg;
+  --circumference: calc(var(--height) * 0.5);
+
+  animation: 2.3s ease bg-in, 33s linear spin infinite reverse;
+}
+
+.bg4 {
+  --start: 170deg;
+  --circumference: calc(var(--height) * 0.4);
+
+  animation: 2.2s ease bg-in, 32s linear spin infinite;
+}
+
+.bg3 {
+  --start: 85deg;
+  --circumference: calc(var(--height) * 0.3);
+
+  animation: 2.1s ease bg-in, 31s linear spin infinite reverse;
+}
+
+.bg2 {
+  --start: 0deg;
+  --circumference: calc(var(--height) * 0.2);
+
+  animation: 2s ease bg-in, 30s linear spin infinite;
+}
+
+@keyframes bg-in {
+  0% {
+    --circumference: calc(var(--height) * 0.1);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Solid center */
+.bg1 {
+  --circumference: calc(var(--height) * 0.1);
+
+  background: #000;
+}
+
+/* Meta */
+.meta {
+  position: absolute;
+  bottom: 32px;
+  inset-inline: 24px;
+  opacity: 0;
+  transform: translateY(16px);
+
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  animation: 2.5s 3s meta-in var(--bezier) forwards;
+}
+
+@keyframes meta-in {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+@media (max-width: 600px) {
+  .meta {
+    flex-direction: column;
+    align-items: start;
+  }
+}

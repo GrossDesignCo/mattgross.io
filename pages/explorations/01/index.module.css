@@ -101,7 +101,7 @@
   border: 0 solid var(--bg);
   box-shadow: 0 0 0 0 var(--bg), 0 0 100px 0 var(--bg);
   animation: 2s 3s frame-in var(--bezier) forwards,
-    1.5s 4.5s frame-shadow ease forwards;
+    1s 5s frame-shadow ease forwards;
 }
 
 @keyframes frame-in {
@@ -121,7 +121,8 @@
     inset-inline: calc(50vw - var(--width) / 2);
     border-radius: 4px;
     /* Always use the light bg for the frame border */
-    border: 16px solid lch(99% calc(var(--chroma) * 0.1) var(--hue));
+    border: calc(var(--height) * 0.025) solid
+      lch(99% calc(var(--chroma) * 0.1) var(--hue));
   }
 }
 
@@ -136,7 +137,6 @@
 }
 
 .bg {
-  transform: translateY(0px);
   background: var(--color);
   height: 100%;
   width: 100%;

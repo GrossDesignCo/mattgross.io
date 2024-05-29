@@ -2,7 +2,6 @@
   /* Colors */
   --bg: #f4f4f4;
   --bg-high-contrast: #fff;
-  --bg-animated: rgba(200, 200, 200, 0.1);
 
   --fg: #444;
   --fg-high-contrast: #222;
@@ -14,18 +13,13 @@
   --spacer: 1.5em;
   --spacer-2x: 3em;
   --spacer-vh-third: 33.33vh;
-
-  /* Transitions */
-  --transition-basic: 0.3s ease;
-  --swirling-circle: infinite linear swirlingCircle;
 }
 
 /* Dark Mode */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #333;
-    --bg-high-contrast: #222;
-    --bg-animated: rgba(0, 0, 0, 0.15);
+    --bg: #1c1c1c;
+    --bg-high-contrast: #000;
 
     --fg: #ddd;
     --fg-high-contrast: #fff;
@@ -34,24 +28,9 @@
   }
 }
 
-/* Background animation for sidebar */
-@keyframes swirlingCircle {
-  0% {
-    transform: rotate(0deg) translateX(24px);
-  }
-
-  50% {
-    transform: rotate(180deg) translateX(24px);
-  }
-
-  100% {
-    transform: rotate(360deg) translateX(24px);
-  }
-}
-
 /* Anti-Vertigo */
-@media (prefers-reduced-motion: reduce) {
+/* @media (prefers-reduced-motion: reduce) {
   :root {
     --swirling-circle: none;
   }
-}
+} */

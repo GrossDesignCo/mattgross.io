@@ -76,6 +76,28 @@ h2 {
   align-items: start;
 }
 
+.align-end {
+  align-items: end;
+}
+
+.justify-start {
+  justify-content: start;
+}
+
+.justify-end {
+  justify-content: end;
+}
+
+@media (max-width: 600px) {
+  .justify-end {
+    justify-content: start;
+  }
+
+  .align-end {
+    align-items: start;
+  }
+}
+
 .spaced-stack {
   display: flex;
   flex-direction: column;
