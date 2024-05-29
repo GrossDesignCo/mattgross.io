@@ -36,7 +36,8 @@
   width: 100vw;
   font-family: monospace;
   background: var(--bg);
-  animation: 10s linear rotate-hue infinite, 16s ease rotate-chroma infinite;
+  animation: 0.5s ease root-in, 10s linear rotate-hue infinite,
+    16s ease rotate-chroma infinite;
 }
 
 /* Originally used light-dark() function but breaks animations in Chrome */
@@ -46,6 +47,13 @@
 
     /* Tint the shadow/glow */
     --bg-glow: lch(50% calc(var(--chroma) * 0.75) var(--hue));
+  }
+}
+
+/* Give a fade-in since the first frame is a giant wall of color */
+@keyframes root-in {
+  0% {
+    opacity: 0%;
   }
 }
 
@@ -62,19 +70,23 @@
 
 @keyframes rotate-chroma {
   0% {
+    --chroma: 50;
+  }
+
+  25% {
     --chroma: 20;
   }
 
-  33% {
-    --chroma: 30;
+  25% {
+    --chroma: 60;
   }
 
-  66% {
+  75% {
     --chroma: 50;
   }
 
   100% {
-    --chroma: 20;
+    --chroma: 50;
   }
 }
 
