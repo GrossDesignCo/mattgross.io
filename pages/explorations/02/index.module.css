@@ -100,7 +100,7 @@
   height: var(--circumference);
   top: calc(50% - var(--circumference) / 2);
   left: calc(50% - var(--circumference) / 2);
-  box-shadow: 0 0 0px 2px #000;
+  box-shadow: 0 0 0px 2px var(--bg);
 }
 
 .bg12 {
