@@ -56,7 +56,7 @@
     inset-block: 50%;
     inset-inline: 50%;
     border-radius: 100%;
-    border: 0 solid var(--bg);
+    border: calc(var(--height) * 0.02) solid var(--bg);
   }
 
   100% {
@@ -100,6 +100,7 @@
   height: var(--circumference);
   top: calc(50% - var(--circumference) / 2);
   left: calc(50% - var(--circumference) / 2);
+  box-shadow: 0 0 0px 2px #000;
 }
 
 .bg12 {
