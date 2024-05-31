@@ -1,12 +1,11 @@
-import Link from 'next/link';
-import styles from './nav-link.module.css';
+import NextLink from 'next/link';
 import { IconExternal } from './icons/external';
 
-export const NavLink = (props) => {
+export const Link = (props) => {
   const { href, children } = props;
   const isExternal = href.includes('http');
 
-  const externalProps = href.includes('http')
+  const targetProps = href.includes('http')
     ? {
         target: '_blank',
         rel: 'nofollow noopener',
@@ -14,9 +13,9 @@ export const NavLink = (props) => {
     : {};
 
   return (
-    <Link className={styles['nav-link']} {...props} {...externalProps}>
+    <NextLink {...props} {...targetProps}>
       {children}
       {isExternal && <IconExternal />}
-    </Link>
+    </NextLink>
   );
 };

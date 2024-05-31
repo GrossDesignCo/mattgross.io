@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import Link from 'next/link';
+import { Link } from '../../../components/link';
 import styles from './index.module.css';
 import { Favicon } from '../../../components/favicon';
 
@@ -38,19 +38,6 @@ export default function Page() {
             </div>
 
             <div>
-              <Link href="/" className={styles.link}>
-                Main
-              </Link>{' '}
-              /{' '}
-              <Link href="/explorations/01" className={styles.link}>
-                01
-              </Link>
-            </div>
-          </div>
-
-          <div className="stack align-end">
-            <div>May 2024</div>
-            <div>
               Based on{' '}
               <Link
                 href="https://x.com/FonsMans/status/1795025314810409342"
@@ -59,6 +46,19 @@ export default function Page() {
                 Endless
               </Link>{' '}
               by <Link href="https://x.com/FonsMans">Fons Mans</Link>
+            </div>
+          </div>
+
+          <div className="stack align-end">
+            <div>May 2024</div>
+            <div>
+              <Link href="/" className={styles.link}>
+                Main
+              </Link>{' '}
+              /{' '}
+              <Link href="/explorations/01" className={styles.link}>
+                01
+              </Link>
             </div>
           </div>
         </div>

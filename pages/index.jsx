@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useTagline } from '../hooks/useTagline';
 import { Header } from '../components/header';
-import { Nav } from '../components/nav';
+import { Nav } from '../components/nav/nav';
 import { Footer } from '../components/footer';
 import styles from './index.module.css';
 import { Favicon } from '../components/favicon';

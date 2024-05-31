@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import Link from 'next/link';
+import { Link } from '../../../components/link';
 import styles from './index.module.css';
 import { Favicon } from '../../../components/favicon';
 
@@ -25,17 +25,15 @@ export default function Page() {
             <div>
               <strong>Exploration 01</strong>: lch() Color & Framing
             </div>
-
-            <div>
-              <Link href="/" className={styles.link}>
-                Main
-              </Link>
-            </div>
           </div>
 
           <div className="stack align-end">
             <div>May 2024</div>
             <div>
+              <Link href="/" className={styles.link}>
+                Main
+              </Link>{' '}
+              /{' '}
               <Link href="/explorations/02" className={styles.link}>
                 02
               </Link>
