@@ -15,8 +15,9 @@
 
   /* Color stops */
   --pink: lch(60 95 350);
-  --yellow: lch(95 100 100);
+  --yellow: lch(95 100 70);
   --navy: lch(25 40 280);
+  --mid-blue: lch(50 50 280);
 
   height: 100vh;
   width: 100vw;
@@ -84,15 +85,17 @@
   background: conic-gradient(
     from var(--start),
     var(--pink) 0deg,
-    var(--yellow) 75deg,
-    #000 75.5deg,
+    var(--yellow) 60deg,
+    #000 61deg,
     #fff 150deg,
     var(--pink) 200deg,
-    var(--yellow) 200.5deg,
-    #fff 230deg,
-    #111 230.5deg,
-    var(--navy) 260deg,
-    #fff 359.5deg
+    var(--yellow) 201deg,
+    #fff 260deg,
+    #111 261deg,
+    var(--navy) 290deg,
+    var(--mid-blue) 320deg,
+    #fff 359deg,
+    var(--pink) 360deg
   );
 
   position: absolute;
@@ -100,7 +103,6 @@
   height: var(--circumference);
   top: calc(50% - var(--circumference) / 2);
   left: calc(50% - var(--circumference) / 2);
-  box-shadow: 0 0 0px 2px var(--bg);
 }
 
 .bg12 {
