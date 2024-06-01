@@ -6,7 +6,9 @@ export const Footer = () => {
   return (
     <div className={`frame ${styles['footer-frame']}`}>
       <footer className={styles.footer}>
-        <div className={styles.copyright}>© Matt Gross / {year}</div>
+        <div className={`caption ${styles.copyright}`}>
+          © Matt Gross / {year}
+        </div>
       </footer>
     </div>
   );

@@ -1,7 +1,9 @@
 import Head from 'next/head';
-import { Link } from '../../../components/link';
 import styles from './index.module.css';
+import { Link } from '../../../components/link';
+import { Meta } from '../../../components/meta';
 import { Favicon } from '../../../components/favicon';
+import { IconArrowLeft } from '../../../components/icons/arrow-left';
 
 export default function Page() {
   return (
@@ -10,13 +12,14 @@ export default function Page() {
         <title>Exploration 02 - Matt Gross</title>
         <meta
           name="description"
-          content="Exploration 01: lch() Color & Framing"
+          content="Exploration 02: Stacked Conic Gradients"
         />
         <Favicon />
       </Head>
 
       <div className={styles.root}>
         <div className={styles.frame}>
+          {/* Stack of divs for each ring */}
           <div className={styles.bg12} />
           <div className={styles.bg11} />
           <div className={styles.bg10} />
@@ -31,13 +34,15 @@ export default function Page() {
           <div className={styles.bg1} />
         </div>
 
-        <div className={`monospace ${styles.meta}`}>
-          <div className="stack">
-            <div>
-              <strong>Exploration 02</strong>: Conic Gradients
-            </div>
-
-            <div>
+        <Meta
+          className={styles.meta}
+          title={
+            <>
+              <strong>Exploration 02</strong>: Stacked Conic Gradients
+            </>
+          }
+          subTitle={
+            <>
               Based on{' '}
               <Link
                 href="https://x.com/FonsMans/status/1795025314810409342"
@@ -46,22 +51,22 @@ export default function Page() {
                 Endless
               </Link>{' '}
               by <Link href="https://x.com/FonsMans">Fons Mans</Link>
-            </div>
-          </div>
-
-          <div className="stack align-end">
-            <div>May 2024</div>
-            <div>
+            </>
+          }
+          dateCreated="May 2024"
+          links={
+            <>
               <Link href="/" className={styles.link}>
-                Main
+                <IconArrowLeft /> Main
               </Link>{' '}
               /{' '}
               <Link href="/explorations/01" className={styles.link}>
+                <IconArrowLeft />
                 01
               </Link>
-            </div>
-          </div>
-        </div>
+            </>
+          }
+        />
       </div>
     </div>
   );

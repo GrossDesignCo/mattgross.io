@@ -48,15 +48,20 @@ h2 {
 }
 
 h1 {
-  font-size: 2em;
+  font-size: 2rem;
 }
 
 h2 {
-  font-size: 2em;
+  font-size: 1.75rem;
+}
+
+.caption {
+  font-size: 0.85rem;
 }
 
 /* Layout */
 .frame {
+  /* TODO: Do an outer/frame padding and an inner/item padding */
   padding-block: 3em;
   padding-inline: 2em;
   transition: padding 0.3s ease;

@@ -205,17 +205,8 @@
   background: #000;
 }
 
-/* Meta */
+/* Meta intro timing */
 .meta {
-  position: absolute;
-  bottom: 32px;
-  inset-inline: 24px;
-  opacity: 0;
-  transform: translateY(16px);
-
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
   animation: 2.5s 3s meta-in var(--bezier) forwards;
 }
 
@@ -228,12 +219,5 @@
   100% {
     opacity: 1;
     transform: translateY(0px);
-  }
-}
-
-@media (max-width: 600px) {
-  .meta {
-    flex-direction: column;
-    align-items: start;
   }
 }
