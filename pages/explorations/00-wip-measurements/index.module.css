@@ -1,0 +1,136 @@
+.root {
+  --bg: linear-gradient(lch(40% 50 280), lch(30% 45 280));
+  --fg-line: lch(75% 0 0);
+  --font-size: min(5rem, 10vw);
+
+  min-height: 100vh;
+  height: 100%;
+  width: 100vw;
+  background: var(--bg);
+  animation: 0.5s ease root-in;
+}
+
+/* Originally used light-dark() function but breaks animations in Chrome */
+@media (prefers-color-scheme: dark) {
+  .root {
+    --bg: linear-gradient(lch(40% 50 280), lch(30% 45 280));
+    --fg-line: lch(60% 40 280);
+  }
+}
+
+/* Give a fade-in since the first frame is a giant wall of color */
+@keyframes root-in {
+  0% {
+    opacity: 0%;
+  }
+}
+
+.frame {
+  font-size: var(--font-size);
+  padding: var(--font-size);
+}
+
+.frame :global(.row) {
+  display: flex;
+  gap: 0.25em;
+  flex-wrap: wrap;
+}
+
+.frame :is(.em, .ch, .ex, .cap, .lh) {
+  position: relative;
+  min-width: max-content;
+}
+
+/* Core Grid */
+.ruler {
+  position: relative;
+  height: 1px;
+  background: var(--fg-line);
+  margin-block-end: 0.33rem;
+}
+
+.ruler::before {
+  font-size: 1rem;
+  line-height: 1rem;
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block: -0.33rem;
+  border-inline: 1px solid var(--fg-line);
+}
+
+.em .ruler {
+  width: 1em;
+}
+
+.ch .ruler {
+  width: 1ch;
+}
+
+.ex .ruler {
+  width: 1ex;
+}
+
+/* vertical line */
+.vertical-ruler::before {
+  content: '';
+  position: absolute;
+  width: 1px;
+  background: var(--fg-line);
+  inset-block: -0.5rem;
+  height: calc(var(--height) + 1rem + 3px);
+  inset-inline-start: 0;
+}
+
+/* horizontal lines */
+.vertical-ruler::after {
+  content: '';
+  position: absolute;
+  border-block: 1px solid var(--fg-line);
+  inset-inline-start: -0.5rem;
+  inset-block: 0;
+  width: 2em;
+  height: var(--height);
+}
+
+.cap,
+.lh {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: baseline;
+
+  & .char {
+    width: 100%;
+  }
+}
+
+.cap .vertical-ruler {
+  --height: 1cap;
+}
+
+.cap .vertical-ruler::before,
+.cap .vertical-ruler::after {
+  /* Cap needs a manual offset to align with text */
+  transform: translateY(0.25em);
+}
+
+.lh .vertical-ruler {
+  --height: 1lh;
+}
+
+/* Meta intro timing */
+.meta {
+  animation: 0.5s meta-in var(--bezier) forwards;
+}
+
+@keyframes meta-in {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}

@@ -8,7 +8,8 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <style jsx global>{`
-        :root {
+        :root,
+        .sans {
           font-family: ${GeistSans.style.fontFamily};
         }
 

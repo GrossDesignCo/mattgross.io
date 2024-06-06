@@ -4,6 +4,7 @@
   --bg-high-contrast: #fff;
 
   --fg: #444;
+  --fg: lch(10% 0 0 / 100%);
   --fg-high-contrast: #222;
   --fg-low-contrast: #777;
   --fg-shadow: #ccc;
@@ -13,6 +14,8 @@
   --spacer: 1.5em;
   --spacer-2x: 3em;
   --spacer-vh-third: 33.33vh;
+
+  --bezier: cubic-bezier(1, 0, 0.1, 0.9);
 }
 
 /* Dark Mode */
@@ -21,10 +24,11 @@
     --bg: #1c1c1c;
     --bg-high-contrast: #000;
 
-    --fg: #ddd;
+    --fg: lch(90% 0 0 / 100%);
     --fg-high-contrast: #fff;
-    --fg-low-contrast: #aaa;
+    --fg-low-contrast: lch(90% 0 0 / 66%);
     --fg-shadow: #555;
+    --fg-shadow: lch(90% 0 0 / 33%);
   }
 }
 

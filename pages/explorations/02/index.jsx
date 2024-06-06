@@ -4,16 +4,14 @@ import { Link } from '../../../components/link';
 import { Meta } from '../../../components/meta';
 import { Favicon } from '../../../components/favicon';
 import { IconArrowLeft } from '../../../components/icons/arrow-left';
+import { IconArrowRight } from '../../../components/icons/arrow-right';
 
 export default function Page() {
   return (
     <div>
       <Head>
         <title>Exploration 02 - Matt Gross</title>
-        <meta
-          name="description"
-          content="Exploration 02: Stacked Conic Gradients"
-        />
+        <meta name="description" content="Stacked Conic Gradients" />
         <Favicon />
       </Head>
 
@@ -63,6 +61,11 @@ export default function Page() {
               <Link href="/explorations/01" className={styles.link}>
                 <IconArrowLeft />
                 01
+              </Link>{' '}
+              /{' '}
+              <Link href="/explorations/03" className={styles.link}>
+                03
+                <IconArrowRight />
               </Link>
             </>
           }

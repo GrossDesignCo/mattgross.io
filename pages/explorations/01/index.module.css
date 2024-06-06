@@ -30,11 +30,8 @@
   /* Tint the shadow/glow */
   --bg-glow: lch(75% calc(var(--chroma) * 0.25) var(--hue));
 
-  --bezier: cubic-bezier(1, 0, 0.1, 0.9);
-
   height: 100vh;
   width: 100vw;
-  font-family: monospace;
   background: var(--bg);
   animation: 0.5s ease root-in, 10s linear rotate-hue infinite,
     16s ease rotate-chroma infinite;
@@ -211,17 +208,8 @@
   }
 }
 
-/* Meta */
+/* Meta intro timing */
 .meta {
-  position: absolute;
-  bottom: 32px;
-  inset-inline: 24px;
-  opacity: 0;
-  transform: translateY(16px);
-
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
   animation: 2.5s 5s meta-in var(--bezier) forwards;
 }
 
@@ -234,11 +222,5 @@
   100% {
     opacity: 1;
     transform: translateY(0px);
-  }
-}
-
-@media (max-width: 600px) {
-  .meta {
-    flex-direction: column;
   }
 }

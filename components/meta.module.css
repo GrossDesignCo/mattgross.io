@@ -1,5 +1,5 @@
 .meta {
-  position: absolute;
+  position: fixed;
   bottom: 32px;
   inset-inline: 24px;
   opacity: 0;

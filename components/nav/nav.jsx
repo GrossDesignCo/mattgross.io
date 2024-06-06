@@ -9,6 +9,7 @@ export const Nav = () => {
         <NavCategory>Explorations</NavCategory> /{' '}
         <NavLink href="/explorations/01">01</NavLink>
         <NavLink href="/explorations/02">02</NavLink>
+        {/* <NavLink href="/explorations/03">03</NavLink> */}
       </div>
       <NavLink href="https://www.linkedin.com/in/m-gross/">LinkedIn</NavLink>
       <NavLink href="https://github.com/GrossDesignCo">GitHub</NavLink>

@@ -1,0 +1,235 @@
+.root {
+  --bg: lch(99% 0 0);
+
+  /* Tint the shadow/glow */
+  --bg-brick: lch(0% 0 0);
+  --bg-brick-glow: lch(10% 0 0 / 50%);
+
+  height: 100vh;
+  width: 100vw;
+  animation: 0.5s ease root-in;
+}
+
+/* Originally used light-dark() function but breaks animations in Chrome */
+@media (prefers-color-scheme: dark) {
+  .root {
+    --bg: lch(1% 0 0);
+
+    /* Tint the shadow/glow */
+    --bg-brick: lch(100% 0 0);
+    --bg-brick-glow: lch(90% 0 0 / 33%);
+  }
+}
+
+/* Give a fade-in since the first frame is a giant wall of color */
+@keyframes root-in {
+  0% {
+    opacity: 0%;
+  }
+}
+
+.frame {
+  overflow: hidden;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  inset: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  filter: blur(20px);
+  background: url(/explorations/map-bg.heic);
+  background-size: cover;
+  background-position: center;
+}
+
+.grid {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.brick {
+  height: 40px;
+  width: 60px;
+  filter: drop-shadow(0 1px 1px var(--bg))
+    drop-shadow(0 0 10px var(--bg-brick-glow))
+    drop-shadow(0 0 50px var(--bg-brick-glow));
+}
+
+/* Angles */
+.clipAngle45 {
+  --clip-size: 10px;
+
+  /* Partial clip paths for each corner */
+  --top-left-normal: 0 0;
+  --top-left-clip: 0 var(--clip-size), var(--clip-size) 0;
+
+  --top-right-normal: 100% 0;
+  --top-right-clip: calc(100% - var(--clip-size)) 0, 100% var(--clip-size);
+
+  --bottom-right-normal: 100% 100%;
+  --bottom-right-clip: 100% calc(100% - var(--clip-size)),
+    calc(100% - var(--clip-size)) 100%;
+
+  --bottom-left-normal: 0 100%;
+  --bottom-left-clip: var(--clip-size) 100%, 0 calc(100% - var(--clip-size));
+
+  /* Final clip path */
+  --clip: polygon(
+    var(--top-left, var(--top-left-normal)),
+    var(--top-right, var(--top-right-normal)),
+    var(--bottom-right, var(--bottom-right-normal)),
+    var(--bottom-left, var(--bottom-left-normal))
+  );
+
+  position: relative;
+}
+
+.clipAngle45::before {
+  /* Apply clip directly so that corners can be set with just the one token */
+  clip-path: var(--clip);
+
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--bg-brick);
+}
+
+/* Base clip classes, in RTL just swap the tokens associated with each class */
+.clipTopLeft {
+  --top-left: var(--top-left-clip);
+}
+
+.clipTopRight {
+  --top-right: var(--top-right-clip);
+}
+
+.clipBottomRight {
+  --bottom-right: var(--bottom-right-clip);
+}
+
+.clipBottomLeft {
+  --bottom-left: var(--bottom-left-clip);
+}
+
+/* Outlined Angles */
+/* Outlines */
+/* Less systematic than ideal */
+.outline {
+  color: #333;
+
+  /* Partial background gradients, either a basic corner outline, or an angled-clip */
+  --outline-top-left-basic: linear-gradient(#333 0 0) top left / 1px 50px,
+    linear-gradient(#333 0 0) top left / 50px 1px;
+  --outline-top-left-clip: linear-gradient(135deg, #333 15px, transparent 15px),
+    linear-gradient(#333 0 0) top left / 1px 80px,
+    linear-gradient(#333 0 0) top left / 80px 1px;
+
+  --outline-top-right-basic: linear-gradient(#333 0 0) top right / 1px 50px,
+    linear-gradient(#333 0 0) top right / 50px 1px;
+  --outline-top-right-clip: linear-gradient(
+      -135deg,
+      #333 15px,
+      transparent 15px
+    ),
+    linear-gradient(#333 0 0) top right / 1px 80px,
+    linear-gradient(#333 0 0) top right / 80px 1px;
+
+  --outline-bottom-right-basic: linear-gradient(#333 0 0) bottom right / 1px
+      50px,
+    linear-gradient(#333 0 0) bottom right / 50px 1px;
+  --outline-bottom-right-clip: linear-gradient(
+      -45deg,
+      #333 15px,
+      transparent 15px
+    ),
+    linear-gradient(#333 0 0) bottom right / 1px 80px,
+    linear-gradient(#333 0 0) bottom right / 80px 1px;
+
+  --outline-bottom-left-basic: linear-gradient(#333 0 0) bottom left / 1px 50px,
+    linear-gradient(#333 0 0) bottom left / 50px 1px;
+  --outline-bottom-left-clip: linear-gradient(
+      45deg,
+      #333 15px,
+      transparent 15px
+    ),
+    linear-gradient(#333 0 0) bottom left / 1px 80px,
+    linear-gradient(#333 0 0) bottom left / 80px 1px;
+
+  /* Provide a dummy gradient to preserve the syntax in --outline-background */
+  --dummy-gradient: linear-gradient(transparent 0 0);
+
+  --outline-background: var(--outline-top-left, var(--dummy-gradient)),
+    var(--outline-top-right, var(--dummy-gradient)),
+    var(--outline-bottom-right, var(--dummy-gradient)),
+    var(--outline-bottom-left, var(--dummy-gradient));
+
+  background: var(--outline-background);
+  background-repeat: no-repeat;
+}
+
+/* Now each outline class is a single token */
+.outlineTopLeft {
+  --outline-top-left: var(--outline-top-left-basic);
+}
+
+/* And responds to being clipped :) */
+.outlineTopLeft.clipTopLeft {
+  --outline-top-left: var(--outline-top-left-clip);
+}
+
+.outlineTopRight {
+  --outline-top-right: var(--outline-top-right-basic);
+}
+
+.outlineTopRight.clipTopRight {
+  --outline-top-right: var(--outline-top-right-clip);
+}
+
+.outlineBottomRight {
+  --outline-bottom-right: var(--outline-bottom-right-basic);
+}
+
+.outlineBottomRight.clipBottomRight {
+  --outline-bottom-right: var(--outline-bottom-right-clip);
+}
+
+.outlineBottom-left {
+  --outline-bottom-left: var(--outline-bottom-left-basic);
+}
+
+.outlineBottom-left.clipBottom-left {
+  --outline-bottom-left: var(--outline-bottom-left-clip);
+}
+
+/* Square loops */
+.squareLoop {
+  background-color: red;
+}
+
+/* Meta intro timing */
+.meta {
+  background-color: lch(0 0 0 / 33%);
+  box-shadow: 0 0 3em 3em lch(0 0 0 / 33%);
+  animation: 0.5s meta-in var(--bezier) forwards;
+}
+
+@keyframes meta-in {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}

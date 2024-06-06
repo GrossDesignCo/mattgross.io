@@ -11,10 +11,7 @@ export default function Page() {
     <div>
       <Head>
         <title>Exploration 01 - Matt Gross</title>
-        <meta
-          name="description"
-          content="Exploration 01: lch() Color & Framing"
-        />
+        <meta name="description" content="lch() Color & Framing" />
         <Favicon />
       </Head>
 

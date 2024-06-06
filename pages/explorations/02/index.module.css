@@ -8,8 +8,6 @@
   --height: min(60vh, 100vw);
   --width: min(40vh, 60vw);
 
-  --bezier: cubic-bezier(1, 0, 0.1, 0.9);
-
   --bg: #fff;
   --bg-glow: lch(75% 0 0);
 
@@ -21,7 +19,6 @@
 
   height: 100vh;
   width: 100vw;
-  font-family: monospace;
   background: var(--bg);
   animation: 0.5s ease root-in;
 }
