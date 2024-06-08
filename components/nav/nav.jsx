@@ -4,7 +4,9 @@ import { NavCategory } from './nav-category';
 export const Nav = () => {
   return (
     <div className="stack align-start">
-      <NavLink href="/Matt-Gross-Resume-2024.pdf">Résumé</NavLink>
+      <NavLink href="/Matt-Gross-Resume-2024.pdf" openInNewTab>
+        Résumé
+      </NavLink>
       <div>
         <NavCategory>Explorations</NavCategory> /{' '}
         <NavLink href="/explorations/01">01</NavLink>

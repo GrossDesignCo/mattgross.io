@@ -116,3 +116,24 @@ h2 {
   height: 1em;
   width: 1em;
 }
+
+/* View Transitions */
+@keyframes default-in {
+  0% {
+    opacity: 0;
+  }
+}
+
+@keyframes default-out {
+  100% {
+    opacity: 0;
+  }
+}
+
+::view-transition-old(root) {
+  animation: 0.5s ease both default-out;
+}
+
+::view-transition-new(root) {
+  animation: 0.5s ease both default-in;
+}
