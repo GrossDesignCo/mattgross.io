@@ -1,0 +1,53 @@
+/* Control Panel */
+.controls {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 0.6em;
+}
+
+.controls button {
+  font: inherit;
+  background-color: transparent;
+  border: 1px solid #fff;
+  padding: 0.3em 0.8em;
+}
+
+/* Label */
+.label {
+  --pointer-length: 2em;
+
+  font-size: 0.8em;
+  font-weight: 300;
+  width: max-content;
+  padding: calc(var(--pointer-length) + 2.5px);
+  pointer-events: none;
+  position: relative;
+}
+
+.label::before,
+.label::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+}
+
+.label::before {
+  width: 1px;
+  height: calc(var(--pointer-length) * 1.414);
+  transform: rotate(-45deg);
+  transform-origin: 0 0;
+}
+
+.label::after {
+  height: 5px;
+  width: 5px;
+  border-radius: 50%;
+}
+
+.label strong {
+  color: inherit;
+  font-weight: 800;
+}

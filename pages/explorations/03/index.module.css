@@ -1,0 +1,154 @@
+.root {
+  /* Threejs has issues with lch color format, so using hex/srgb for now */
+  --bg: #111;
+  --bg-high-contrast: #000;
+  --bg-midtone: #404040;
+
+  --fg: #e2e2e2;
+  --fg-high-contrast: #fff;
+  --fg-low-contrast: #a0a0a0;
+
+  height: 100vh;
+  width: 100vw;
+  background: var(--bg);
+  animation: 0.5s ease fade-in;
+}
+
+/* Give a fade-in since the first frame is a giant wall of color */
+@keyframes fade-in {
+  0% {
+    opacity: 0%;
+  }
+}
+
+.frame {
+  height: 100vh;
+  width: 100vw;
+}
+
+.frame :global(.loading) {
+  opacity: 0;
+}
+
+.frame :global(.loaded) {
+  animation: 0.5s ease fade-in;
+}
+
+/* Cool cross-hatched pattern */
+/* .visualFrame {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  inset-block: 0;
+  inset-inline: 0;
+  pointer-events: none;
+  border: 0 solid transparent;
+  animation: 2s 1s frame-in var(--bezier) forwards;
+}
+
+@keyframes frame-in {
+  0% {
+    height: 100vh;
+    width: 100vw;
+    inset-block: 0;
+    inset-inline: 0;
+    border: 1px solid transparent;
+  }
+
+  100% {
+    height: 40vh;
+    width: 80vw;
+    inset-block: 10vh;
+    inset-inline: 10vw;
+    border: 1px solid #444;
+  }
+}
+
+.visualFrame::after {
+  --thickness: min(5vh, 5vw);
+  --bg-sz: calc(50% - 0.5px);
+  --bg-gap: 8px;
+
+  content: '';
+  display: block;
+  position: absolute;
+  inset: calc(-1 * var(--thickness));
+  border-radius: var(--thickness);
+  background: repeating-linear-gradient(
+      45deg,
+      #444,
+      #444 1px,
+      transparent 1px,
+      transparent var(--bg-gap)
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      #444,
+      #444 1px,
+      transparent 1px,
+      transparent var(--bg-gap)
+    ),
+    repeating-linear-gradient(
+      45deg,
+      #444,
+      #444 1px,
+      transparent 1px,
+      transparent var(--bg-gap)
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      #444,
+      #444 1px,
+      transparent 1px,
+      transparent var(--bg-gap)
+    );
+  background-size: var(--bg-sz) var(--bg-sz), var(--bg-sz) var(--bg-sz),
+    var(--bg-sz) var(--bg-sz), var(--bg-sz) var(--bg-sz);
+  background-position: top left, top right, bottom right, bottom left;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 100%,
+    0 100%,
+    0 0,
+    var(--thickness) var(--thickness),
+    var(--thickness) calc(100% - var(--thickness)),
+    calc(100% - var(--thickness)) calc(100% - var(--thickness)),
+    calc(100% - var(--thickness)) var(--thickness),
+    var(--thickness) var(--thickness)
+  );
+  box-shadow: inset 0 0 var(--thickness) calc(var(--thickness) * 0.66) var(--bg);
+} */
+
+/* Meta intro timing */
+.meta {
+  background-color: lch(0 0 0 / 50%);
+  box-shadow: 0 0 3em 3em lch(0 0 0 / 50%);
+  animation: 0.5s meta-in var(--bezier) forwards;
+}
+
+/* Force dark theme for meta component */
+.root :global(.meta) {
+  --bg: #040608;
+  --bg-high-contrast: #000;
+  --bg-midtone: #474d55;
+
+  --fg: #e2e2e2;
+  --fg-high-contrast: #fff;
+  --fg-low-contrast: #a0a0a0;
+
+  color: var(--fg);
+}
+
+@keyframes meta-in {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}

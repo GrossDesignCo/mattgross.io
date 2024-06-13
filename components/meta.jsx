@@ -2,7 +2,7 @@ import styles from './meta.module.css';
 
 export const Meta = ({ title, subTitle, dateCreated, links, className }) => {
   return (
-    <div className={`monospace ${styles.meta} ${className}`}>
+    <div className={`monospace meta ${styles.meta} ${className}`}>
       <div className="stack align-start">
         <div>{title}</div>
 

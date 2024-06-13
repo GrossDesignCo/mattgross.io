@@ -1,12 +1,16 @@
 export const IconExternal = () => {
   return (
-    <svg class="icon" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      className="icon"
+      viewBox="0 0 21 21"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <g
         fill="none"
-        fill-rule="evenodd"
+        fillRule="evenodd"
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         transform="translate(3 3)"
       >
         <path d="m15.5.5v5h-5" transform="matrix(1 0 0 -1 0 6)" />
