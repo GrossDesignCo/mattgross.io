@@ -1,4 +1,4 @@
-export const useTagline = () => {
+export const getTagline = () => {
   // Show a randomized tagline whenever someone arrives on the page
   const taglines = [
     'Codes for Jesus',

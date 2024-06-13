@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { useTagline } from '../hooks/useTagline';
+import { getTagline } from '../hooks/getTagline';
 import { Header } from '../components/header';
 import { Nav } from '../components/nav/nav';
 import { Footer } from '../components/footer';
@@ -31,7 +31,7 @@ export default function Home({ tagline }) {
 
 // Load tagline SSR to randomly show one each pageload
 export async function getServerSideProps() {
-  const tagline = useTagline();
+  const tagline = getTagline();
 
   return { props: { tagline } };
 }
