@@ -1,12 +1,14 @@
 /* Control Panel */
 .controls {
   position: fixed;
-  top: 0;
-  right: 0;
-  padding: 0.6em;
+  bottom: 20vh;
+  inset-inline: 24px;
+  display: flex;
+  justify-content: end;
 }
 
 .controls button {
+  appearance: none;
   font: inherit;
   background-color: transparent;
   border: 1px solid #fff;

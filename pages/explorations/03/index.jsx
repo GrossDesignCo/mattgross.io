@@ -8,9 +8,12 @@ import { IconArrowLeft } from '../../../components/icons/arrow-left';
 import { IconArrowRight } from '../../../components/icons/arrow-right';
 
 // Only import 3d space client-side to avoid SSR issues
-const Canvas = dynamic(() => import('../../../components/3d/canvas'), {
-  ssr: false,
-});
+const Canvas = dynamic(
+  () => import('../../../components/explorations/03/canvas'),
+  {
+    ssr: false,
+  }
+);
 
 export default function Page() {
   return (
@@ -34,7 +37,7 @@ export default function Page() {
               <strong>Exploration 03</strong>: Three.js + R3F + Context
             </>
           }
-          subTitle="Work in Progress"
+          subTitle="Work in Progress, Starship Test Flight 4 Timeline"
           dateCreated="June 2024"
           links={
             <>

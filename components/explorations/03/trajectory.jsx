@@ -3,6 +3,7 @@ import { Line, OrbitControls } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { Label } from './label';
+// import { Crosshair } from './crosshair';
 import { latLonToVector3 } from './utils';
 import {
   // falcon9EstimatedEvents as events,
@@ -121,8 +122,14 @@ const Trajectory = () => {
     <>
       <group>
         {/* Improved Path */}
-        {points.map(({ timestamp, position, ...point }) => {
-          return <Label key={timestamp} position={position} {...point} />;
+        {points.map(({ timestamp, position, ...point }, i) => {
+          console.log(i === 0 ? { point, position } : '');
+          return (
+            <>
+              {/* <Crosshair position={position} /> */}
+              <Label key={timestamp} position={position} {...point} />
+            </>
+          );
         })}
         {completedPoints.length && (
           <Line points={completedPoints} color="#fff" lineWidth={1.5} />
@@ -142,9 +149,9 @@ const Trajectory = () => {
         // zoom0={100}
         // zoomSpeed={1}
         maxDistance={earthRadius * 5}
-        minDistance={earthRadius * 2}
+        minDistance={earthRadius * 1.25}
         enablePan={false}
-        maxPolarAngle={Math.PI / 1.5}
+        maxPolarAngle={Math.PI / 1.25}
         minPolarAngle={Math.PI / 4}
         // autoRotate={true}
         // autoRotateSpeed={-1}

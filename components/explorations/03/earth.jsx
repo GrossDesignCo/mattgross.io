@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 // import { useFrame } from '@react-three/fiber';
-import { Sphere, Outlines, useTexture } from '@react-three/drei';
+import { Sphere, Outlines, useTexture, Line } from '@react-three/drei';
 import Trajectory from './trajectory';
 import { earthRadius } from './data';
 
@@ -57,6 +57,32 @@ const Earth = () => {
             opacity={1}
           />
         </Sphere>
+
+        {/* Debug */}
+        {/* <Line
+          points={[
+            [2, 0, 0],
+            [-2, 0, 0],
+          ]}
+          color="cyan"
+          lineWidth={1.5}
+        />
+        <Line
+          points={[
+            [0, 2, 0],
+            [0, -2, 0],
+          ]}
+          color="lightgreen"
+          lineWidth={1.5}
+        />
+        <Line
+          points={[
+            [0, 0, 2],
+            [0, 0, -2],
+          ]}
+          color="pink"
+          lineWidth={1.5}
+        /> */}
 
         <Trajectory earthRef={earthRef} />
       </group>

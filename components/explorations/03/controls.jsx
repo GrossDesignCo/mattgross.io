@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import cx from 'classnames';
 import { CanvasContext } from './canvas';
-import styles from './3d.module.css';
+import styles from './03.module.css';
 
 const Controls = () => {
   const { playing, togglePlaying, progress, setProgress } =
@@ -22,10 +22,10 @@ const Controls = () => {
 
   /**
    * PAUSE HERE
-   * - Frame the scene idea
-   * - Camera within a camera
-   * - allow for toggling the frame
-   * - halftone pattern for light source
+   * - Allow toggling freelook while animating
+   * - Come up with a few camera orientation presets based on the target position
+   * - Bias it to look forward early and backward late
+   * - Bias it to look up when above equator and down when below
    */
 
   return (
