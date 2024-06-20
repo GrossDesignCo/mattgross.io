@@ -1,0 +1,19 @@
+.doubleSlash span {
+  display: inline-block;
+}
+
+.doubleSlash span:nth-child(1) {
+  transform: translateY(0.25em);
+}
+
+.doubleSlash span:nth-child(2) {
+  transform: translateY(-0.25em);
+}
+
+:global(.sideways) .doubleSlash span:nth-child(1) {
+  transform: translateX(-0.25em);
+}
+
+:global(.sideways) .doubleSlash span:nth-child(2) {
+  transform: translateX(0.25em);
+}

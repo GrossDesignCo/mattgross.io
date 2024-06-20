@@ -1,5 +1,6 @@
 import { NavLink } from './nav-link';
 import { NavCategory } from './nav-category';
+import { DoubleSlash } from '../double-slash';
 
 export const Nav = () => {
   return (
@@ -8,7 +9,7 @@ export const Nav = () => {
         Résumé
       </NavLink>
       <div>
-        <NavCategory>Explorations</NavCategory> /{' '}
+        <NavCategory>Explorations</NavCategory> <DoubleSlash />{' '}
         <NavLink href="/explorations/01">01</NavLink>
         <NavLink href="/explorations/02">02</NavLink>
         <NavLink href="/explorations/03">03</NavLink>

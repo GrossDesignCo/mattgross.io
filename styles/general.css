@@ -19,6 +19,10 @@
   box-sizing: border-box;
 }
 
+html {
+  background-color: var(--bg);
+}
+
 html,
 body,
 .root {
@@ -62,15 +66,13 @@ h2 {
 /* Layout */
 .frame {
   /* TODO: Do an outer/frame padding and an inner/item padding */
-  padding-block: 3em;
-  padding-inline: 2em;
+  padding: var(--frame-outer-padding);
   transition: padding 0.3s ease;
 }
 
 @media (max-width: 400px), (max-height: 400px) {
-  .frame {
-    padding-block: 1.5em;
-    padding-inline: 1em;
+  :root {
+    --frame-outer-padding: 1.5em 1em;
   }
 }
 

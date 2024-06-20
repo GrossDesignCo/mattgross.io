@@ -2,14 +2,10 @@
   position: fixed;
   bottom: 0;
   right: 0;
+  writing-mode: vertical-lr;
 }
 
 .footer {
-  padding: 0.5em 0.8em;
+  padding: var(--frame-inner-padding);
   color: var(--fg-low-contrast);
-}
-
-.copyright {
-  transform: rotate(90deg) translateX(1em);
-  transform-origin: top right;
 }
