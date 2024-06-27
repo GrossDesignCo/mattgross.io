@@ -1,0 +1,246 @@
+.root {
+  --bg: lch(99% 0 0);
+
+  /* Tint the shadow/glow */
+  --bg-brick-glow: lch(10% 0 0 / 50%);
+
+  /* Default notch settings */
+  --notch-bg: lch(50% 0 0);
+
+  /* Depth of cut into background */
+  --notch-clip-depth: 8px;
+
+  /* Length of center notches along axis (default to the same) */
+  --notch-center-length: 8px;
+  --notch-block-width: var(--notch-center-length);
+  --notch-inline-height: var(--notch-center-length);
+  /* --notch-angle-ratio: 1.414; */
+
+  height: 100vh;
+  width: 100vw;
+  animation: 0.5s ease root-in;
+}
+
+/* Originally used light-dark() function but breaks animations in Chrome */
+@media (prefers-color-scheme: dark) {
+  .root {
+    --bg: lch(1% 0 0);
+
+    /* Tint the shadow/glow */
+    --bg-brick-glow: lch(90% 0 0 / 33%);
+  }
+}
+
+/* Give a fade-in since the first frame is a giant wall of color */
+@keyframes root-in {
+  0% {
+    opacity: 0%;
+  }
+}
+
+.frame {
+  overflow: hidden;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  inset: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  filter: blur(20px);
+  background: url(/explorations/map-bg.heic);
+  background-size: cover;
+  background-position: center;
+}
+
+/**
+ * Configurable Notches/Angle-Cuts
+ */
+.notch {
+  /* Partial clip paths for each corner, normal is a nothing point to maintain a rectangle,
+  clip is the notch/cutout for that location */
+
+  /* Top-Left */
+  --notch-top-left-normal: 0 0;
+  --notch-top-left-clip: 0 var(--notch-clip-depth), var(--notch-clip-depth) 0;
+
+  /* Top-Center */
+  --notch-top-center-normal: 50% 0;
+  --notch-top-center-clip: calc(
+        50% - var(--notch-block-width) / 2 - var(--notch-clip-depth)
+      )
+      0,
+    calc(50% - var(--notch-block-width) / 2) var(--notch-clip-depth),
+    calc(50% + var(--notch-block-width) / 2) var(--notch-clip-depth),
+    calc(50% + var(--notch-block-width) / 2 + var(--notch-clip-depth)) 0;
+
+  /* Top-Right */
+  --notch-top-right-normal: 100% 0;
+  --notch-top-right-clip: calc(100% - var(--notch-clip-depth)) 0,
+    100% var(--notch-clip-depth);
+
+  /* Center-Right */
+  --notch-center-right-normal: 100% 50%;
+  --notch-center-right-clip: 100%
+      calc(50% - var(--notch-inline-height) / 2 - var(--notch-clip-depth)),
+    calc(100% - var(--notch-clip-depth))
+      calc(50% - var(--notch-inline-height) / 2),
+    calc(100% - var(--notch-clip-depth))
+      calc(50% + var(--notch-inline-height) / 2),
+    100% calc(50% + var(--notch-inline-height) / 2 + var(--notch-clip-depth));
+
+  /* Bottom-Right */
+  --notch-bottom-right-normal: 100% 100%;
+  --notch-bottom-right-clip: 100% calc(100% - var(--notch-clip-depth)),
+    calc(100% - var(--notch-clip-depth)) 100%;
+
+  /* Bottom-Center */
+  --notch-bottom-center-normal: 50% 100%;
+  --notch-bottom-center-clip: calc(
+        50% + var(--notch-block-width) / 2 + var(--notch-clip-depth)
+      )
+      100%,
+    calc(50% + var(--notch-block-width) / 2)
+      calc(100% - var(--notch-clip-depth)),
+    calc(50% - var(--notch-block-width) / 2)
+      calc(100% - var(--notch-clip-depth)),
+    calc(50% - var(--notch-block-width) / 2 - var(--notch-clip-depth)) 100%;
+
+  /* Bottom-Left */
+  --notch-bottom-left-normal: 0 100%;
+  --notch-bottom-left-clip: var(--notch-clip-depth) 100%,
+    0 calc(100% - var(--notch-clip-depth));
+
+  /* Center-Left */
+  --notch-center-left-normal: 0 50%;
+  --notch-center-left-clip: 0
+      calc(50% + var(--notch-inline-height) / 2 + var(--notch-clip-depth)),
+    var(--notch-clip-depth) calc(50% + var(--notch-inline-height) / 2),
+    var(--notch-clip-depth) calc(50% - var(--notch-inline-height) / 2),
+    0 calc(50% - var(--notch-inline-height) / 2 - var(--notch-clip-depth));
+
+  /* Final clip path, individual notches MUST be in clockwise order from top-left */
+  --notch-clip: polygon(
+    var(--notch-top-left, var(--notch-top-left-normal)),
+    var(--notch-top-center, var(--notch-top-center-normal)),
+    var(--notch-top-right, var(--notch-top-right-normal)),
+    var(--notch-center-right, var(--notch-center-right-normal)),
+    var(--notch-bottom-right, var(--notch-bottom-right-normal)),
+    var(--notch-bottom-center, var(--notch-bottom-center-normal)),
+    var(--notch-bottom-left, var(--notch-bottom-left-normal)),
+    var(--notch-center-left, var(--notch-center-left-normal))
+  );
+
+  position: relative;
+}
+
+.notch::before {
+  /* Apply clip directly so that corners can be set with just the one token */
+  clip-path: var(--notch-clip);
+
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--notch-bg);
+}
+
+/* Base clip classes, in RTL just swap the tokens associated with each class */
+.notchTopLeft {
+  --notch-top-left: var(--notch-top-left-clip);
+}
+
+.notchTopCenter {
+  --notch-top-center: var(--notch-top-center-clip);
+}
+
+.notchTopRight {
+  --notch-top-right: var(--notch-top-right-clip);
+}
+
+.notchCenterRight {
+  --notch-center-right: var(--notch-center-right-clip);
+}
+
+.notchBottomRight {
+  --notch-bottom-right: var(--notch-bottom-right-clip);
+}
+
+.notchBottomCenter {
+  --notch-bottom-center: var(--notch-bottom-center-clip);
+}
+
+.notchCenterLeft {
+  --notch-center-left: var(--notch-center-left-clip);
+}
+
+.notchBottomLeft {
+  --notch-bottom-left: var(--notch-bottom-left-clip);
+}
+
+/* Demo UI / Header */
+.header {
+  --notch-bg: lch(100% 0 0);
+  --notch-clip-depth: 12px;
+  --notch-block-width: 40px;
+
+  padding-bottom: 2px;
+}
+
+.headerInner {
+  --notch-bg: lch(50% 0 0 / 50%);
+  --notch-clip-depth: 12px;
+  --notch-block-width: 44px;
+}
+
+.headerDemoContent {
+  width: 100%;
+  height: 60px;
+}
+
+/* Example/Testing Bricks */
+.bricks {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.brick {
+  --notch-bg: lch(5% 0 0);
+  --notch-clip-depth: 8px;
+  --notch-block-width: 12px;
+
+  height: 50px;
+  width: 60px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .brick {
+    --notch-bg: lch(95% 0 0);
+  }
+}
+
+/* Meta intro timing */
+.meta {
+  background-color: lch(0 0 0 / 33%);
+  box-shadow: 0 0 3em 3em lch(0 0 0 / 33%);
+  animation: 0.5s meta-in var(--bezier) forwards;
+}
+
+@keyframes meta-in {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}

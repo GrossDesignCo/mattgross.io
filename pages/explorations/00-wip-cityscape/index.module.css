@@ -1,0 +1,53 @@
+.root {
+  /* Threejs has issues with lch color format, so using hex/srgb for now */
+  --bg: rgb(71, 30, 92);
+  --bg-high-contrast: #000;
+
+  --fg: #e2e2e2;
+  --fg-high-contrast: #fff;
+  --fg-low-contrast: #a0a0a0;
+
+  height: 100vh;
+  width: 100vw;
+  background: var(--bg);
+  animation: 0.5s ease fade-in;
+}
+
+/* Give a fade-in since the first frame is a giant wall of color */
+@keyframes fade-in {
+  0% {
+    opacity: 0%;
+  }
+}
+
+.frame {
+  height: 100vh;
+  width: 100vw;
+}
+
+.frame :global(.loading) {
+  opacity: 0;
+}
+
+.frame :global(.loaded) {
+  animation: 0.5s ease fade-in;
+}
+
+/* Meta intro timing */
+.meta {
+  background-color: lch(0 0 0 / 50%);
+  box-shadow: 0 0 3em 3em lch(0 0 0 / 50%);
+  animation: 0.5s meta-in var(--bezier) forwards;
+}
+
+@keyframes meta-in {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
