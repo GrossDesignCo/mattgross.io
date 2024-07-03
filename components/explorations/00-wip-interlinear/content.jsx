@@ -1,10 +1,10 @@
-import styles from '../index.module.css';
+import styles from './00.module.css';
 import { useContext } from 'react';
 import cx from 'classnames';
 import { SettingsContext } from './control-context';
 import { Book } from './book';
 import { ChapterHeading } from './chapter-heading';
-import { content } from '../_content';
+import { content } from './_content';
 
 export const Content = () => {
   const { dir } = useContext(SettingsContext);

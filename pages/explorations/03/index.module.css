@@ -121,13 +121,6 @@
   box-shadow: inset 0 0 var(--thickness) calc(var(--thickness) * 0.66) var(--bg);
 } */
 
-/* Meta intro timing */
-.meta {
-  background-color: lch(0 0 0 / 50%);
-  box-shadow: 0 0 3em 3em lch(0 0 0 / 50%);
-  animation: 0.5s meta-in var(--bezier) forwards;
-}
-
 /* Force dark theme for meta component */
 .root :global(.meta) {
   --bg: #040608;
@@ -139,16 +132,4 @@
   --fg-low-contrast: #a0a0a0;
 
   color: var(--fg);
-}
-
-@keyframes meta-in {
-  0% {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0px);
-  }
 }

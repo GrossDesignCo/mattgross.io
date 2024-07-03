@@ -48,6 +48,11 @@ export default function Page() {
               <Link href="/explorations/02" className={styles.link}>
                 <IconArrowLeft />
                 02
+              </Link>{' '}
+              /{' '}
+              <Link href="/explorations/04" className={styles.link}>
+                04
+                <IconArrowRight />
               </Link>
             </>
           }

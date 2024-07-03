@@ -1,0 +1,32 @@
+.root {
+  height: 100vh;
+  width: 100vw;
+  background: var(--bg);
+  animation: 0.5s ease fade-in;
+}
+
+/* Give a fade-in since the first frame is a giant wall of color */
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+}
+
+.frame {
+  height: 100vh;
+  width: 100vw;
+}
+
+.frame :global(.loading) {
+  opacity: 0;
+}
+
+.frame :global(.loaded) {
+  animation: 0.5s ease fade-in;
+}
+
+/* Meta intro timing, can't reliably layer different modules on the same element, but can set vars */
+.meta {
+  --meta-in-delay: 2.5s;
+  --meta-in-timing: 2.5s;
+}

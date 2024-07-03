@@ -1,5 +1,5 @@
 import { useEffect, useId, useState, useRef } from 'react';
-import styles from '../index.module.css';
+import styles from './00.module.css';
 
 export const Word = ({ word, selectedLanguages }) => {
   const languages = Object.keys(word);

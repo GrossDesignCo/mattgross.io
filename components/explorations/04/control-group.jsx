@@ -1,24 +1,23 @@
-import styles from '../index.module.css';
+import { useId } from 'react';
+import cx from 'classnames';
+import styles from './04.module.css';
 
 export const ControlGroup = ({ options, selected, select }) => {
+  // Get `multiple` setting from type of value passed
   const isMultiple = Array.isArray(selected);
+  const id = useId();
 
   return (
     <div className={styles.controlGroup}>
       {options.map((option) => {
+        // Check selected array for presence of this option
         const isSelected = isMultiple
           ? selected.includes(option)
           : selected === option;
 
-        const handleClick = () => {
+        const handleChange = () => {
+          // Add or remove the selected option from the array
           if (isMultiple) {
-            console.log('isMultiple', {
-              isMultiple,
-              selected,
-              isSelected,
-              added: [...selected, option],
-              filtered: selected.filter((opt) => opt !== option),
-            });
             select(
               isSelected
                 ? selected.filter((opt) => opt !== option)
@@ -29,19 +28,19 @@ export const ControlGroup = ({ options, selected, select }) => {
           else {
             select(option);
           }
-
-          console.log({ selected, isMultiple, isSelected, option });
         };
 
         return (
-          <button
-            key={option}
-            className={styles.control}
-            onClick={handleClick}
-            aria-pressed={isSelected}
-          >
-            {option}
-          </button>
+          <label key={option} className={cx(styles.control, styles[option])}>
+            <input
+              type={isMultiple ? 'checkbox' : 'radio'}
+              onChange={handleChange}
+              checked={isSelected}
+              name={id}
+              value={option}
+            />
+            <span>{option}</span>
+          </label>
         );
       })}
     </div>

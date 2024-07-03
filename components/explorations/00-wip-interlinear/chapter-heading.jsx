@@ -1,4 +1,4 @@
-import styles from '../index.module.css';
+import styles from './00.module.css';
 
 export const ChapterHeading = () => {
   return (

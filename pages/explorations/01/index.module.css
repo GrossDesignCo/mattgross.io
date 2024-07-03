@@ -210,19 +210,9 @@
 
 /* Meta intro timing */
 .meta {
+  --meta-in-delay: 2.5s;
+  --meta-in-timing: 5s;
+
   background: transparent !important;
   backdrop-filter: none !important;
-  animation: 2.5s 5s meta-in var(--bezier) forwards;
-}
-
-@keyframes meta-in {
-  0% {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0px);
-  }
 }

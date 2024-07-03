@@ -5,9 +5,9 @@ import { Link } from '../../../components/link';
 import { Meta } from '../../../components/meta';
 import { Favicon } from '../../../components/favicon';
 import { IconArrowLeft } from '../../../components/icons/arrow-left';
-import { SettingsProvider } from './_components/control-context';
-import { ControlPanel } from './_components/control-panel';
-import { Content } from './_components/content';
+import { SettingsProvider } from '../../../components/explorations/00-wip-interlinear/control-context';
+import { ControlPanel } from '../../../components/explorations/00-wip-interlinear/control-panel';
+import { Content } from '../../../components/explorations/00-wip-interlinear/content';
 
 export default function Page() {
   return (

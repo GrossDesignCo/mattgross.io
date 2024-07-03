@@ -1,4 +1,4 @@
-import styles from '../index.module.css';
+import styles from './00.module.css';
 import { Chapter } from './chapter';
 
 export const Book = ({ book, chapters }) => {
@@ -8,7 +8,7 @@ export const Book = ({ book, chapters }) => {
 
       <div className={styles.chapters}>
         {chapters.map(({ chapter, verses }) => {
-          return <Chapter chapter={chapter} verses={verses} />;
+          return <Chapter key={chapter} chapter={chapter} verses={verses} />;
         })}
       </div>
     </div>

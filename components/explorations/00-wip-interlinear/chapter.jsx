@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import styles from '../index.module.css';
+import styles from './00.module.css';
 import { Word } from './word';
 import { SettingsContext } from './control-context';
 
