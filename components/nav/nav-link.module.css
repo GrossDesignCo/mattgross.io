@@ -11,4 +11,12 @@
 .nav-link:is(:hover, :focus) {
   box-shadow: 0 0 10px 0 var(--fg-shadow);
   outline: none;
+
+  /* animation: 1.5s ease gradient-swirl; */
 }
+
+/* @keyframes gradient-swirl {
+  0% {
+    background: conic-gradient();
+  }
+} */

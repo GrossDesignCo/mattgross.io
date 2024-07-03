@@ -8,7 +8,7 @@ const Earth = () => {
   const earthRef = useRef();
   // White image functions as a mask for color
   const texture = useTexture(
-    '/explorations/3d/equirectangular-earth-map-white.png'
+    '/explorations/03/equirectangular-earth-map-white.png'
   );
   const styles = getComputedStyle(document.querySelector(`[class*='root']`));
   const bg = styles.getPropertyValue('--bg');

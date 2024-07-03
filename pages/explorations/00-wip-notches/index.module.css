@@ -55,7 +55,7 @@
   position: absolute;
   inset: 0;
   filter: blur(20px);
-  background: url(/explorations/map-bg.heic);
+  background: url(/explorations/00-wip-notches/map-bg.heic);
   background-size: cover;
   background-position: center;
 }
