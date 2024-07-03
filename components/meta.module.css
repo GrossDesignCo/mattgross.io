@@ -1,13 +1,28 @@
 .meta {
   position: fixed;
-  bottom: 32px;
-  inset-inline: 24px;
+  padding: 36px 24px;
+  inset: auto 0 0;
   opacity: 0;
-  transform: translateY(16px);
+  background-color: var(--bg-overlay);
+  backdrop-filter: blur(12px);
 
   display: flex;
   justify-content: space-between;
   gap: 8px;
+  animation: var(--meta-in-timing, 1s) var(--meta-in-delay, 0s) meta-in
+    var(--bezier) forwards;
+}
+
+@keyframes meta-in {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
 }
 
 @media (max-width: 600px) {

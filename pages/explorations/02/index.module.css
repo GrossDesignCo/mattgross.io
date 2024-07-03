@@ -204,6 +204,8 @@
 
 /* Meta intro timing */
 .meta {
+  background: transparent !important;
+  backdrop-filter: none !important;
   animation: 2.5s 3s meta-in var(--bezier) forwards;
 }
 

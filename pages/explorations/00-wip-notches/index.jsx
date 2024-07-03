@@ -48,7 +48,10 @@ export default function Page() {
               styles.notchCenterLeft,
               styles.notchCenterRight,
             ].map((className) => (
-              <div className={cx(styles.brick, styles.notch, className)} />
+              <div
+                key={className}
+                className={cx(styles.brick, styles.notch, className)}
+              />
             ))}
 
             <div

@@ -1,7 +1,10 @@
-:root {
+:root,
+.theme-light {
   /* Colors */
-  --bg: #f4f4f4;
-  --bg-high-contrast: #fff;
+  --bg: lch(95% 0 0);
+  --bg-high-contrast: lch(100% 0 0);
+  --bg-low-contrast: lch(90% 0 0);
+  --bg-overlay: lch(95% 0 0 / 50%);
 
   --fg: #444;
   --fg: lch(10% 0 0 / 100%);
@@ -24,7 +27,9 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: lch(5% 0 0);
-    --bg-high-contrast: #000;
+    --bg-high-contrast: lch(0% 0 0);
+    --bg-low-contrast: lch(10% 0 0);
+    --bg-overlay: lch(5% 0 0 / 50%);
 
     --fg: lch(90% 0 0 / 100%);
     --fg-high-contrast: #fff;

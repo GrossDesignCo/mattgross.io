@@ -141,6 +141,8 @@
   position: relative;
 }
 
+/* TODO: Spend the time to do actual/true notch-outlines with the bigger clip */
+
 .notch::before {
   /* Apply clip directly so that corners can be set with just the one token */
   clip-path: var(--notch-clip);

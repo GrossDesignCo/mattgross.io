@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "devDependencies": {
+    "culori": "^4.0.1",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.3",
     "next": "^14.2.3",
