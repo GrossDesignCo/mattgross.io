@@ -27,3 +27,5 @@ UI Concept for a Eng-Hebrew Literal Interlinear
 - Flip directions/mirror characters
 - Literal 1:1
 
+collection of sine/cosine waves being added/multiplied together
+- just clean, simplistic waves animating on the screen
