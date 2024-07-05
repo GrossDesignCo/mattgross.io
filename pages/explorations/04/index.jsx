@@ -8,6 +8,7 @@ import { IconArrowLeft } from '../../../components/icons/arrow-left';
 import { IconArrowRight } from '../../../components/icons/arrow-right';
 import { SettingsProvider } from '../../../components/explorations/04/control-context';
 import { ControlPanel } from '../../../components/explorations/04/control-panel';
+import { DoubleSlash } from '../../../components/double-slash';
 
 // Only import 3d space client-side to avoid SSR issues
 const Canvas = dynamic(
@@ -59,7 +60,7 @@ export default function Page() {
                 <Link href="/" className={styles.link}>
                   <IconArrowLeft /> Main
                 </Link>{' '}
-                /{' '}
+                <DoubleSlash />{' '}
                 <Link href="/explorations/03" className={styles.link}>
                   <IconArrowLeft />
                   03

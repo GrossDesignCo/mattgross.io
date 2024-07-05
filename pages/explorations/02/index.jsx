@@ -5,6 +5,7 @@ import { Meta } from '../../../components/meta';
 import { Favicon } from '../../../components/favicon';
 import { IconArrowLeft } from '../../../components/icons/arrow-left';
 import { IconArrowRight } from '../../../components/icons/arrow-right';
+import { DoubleSlash } from '../../../components/double-slash';
 
 export default function Page() {
   return (
@@ -57,7 +58,7 @@ export default function Page() {
               <Link href="/" className={styles.link}>
                 <IconArrowLeft /> Main
               </Link>{' '}
-              /{' '}
+              <DoubleSlash />{' '}
               <Link href="/explorations/01" className={styles.link}>
                 <IconArrowLeft />
                 01
