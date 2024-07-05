@@ -7,6 +7,8 @@ export const SettingsContext = createContext();
 
 export const SettingsProvider = ({ children }) => {
   const [pattern, setPattern] = useState('radial');
+  const [layerCount, setLayerCount] = useState(24);
+  const [petalCount, setPetalCount] = useState(32);
 
   return (
     <SettingsContext.Provider
@@ -14,6 +16,10 @@ export const SettingsProvider = ({ children }) => {
         patterns,
         pattern,
         setPattern,
+        layerCount,
+        setLayerCount,
+        petalCount,
+        setPetalCount,
       }}
     >
       {children}

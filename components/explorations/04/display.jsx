@@ -7,7 +7,7 @@ import { Petal } from './petal';
 import { useDarkMode } from '../../../hooks/useDarkMode';
 
 const Display = () => {
-  const { pattern } = useContext(SettingsContext);
+  const { pattern, layerCount, petalCount } = useContext(SettingsContext);
   const display = useRef();
   const prefersDarkMode = useDarkMode();
 
@@ -17,9 +17,6 @@ const Display = () => {
 
   // Configs/knobs
   const centerRadius = 2;
-  // Petals arranged into radially tesselating layers
-  const layerCount = 24;
-  const petalCount = 32;
   // Radial space between petals
   const angle = (Math.PI * 2) / petalCount;
 
@@ -41,9 +38,13 @@ const Display = () => {
     const steps = new Array(petalCount).fill(0).map((value, j) => {
       const colors = {
         // Rainbow flowing around the center axis
-        conic: `lch(50 100 ${(360 / petalCount) * j})`,
+        conic: `lch(${
+          50 + 25 * Math.sin((Math.PI / (petalCount - 1)) * j + Math.PI / 3)
+        } 100 ${(360 / petalCount) * j})`,
         // Rainbow flowing out from the center
-        radial: `lch(50 100 ${(360 / layerCount) * i})`,
+        radial: `lch(${
+          50 + 25 * Math.sin((Math.PI / (layerCount - 1)) * i + Math.PI / 3)
+        } 100 ${(360 / layerCount) * i})`,
         none: prefersDarkMode ? '#fff' : '#000',
       };
       const color = colors[pattern];

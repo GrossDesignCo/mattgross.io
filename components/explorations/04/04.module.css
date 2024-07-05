@@ -1,8 +1,11 @@
 .controlPanel {
   position: fixed;
   inset: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1em;
   opacity: 0;
-  transform: translateY(-16px);
+  transform: translateY(-1em);
   background-color: var(--bg-overlay);
   backdrop-filter: blur(12px);
   padding: 0.25em 0.5em;
@@ -12,7 +15,7 @@
 @keyframes controls-in {
   0% {
     opacity: 0;
-    transform: translateY(-16px);
+    transform: translateY(-1em);
   }
 
   100% {
@@ -23,38 +26,48 @@
 
 .controlGroup {
   display: flex;
+
+  .control {
+    padding: 0.5em;
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .control input {
+    appearance: none;
+    height: 1.5em;
+    width: 1.5em;
+    box-shadow: 0 0 0 2px transparent, 0 0 0 3px transparent;
+    border-radius: 1em;
+    position: relative;
+    transition: 0.3s ease;
+  }
+
+  .control input:checked {
+    box-shadow: 0 0 0 2px var(--bg), 0 0 0 3px currentColor;
+  }
+
+  .control.radial input {
+    background: radial-gradient(transparent, var(--fg));
+  }
+
+  .control.conic input {
+    background: conic-gradient(transparent, var(--fg));
+  }
+
+  .control.none input {
+    background: lch(50 0 0 / 33%);
+  }
 }
 
-.control {
-  padding: 0.5em;
+.controlRange {
   display: flex;
-  gap: 0.5em;
   align-items: center;
-  cursor: pointer;
-}
 
-.control input {
-  appearance: none;
-  height: 1.5em;
-  width: 1.5em;
-  box-shadow: 0 0 0 2px transparent, 0 0 0 3px transparent;
-  border-radius: 1em;
-  position: relative;
-  transition: 0.3s ease;
-}
-
-.control input:checked {
-  box-shadow: 0 0 0 2px var(--bg), 0 0 0 3px currentColor;
-}
-
-.control.radial input {
-  background: radial-gradient(transparent, var(--fg));
-}
-
-.control.conic input {
-  background: conic-gradient(transparent, var(--fg));
-}
-
-.control.none input {
-  background: lch(50 0 0 / 33%);
+  .control {
+    display: flex;
+    align-items: center;
+  }
 }
