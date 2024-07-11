@@ -1,0 +1,36 @@
+.canvas {
+  height: clamp(300px, 100vh, 500px);
+  width: 100%;
+  display: block;
+
+  /* Flip the canvas vertically so y axis starts at the bottom
+  instead of the top */
+  transform: rotateX(-180deg);
+}
+
+.controls {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  gap: 0.5em;
+  padding: 0.5em;
+  align-items: center;
+}
+
+.controlIconButton {
+  appearance: none;
+  width: 2em;
+  height: 2em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-low-contrast);
+  border: none;
+  font: inherit;
+  transition: 0.3s ease;
+}
+
+.controlIconButton:hover,
+.controlIconButton:focus {
+  filter: invert();
+}

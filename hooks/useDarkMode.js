@@ -18,7 +18,7 @@ export const useDarkMode = () => {
     query.addEventListener('change', update);
 
     return () => query.removeEventListener('change', update);
-  });
+  }, []);
 
   return prefersDarkMode;
 };
