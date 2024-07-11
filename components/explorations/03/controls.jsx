@@ -4,8 +4,7 @@ import { CanvasContext } from './canvas';
 import styles from './03.module.css';
 
 const Controls = () => {
-  const { playing, togglePlaying, progress, setProgress } =
-    useContext(CanvasContext);
+  const { playing, togglePlaying } = useContext(CanvasContext);
 
   useEffect(() => {
     const handleKeys = (e) => {

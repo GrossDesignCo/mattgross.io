@@ -47,6 +47,8 @@
   height: 5px;
   width: 5px;
   border-radius: 50%;
+  margin-left: -2px;
+  margin-top: -2px;
 }
 
 .label strong {

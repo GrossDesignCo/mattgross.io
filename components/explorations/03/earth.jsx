@@ -14,29 +14,9 @@ const Earth = () => {
   const bg = styles.getPropertyValue('--bg');
   const bgMidtone = styles.getPropertyValue('--bg-midtone');
 
-  // useEffect(() => {
-  //   const svgLoader = new SVGLoader();
-  //   const textureLoader = new TextureLoader();
-
-  //   const texture = svgLoader.load('/explorations/3d/earth.svg', (data) => {
-  //     const svg = data.paths[0].userData.node;
-  //     const xml = new XMLSerializer().serializeToString(svg);
-  //     const svg64 = btoa(xml);
-  //     const image64 = `data:image/svg+xml;base64,${svg64}`;
-
-  //     return textureLoader.load(image64, (texture) => texture);
-  //   });
-
-  //   textureRef.current = texture;
-  // }, [textureRef]);
-
-  // useFrame((state, delta) => {
-  //   earthRef.current.rotation.y += delta * 0.1;
-  // });
-
   return (
     <>
-      <group ref={earthRef}>
+      <group>
         {/* Outline */}
         <mesh>
           <sphereGeometry args={[earthRadius - 0.001, 64, 64]} />
@@ -44,10 +24,11 @@ const Earth = () => {
         </mesh>
 
         {/* Base Color Sphere */}
-        <Sphere args={[earthRadius, 64, 64]}>
+        {/* earthRef on the basic sphere is best for occlusion performance of the event labels */}
+        <Sphere args={[earthRadius, 64, 64]} ref={earthRef}>
           <meshBasicMaterial color="#222" />
-          {/* <MeshReflectorMaterial color="#333" mirror={1} /> */}
         </Sphere>
+
         {/* Transparent Texture Sphere */}
         <Sphere args={[earthRadius + 0.001, 64, 64]}>
           <meshBasicMaterial
@@ -57,32 +38,6 @@ const Earth = () => {
             opacity={1}
           />
         </Sphere>
-
-        {/* Debug */}
-        {/* <Line
-          points={[
-            [2, 0, 0],
-            [-2, 0, 0],
-          ]}
-          color="cyan"
-          lineWidth={1.5}
-        />
-        <Line
-          points={[
-            [0, 2, 0],
-            [0, -2, 0],
-          ]}
-          color="lightgreen"
-          lineWidth={1.5}
-        />
-        <Line
-          points={[
-            [0, 0, 2],
-            [0, 0, -2],
-          ]}
-          color="pink"
-          lineWidth={1.5}
-        /> */}
 
         <Trajectory earthRef={earthRef} />
       </group>

@@ -3,29 +3,22 @@ import { Line, OrbitControls } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { Label } from './label';
-// import { Crosshair } from './crosshair';
 import { latLonToVector3 } from './utils';
-import {
-  // falcon9EstimatedEvents as events,
-  starshipTestFlight4Events as events,
-  earthRadius,
-} from './data';
+import { starshipTestFlight4Events, earthRadius } from './data';
 import { kmToEarthRadii } from './utils';
 import { CanvasContext } from './canvas';
+
+const events = starshipTestFlight4Events.Starship;
 
 const lastEvent = events[events.length - 1];
 const totalTimestamp = lastEvent.timestamp;
 
 const progressSpeed = 0.05; // Adjust this value to change the speed of the animation
 
-const Trajectory = () => {
+const Trajectory = ({ earthRef }) => {
   const { camera } = useThree();
   const controls = useRef();
   const { playing, progress, setProgress } = useContext(CanvasContext);
-
-  const reset = () => {
-    setProgress(0);
-  };
 
   /**
    * Animate progress along the flight path
@@ -110,51 +103,51 @@ const Trajectory = () => {
 
   const completedPoints = useMemo(() => {
     const index = Math.floor(progress * (totalTimestamp - 1));
+    // Points up till the current time
     return scaledArcPoints.slice(0, index);
   }, [progress, scaledArcPoints]);
 
   const incompletePoints = useMemo(() => {
     const index = Math.floor(progress * (totalTimestamp - 1));
+    // Points from current time onward
     return scaledArcPoints.slice(index, totalTimestamp - 1);
   }, [progress, scaledArcPoints]);
 
   return (
     <>
       <group>
-        {/* Improved Path */}
-        {points.map(({ timestamp, position, ...point }, i) => {
-          console.log(i === 0 ? { point, position } : '');
-          return (
-            <>
-              {/* <Crosshair position={position} /> */}
-              <Label key={timestamp} position={position} {...point} />
-            </>
-          );
-        })}
+        {/* Points of Interest */}
+        {points.map(({ timestamp, position, ...point }, i) => (
+          <Label
+            key={timestamp}
+            position={position}
+            earthRef={earthRef}
+            {...point}
+          />
+        ))}
+
+        {/* Completed Path */}
         {completedPoints.length && (
           <Line points={completedPoints} color="#fff" lineWidth={1.5} />
         )}
+
+        {/* Future Path */}
         {incompletePoints.length && (
           <Line points={incompletePoints} color="#999" lineWidth={0.75} />
         )}
       </group>
 
-      {/* Keep orbit controls here so it can reference the rocket path */}
+      {/* Keep orbit controls here so it can directly reference the camera settings */}
       <OrbitControls
         ref={controls}
         args={[camera]}
         enableRotate={true}
-        rotateSpeed={1}
         enableZoom={true}
-        // zoom0={100}
-        // zoomSpeed={1}
         maxDistance={earthRadius * 5}
         minDistance={earthRadius * 1.25}
         enablePan={false}
         maxPolarAngle={Math.PI / 1.25}
         minPolarAngle={Math.PI / 4}
-        // autoRotate={true}
-        // autoRotateSpeed={-1}
       />
     </>
   );
