@@ -120,6 +120,7 @@ export const Controls = ({
                 })}
                 style={{ left: `calc(${(value * 100) / 2}%)` }}
                 onClick={() => {
+                  setPaused(true);
                   setProportion(value);
                 }}
               >
