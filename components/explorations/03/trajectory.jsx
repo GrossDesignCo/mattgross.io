@@ -23,52 +23,52 @@ const Trajectory = ({ earthRef }) => {
   /**
    * Animate progress along the flight path
    */
-  useFrame((state, delta) => {
-    if (playing) {
-      setProgress((prevProgress) =>
-        progress >= 1 ? 0 : prevProgress + delta * progressSpeed
-      );
-      const targetPoint = completedPoints[completedPoints.length - 1] ??
-        points[0].position ?? [0, 0, 0];
+  // useFrame((state, delta) => {
+  //   if (playing) {
+  //     setProgress((prevProgress) =>
+  //       progress >= 1 ? 0 : prevProgress + delta * progressSpeed
+  //     );
+  //     const targetPoint = completedPoints[completedPoints.length - 1] ??
+  //       points[0].position ?? [0, 0, 0];
 
-      const normalizedPoint = new THREE.Vector3(...targetPoint).normalize();
-      const cameraDistance = 2; // Adjust as needed
+  //     const normalizedPoint = new THREE.Vector3(...targetPoint).normalize();
+  //     const cameraDistance = 2; // Adjust as needed
 
-      // Calculate the direction vector from the origin to the target point
-      const direction = normalizedPoint.clone().normalize();
+  //     // Calculate the direction vector from the origin to the target point
+  //     const direction = normalizedPoint.clone().normalize();
 
-      // Move the camera back along the direction vector and down to achieve the look-up angle
-      const lookUpAngle = Math.PI / 6; // 30 degrees in radians
-      const yOffset = Math.sin(lookUpAngle) * cameraDistance;
-      const xyOffset = Math.cos(lookUpAngle) * cameraDistance;
+  //     // Move the camera back along the direction vector and down to achieve the look-up angle
+  //     const lookUpAngle = Math.PI / 6; // 30 degrees in radians
+  //     const yOffset = Math.sin(lookUpAngle) * cameraDistance;
+  //     const xyOffset = Math.cos(lookUpAngle) * cameraDistance;
 
-      const currentCameraPosition = new THREE.Vector3(...camera.position);
-      const targetCameraPosition = direction.clone().multiplyScalar(xyOffset);
-      targetCameraPosition.y -= yOffset;
+  //     const currentCameraPosition = new THREE.Vector3(...camera.position);
+  //     const targetCameraPosition = direction.clone().multiplyScalar(xyOffset);
+  //     targetCameraPosition.y -= yOffset;
 
-      const lerpFactor = 1; // 1 for no inertia to camera, animation is smooth enough and the extra movement of earth is disorienting
-      // Would be better to lerp the rotational angle of the camera instead of it's raw position
-      // so that it stays in place relative to the earth
-      const cameraPosition = currentCameraPosition.lerp(
-        targetCameraPosition,
-        lerpFactor
-      );
+  //     const lerpFactor = 1; // 1 for no inertia to camera, animation is smooth enough and the extra movement of earth is disorienting
+  //     // Would be better to lerp the rotational angle of the camera instead of it's raw position
+  //     // so that it stays in place relative to the earth
+  //     const cameraPosition = currentCameraPosition.lerp(
+  //       targetCameraPosition,
+  //       lerpFactor
+  //     );
 
-      camera.position.set(cameraPosition.x, cameraPosition.y, cameraPosition.z);
-      camera.lookAt(normalizedPoint);
-      controls.current.target.set(
-        normalizedPoint.x,
-        normalizedPoint.y,
-        normalizedPoint.z
-      );
-      controls.current.update();
-    }
-  });
+  //     camera.position.set(cameraPosition.x, cameraPosition.y, cameraPosition.z);
+  //     camera.lookAt(normalizedPoint);
+  //     controls.current.target.set(
+  //       normalizedPoint.x,
+  //       normalizedPoint.y,
+  //       normalizedPoint.z
+  //     );
+  //     controls.current.update();
+  //   }
+  // });
 
   /**
    * Plot the path of the major events
    */
-  const { points, scaledArcPoints } = useMemo(() => {
+  const { points, arcPoints } = useMemo(() => {
     // Convert the events to usable positions
     const points = events.map(({ lat, lon, altitude, ...event }) => {
       return {
@@ -82,14 +82,19 @@ const Trajectory = ({ earthRef }) => {
     });
 
     // Get a single path from the list of points
-    const path = new THREE.CatmullRomCurve3(
-      points.map((point) => point.position),
-      false, // closed
-      'catmullrom',
-      0.1 // tension
+    const path = new THREE.QuadraticBezierCurve3(
+      ...points.map((point) => point.position)
     );
 
+    console.log({ points, path });
+
     const arcPoints = path.getPoints(totalTimestamp);
+
+    // Have to do a path for each object
+    // Really have to do a path for each pair of points within that object
+    // Draw a line between those two points
+    // Use the altitude for the start and end points instead of the 0.1 scale
+    // And lerp between the two for each path segment
     const scaledArcPoints = arcPoints.map((point, i) => {
       return point
         .normalize()
@@ -98,20 +103,20 @@ const Trajectory = ({ earthRef }) => {
         );
     });
 
-    return { path, points, arcPoints, scaledArcPoints };
+    return { path, points, arcPoints };
   }, []);
 
-  const completedPoints = useMemo(() => {
-    const index = Math.floor(progress * (totalTimestamp - 1));
-    // Points up till the current time
-    return scaledArcPoints.slice(0, index);
-  }, [progress, scaledArcPoints]);
+  // const completedPoints = useMemo(() => {
+  //   const index = Math.floor(progress * (totalTimestamp - 1));
+  //   // Points up till the current time
+  //   return arcPoints.slice(0, index);
+  // }, [progress, arcPoints]);
 
-  const incompletePoints = useMemo(() => {
-    const index = Math.floor(progress * (totalTimestamp - 1));
-    // Points from current time onward
-    return scaledArcPoints.slice(index, totalTimestamp - 1);
-  }, [progress, scaledArcPoints]);
+  // const incompletePoints = useMemo(() => {
+  //   const index = Math.floor(progress * (totalTimestamp - 1));
+  //   // Points from current time onward
+  //   return arcPoints.slice(index, totalTimestamp - 1);
+  // }, [progress, arcPoints]);
 
   return (
     <>
@@ -127,13 +132,18 @@ const Trajectory = ({ earthRef }) => {
         ))}
 
         {/* Completed Path */}
-        {completedPoints.length && (
+        {/* {completedPoints.length && (
           <Line points={completedPoints} color="#fff" lineWidth={1.5} />
-        )}
+        )} */}
 
         {/* Future Path */}
-        {incompletePoints.length && (
+        {/* {incompletePoints.length && (
           <Line points={incompletePoints} color="#999" lineWidth={0.75} />
+        )} */}
+
+        {/* Approximated Path */}
+        {arcPoints.length && (
+          <Line points={arcPoints} color="#999" lineWidth={0.75} />
         )}
       </group>
 
@@ -141,8 +151,8 @@ const Trajectory = ({ earthRef }) => {
       <OrbitControls
         ref={controls}
         args={[camera]}
-        enableRotate={true}
-        enableZoom={true}
+        enableRotate={!playing}
+        enableZoom={!playing}
         maxDistance={earthRadius * 5}
         minDistance={earthRadius * 1.25}
         enablePan={false}

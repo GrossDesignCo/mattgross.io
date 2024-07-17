@@ -4,6 +4,7 @@
   --bg: lch(95% 0 0);
   --bg-high-contrast: lch(100% 0 0);
   --bg-low-contrast: lch(90% 0 0);
+  --bg-midtone: lch(80% 0 0);
   --bg-overlay: lch(95% 0 0 / 50%);
 
   --fg: #444;
@@ -29,6 +30,7 @@
     --bg: lch(5% 0 0);
     --bg-high-contrast: lch(0% 0 0);
     --bg-low-contrast: lch(10% 0 0);
+    --bg-midtone: lch(20% 0 0);
     --bg-overlay: lch(5% 0 0 / 50%);
 
     --fg: lch(90% 0 0 / 100%);

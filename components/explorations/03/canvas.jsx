@@ -6,7 +6,7 @@ import Controls from './controls';
 export const CanvasContext = createContext();
 
 const CanvasProvider = ({ children }) => {
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
 
   const togglePlaying = () => {

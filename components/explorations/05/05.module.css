@@ -1,0 +1,173 @@
+.canvas {
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  opacity: 0;
+  animation: 10s 2s ease canvas-in forwards;
+
+  /* Flip the canvas vertically so y axis starts at the bottom
+  instead of the top */
+  transform: rotateX(-180deg);
+}
+
+@keyframes canvas-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.controls {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  opacity: 1;
+  transform: translateY(0);
+  display: flex;
+  gap: 0.5em;
+  padding: 0.75em 1em;
+  align-items: center;
+  animation: 2.5s ease controls-in;
+}
+
+@keyframes controls-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-1em);
+  }
+}
+
+.rangeWrapper {
+  --thumbSize: 1.25em;
+
+  width: 100%;
+  position: relative;
+}
+
+.range {
+  width: 100%;
+  appearance: none;
+  background-color: transparent;
+  cursor: ew-resize;
+  position: relative;
+  font: inherit;
+  display: block;
+}
+
+.range::-webkit-slider-container {
+  display: flex;
+  align-items: center;
+}
+
+.range::-webkit-slider-runnable-track {
+  background-color: var(--bg-low-contrast);
+  height: calc(var(--thumbSize) / 2);
+  border-radius: 1em;
+  transition: 0.3s ease;
+}
+
+.range::-webkit-slider-thumb {
+  appearance: none;
+  border: 1px solid var(--fg-low-contrast);
+  background-color: var(--bg-low-contrast);
+  width: var(--thumbSize);
+  height: var(--thumbSize);
+  border-radius: 1em;
+  margin-top: calc(var(--thumbSize) * -0.25);
+  transition: 0.3s ease;
+}
+
+.range:hover::-webkit-slider-runnable-track {
+  background-color: var(--bg-midtone);
+}
+
+.range:hover::-webkit-slider-thumb {
+  border: 1px solid var(--fg);
+  background-color: var(--fg);
+}
+
+.presets {
+  position: absolute;
+  /* 1em === 2/3 width of slider thumb, range inputs slide their value along the thumb
+  at the same time as the thumb slides along the track */
+  width: calc(100% - var(--thumbSize));
+  inset: auto 0 auto;
+  margin: calc(var(--thumbSize) * 0.75) auto auto;
+  font-size: 1em;
+  writing-mode: vertical-lr;
+}
+
+button:where(.button, .preset) {
+  appearance: none;
+  border: none;
+  user-select: none;
+  cursor: pointer;
+  font: inherit;
+  background-color: transparent;
+}
+
+.preset {
+  position: absolute;
+  transform: rotateZ(-30deg) translateX(2px);
+  transform-origin: top center;
+  text-wrap: nowrap;
+  z-index: -1;
+}
+
+@media (max-width: 600px) {
+  .preset {
+    transform: translateX(-50%);
+    font-size: 0.75em;
+  }
+}
+
+.preset::before {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: calc(100% + 0.25em);
+  right: 50%;
+  width: 1px;
+  height: 1em;
+  background-color: var(--bg-midtone);
+}
+
+.preset.isGoldenAngle {
+  color: lch(80 70 65);
+  text-shadow: 0 0 8px lch(80 70 65);
+}
+
+.button {
+  appearance: none;
+  user-select: none;
+  position: relative;
+  color: transparent;
+  border: none;
+  height: 1.25em;
+  width: 1.25em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: transparent;
+  background-color: transparent;
+}
+
+.button :global(.icon) {
+  width: 1.25em;
+  height: 1.25em;
+}
+
+.button :global(.shape) {
+  stroke: var(--fg-low-contrast);
+  stroke-width: 1px;
+  fill: var(--bg-low-contrast);
+  transition: 0.3s ease;
+}
+
+.button:hover :global(.shape) {
+  stroke: var(--fg);
+  fill: var(--fg);
+}
