@@ -44,7 +44,7 @@ export default function Page() {
             }
             subTitle={
               <span>
-                Inspired by{' '}
+                Three.js, Inspired by{' '}
                 <Link href="https://www.youtube.com/@HerschelShapiro">
                   Hershel
                 </Link>

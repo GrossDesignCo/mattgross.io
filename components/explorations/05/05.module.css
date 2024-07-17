@@ -23,19 +23,24 @@
   position: absolute;
   inset: 0 0 auto;
   z-index: 1;
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 0;
+  transform: translateY(-1em);
   display: flex;
   gap: 0.5em;
   padding: 0.75em 1em;
   align-items: center;
-  animation: 2.5s ease controls-in;
+  animation: 1.5s 1s ease controls-in forwards;
 }
 
 @keyframes controls-in {
   0% {
     opacity: 0;
     transform: translateY(-1em);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
