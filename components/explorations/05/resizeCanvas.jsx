@@ -4,8 +4,9 @@ export const resizeCanvas = (canvas, render) => {
 
     // Maintain canvas size relative to window
     const resize = () => {
-      canvas.width = window.innerWidth * window.devicePixelRatio;
-      canvas.height = window.innerHeight * window.devicePixelRatio;
+      const size = Math.min(window.innerHeight, window.innerWidth);
+      canvas.width = size * window.devicePixelRatio;
+      canvas.height = size * window.devicePixelRatio;
 
       // Reset scale in case of moving window between screens of different dpi
       ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
