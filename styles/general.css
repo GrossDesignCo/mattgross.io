@@ -86,6 +86,13 @@ h2 {
   gap: 0.25em;
 }
 
+.row {
+  display: flex;
+  /* flex-wrap: wrap; */
+  gap: 0.25em;
+  align-items: center;
+}
+
 .align-start {
   align-items: start;
 }

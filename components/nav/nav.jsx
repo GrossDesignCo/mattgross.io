@@ -9,13 +9,15 @@ export const Nav = () => {
         Résumé
       </NavLink>
 
-      <div>
+      <div className="row">
         <NavCategory>Explorations</NavCategory> <DoubleSlash />{' '}
-        <NavLink href="/explorations/01">01</NavLink>
-        <NavLink href="/explorations/02">02</NavLink>
-        <NavLink href="/explorations/03">03</NavLink>
-        <NavLink href="/explorations/04">04</NavLink>
-        <NavLink href="/explorations/05">05</NavLink>
+        <div>
+          <NavLink href="/explorations/01">01</NavLink>
+          <NavLink href="/explorations/02">02</NavLink>
+          <NavLink href="/explorations/03">03</NavLink>
+          <NavLink href="/explorations/04">04</NavLink>
+          <NavLink href="/explorations/05">05</NavLink>
+        </div>
       </div>
 
       <NavLink href="https://www.linkedin.com/in/m-gross/">LinkedIn</NavLink>

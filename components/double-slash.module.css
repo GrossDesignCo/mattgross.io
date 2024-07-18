@@ -1,3 +1,7 @@
+.doubleSlash {
+  text-wrap: nowrap;
+}
+
 .doubleSlash span {
   display: inline-block;
 }
