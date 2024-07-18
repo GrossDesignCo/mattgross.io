@@ -1,4 +1,4 @@
-import { useMemo, useState, useContext, useRef } from 'react';
+import { useMemo, useContext, useRef } from 'react';
 import { Line, OrbitControls } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
@@ -7,6 +7,7 @@ import { latLonToVector3 } from './utils';
 import { starshipTestFlight4Events, earthRadius } from './data';
 import { kmToEarthRadii } from './utils';
 import { CanvasContext } from './canvas';
+import { usePrefersDarkMode } from '../../../hooks/usePrefersDarkMode';
 
 const events = starshipTestFlight4Events.Starship;
 
@@ -19,6 +20,7 @@ const Trajectory = ({ earthRef }) => {
   const { camera } = useThree();
   const controls = useRef();
   const { playing, progress, setProgress } = useContext(CanvasContext);
+  const prefersDarkMode = usePrefersDarkMode();
 
   /**
    * Animate progress along the flight path
@@ -142,12 +144,20 @@ const Trajectory = ({ earthRef }) => {
 
         {/* Completed Path */}
         {completedPoints.length && (
-          <Line points={completedPoints} color="#fff" lineWidth={1.5} />
+          <Line
+            points={completedPoints}
+            color={prefersDarkMode ? '#fff' : '#000'}
+            lineWidth={1.5}
+          />
         )}
 
         {/* Future Path */}
         {incompletePoints.length && (
-          <Line points={incompletePoints} color="#999" lineWidth={0.75} />
+          <Line
+            points={incompletePoints}
+            color={prefersDarkMode ? '#999' : '#aaa'}
+            lineWidth={0.75}
+          />
         )}
 
         {/* Approximated Path */}

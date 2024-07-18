@@ -19,6 +19,9 @@
   }
 }
 
+/**
+ * Controls
+ */
 .controls {
   position: absolute;
   inset: 0 0 auto;
@@ -44,6 +47,9 @@
   }
 }
 
+/**
+ * Range
+ */
 .rangeWrapper {
   --thumbSize: 1.25em;
 
@@ -81,16 +87,19 @@
   height: var(--thumbSize);
   border-radius: 1em;
   margin-top: calc(var(--thumbSize) * -0.25);
+  box-shadow: none;
   transition: 0.3s ease;
 }
 
-.range:hover::-webkit-slider-runnable-track {
-  background-color: var(--bg-midtone);
-}
+@media (pointer: fine) {
+  .range:hover::-webkit-slider-runnable-track {
+    background-color: var(--bg-midtone);
+  }
 
-.range:hover::-webkit-slider-thumb {
-  border: 1px solid var(--fg);
-  background-color: var(--fg);
+  .range:hover::-webkit-slider-thumb {
+    border: 1px solid var(--fg);
+    background-color: var(--fg);
+  }
 }
 
 .presets {
@@ -144,6 +153,9 @@ button:where(.button, .preset) {
   text-shadow: 0 0 8px lch(80 70 65);
 }
 
+/**
+ * Play/Pause Button
+ */
 .button {
   appearance: none;
   user-select: none;
@@ -176,9 +188,11 @@ button:where(.button, .preset) {
   transition-delay: 0.1s;
 }
 
-.button:hover :global(.shape) {
-  stroke: var(--fg);
-  fill: var(--fg);
+@media (pointer: fine) {
+  .button:hover :global(.shape) {
+    stroke: var(--fg);
+    fill: var(--fg);
+  }
 }
 
 .button :global(.play .shape.play) {

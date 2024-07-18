@@ -4,12 +4,12 @@ import { SettingsContext } from './control-context';
 import { useFrame } from '@react-three/fiber';
 
 import { Petal } from './petal';
-import { useDarkMode } from '../../../hooks/useDarkMode';
+import { usePrefersDarkMode } from '../../../hooks/usePrefersDarkMode';
 
 const Display = () => {
   const { pattern, layerCount, petalCount } = useContext(SettingsContext);
   const display = useRef();
-  const prefersDarkMode = useDarkMode();
+  const prefersDarkMode = usePrefersDarkMode();
 
   useFrame((state, delta) => {
     display.current.rotation.z += delta * 0.1;

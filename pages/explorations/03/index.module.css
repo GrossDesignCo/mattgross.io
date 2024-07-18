@@ -1,13 +1,4 @@
 .root {
-  /* Threejs has issues with lch color format, so using hex/srgb for now */
-  --bg: #111;
-  --bg-high-contrast: #000;
-  --bg-midtone: #404040;
-
-  --fg: #e2e2e2;
-  --fg-high-contrast: #fff;
-  --fg-low-contrast: #a0a0a0;
-
   height: 100vh;
   width: 100vw;
   background: var(--bg);
@@ -120,16 +111,3 @@
   );
   box-shadow: inset 0 0 var(--thickness) calc(var(--thickness) * 0.66) var(--bg);
 } */
-
-/* Force dark theme for meta component */
-.root :global(.meta) {
-  --bg: #040608;
-  --bg-high-contrast: #000;
-  --bg-midtone: #474d55;
-
-  --fg: #e2e2e2;
-  --fg-high-contrast: #fff;
-  --fg-low-contrast: #a0a0a0;
-
-  color: var(--fg);
-}

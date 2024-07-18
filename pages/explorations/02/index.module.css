@@ -103,70 +103,71 @@
 }
 
 .bg12 {
-  --start: 850deg;
+  /* Golden angle to keep too many of the gradients from aligning at once */
+  --start: calc(137.5deg * 10);
   --circumference: calc(var(--height) * 1.2);
 
   animation: 3s ease bg-in, 39s linear spin infinite;
 }
 
 .bg11 {
-  --start: 765deg;
+  --start: calc(137.5deg * 9);
   --circumference: calc(var(--height) * 1.1);
 
   animation: 2.9s ease bg-in, 38s linear spin infinite;
 }
 
 .bg10 {
-  --start: 680deg;
+  --start: calc(137.5deg * 8);
   --circumference: calc(var(--height) * 1);
 
   animation: 2.8s ease bg-in, 37s linear spin infinite;
 }
 
 .bg9 {
-  --start: 595deg;
+  --start: calc(137.5deg * 7);
   --circumference: calc(var(--height) * 0.9);
 
   animation: 2.7s ease bg-in, 36s linear spin infinite reverse;
 }
 
 .bg8 {
-  --start: 510deg;
+  --start: calc(137.5deg * 6);
   --circumference: calc(var(--height) * 0.8);
 
   animation: 2.6s ease bg-in, 36s linear spin infinite;
 }
 
 .bg7 {
-  --start: 425deg;
+  --start: calc(137.5deg * 5);
   --circumference: calc(var(--height) * 0.7);
 
   animation: 2.5s ease bg-in, 35s linear spin infinite reverse;
 }
 
 .bg6 {
-  --start: 340deg;
+  --start: calc(137.5deg * 4);
   --circumference: calc(var(--height) * 0.6);
 
   animation: 2.4s ease bg-in, 34s linear spin infinite;
 }
 
 .bg5 {
-  --start: 255deg;
+  --start: calc(137.5deg * 3);
   --circumference: calc(var(--height) * 0.5);
 
   animation: 2.3s ease bg-in, 33s linear spin infinite reverse;
 }
 
 .bg4 {
-  --start: 170deg;
+  --start: calc(137.5deg * 2);
   --circumference: calc(var(--height) * 0.4);
 
   animation: 2.2s ease bg-in, 32s linear spin infinite;
 }
 
 .bg3 {
-  --start: 85deg;
+  --start: 137.5deg;
   --circumference: calc(var(--height) * 0.3);
 
   animation: 2.1s ease bg-in, 31s linear spin infinite reverse;

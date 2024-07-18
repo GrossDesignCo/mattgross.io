@@ -1,7 +1,7 @@
 /* Control Panel */
 .controls {
   position: fixed;
-  bottom: 20vh;
+  top: 24px;
   inset-inline: 24px;
   display: flex;
   justify-content: end;
@@ -10,8 +10,8 @@
 .controls button {
   appearance: none;
   font: inherit;
-  background-color: transparent;
-  border: 1px solid #fff;
+  background-color: var(--bg);
+  border: 1px solid var(--fg);
   padding: 0.3em 0.8em;
 }
 
@@ -33,7 +33,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  background-color: #fff;
+  background-color: var(--fg);
 }
 
 .label::before {
