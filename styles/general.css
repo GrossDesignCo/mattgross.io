@@ -29,6 +29,10 @@ body,
   min-height: 100dvh;
 }
 
+button {
+  color: inherit;
+}
+
 strong {
   color: var(--fg-high-contrast);
 }

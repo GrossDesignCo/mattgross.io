@@ -3,7 +3,7 @@
   width: 100%;
   position: fixed;
   opacity: 0;
-  animation: 10s 2s ease canvas-in forwards;
+  animation: 5s 2s ease canvas-in forwards;
 
   /* Flip the canvas vertically so y axis starts at the bottom
   instead of the top */
@@ -172,7 +172,31 @@ button:where(.button, .preset) {
   transition: 0.3s ease;
 }
 
+.button :global(.pause + .pause) {
+  transition-delay: 0.1s;
+}
+
 .button:hover :global(.shape) {
   stroke: var(--fg);
   fill: var(--fg);
+}
+
+.button :global(.play .shape.play) {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.button :global(.pause .shape.play) {
+  opacity: 0;
+  transform: translateX(-1em);
+}
+
+.button :global(.pause .shape.pause) {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.button :global(.play .shape.pause) {
+  opacity: 0;
+  transform: translateX(1em);
 }
