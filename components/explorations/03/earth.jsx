@@ -56,7 +56,7 @@ const Earth = () => {
         </Sphere>
 
         {/* Equator Line */}
-        <Line
+        {/* <Line
           points={equatorPoints}
           color={bgMidtone}
           lineWidth={0.5}
@@ -73,7 +73,7 @@ const Earth = () => {
             transparent
             opacity={0.1}
           />
-        </Circle>
+        </Circle> */}
 
         <Trajectory earthRef={earthRef} />
       </group>
