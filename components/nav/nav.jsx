@@ -3,6 +3,8 @@ import { NavCategory } from './nav-category';
 import { DoubleSlash } from '../double-slash';
 
 export const Nav = () => {
+  const exps = new Array(6).fill(0).map((item, i) => `0${i + 1}`);
+
   return (
     <div className="stack align-start">
       <NavLink href="/Matt-Gross-Resume-2024.pdf" openInNewTab>
@@ -12,11 +14,11 @@ export const Nav = () => {
       <div className="row">
         <NavCategory>Explorations</NavCategory> <DoubleSlash />{' '}
         <div>
-          <NavLink href="/explorations/01">01</NavLink>
-          <NavLink href="/explorations/02">02</NavLink>
-          <NavLink href="/explorations/03">03</NavLink>
-          <NavLink href="/explorations/04">04</NavLink>
-          <NavLink href="/explorations/05">05</NavLink>
+          {exps.map((number) => (
+            <NavLink key={number} href={`/explorations/${number}`}>
+              {number}
+            </NavLink>
+          ))}
         </div>
       </div>
 
