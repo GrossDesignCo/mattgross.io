@@ -50,7 +50,7 @@ export default function Page() {
                 <IconArrowLeft />
                 02
               </Link>{' '}
-              /{' '}
+              / 03 /{' '}
               <Link href="/explorations/04" className={styles.link}>
                 04
                 <IconArrowRight />

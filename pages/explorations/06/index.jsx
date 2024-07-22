@@ -4,43 +4,44 @@ import { Link } from '../../../components/link';
 import { Meta } from '../../../components/meta';
 import { Favicon } from '../../../components/favicon';
 import { IconArrowLeft } from '../../../components/icons/arrow-left';
-import { IconArrowRight } from '../../../components/icons/arrow-right';
 import { DoubleSlash } from '../../../components/double-slash';
+import { Canvas } from '../../../components/explorations/06/canvas';
 
 export default function Page() {
   return (
     <div>
       <Head>
-        <title>Exploration 01 - Matt Gross</title>
-        <meta name="description" content="lch() Color & Framing" />
+        <title>Exploration 06 - Matt Gross</title>
+        <meta name="description" content="Dahlia" />
         <Favicon />
       </Head>
 
       <div className={styles.root}>
         <div className={styles.frame}>
-          {/* Just one div to animate on */}
-          <div className={styles.bg} />
+          <Canvas />
         </div>
 
         <Meta
           className={styles.meta}
           title={
             <>
-              <strong>Exploration 01</strong>: lch() Color & Framing
+              <strong>Exploration 06</strong>: Dahlia
             </>
           }
-          dateCreated="May 2024"
+          subTitle="Work in Progress, canvas, lerps"
+          dateCreated="July 2024"
           links={
             <>
               <Link href="/" className={styles.link}>
                 <IconArrowLeft />
                 Main
               </Link>{' '}
-              <DoubleSlash /> 01 /{' '}
-              <Link href="/explorations/02" className={styles.link}>
-                02
-                <IconArrowRight />
-              </Link>
+              <DoubleSlash />{' '}
+              <Link href="/explorations/05" className={styles.link}>
+                <IconArrowLeft />
+                05
+              </Link>{' '}
+              / 06
             </>
           }
         />

@@ -4,6 +4,7 @@ import { Link } from '../../../components/link';
 import { Meta } from '../../../components/meta';
 import { Favicon } from '../../../components/favicon';
 import { IconArrowLeft } from '../../../components/icons/arrow-left';
+import { IconArrowRight } from '../../../components/icons/arrow-right';
 import { DoubleSlash } from '../../../components/double-slash';
 import { Canvas } from '../../../components/explorations/05/canvas';
 
@@ -29,7 +30,7 @@ export default function Page() {
             </>
           }
           subTitle="On HTML Canvas, Maths & Data Vis"
-          dateCreated="June 2024"
+          dateCreated="July 2024"
           links={
             <>
               <Link href="/" className={styles.link}>
@@ -40,6 +41,11 @@ export default function Page() {
               <Link href="/explorations/04" className={styles.link}>
                 <IconArrowLeft />
                 04
+              </Link>{' '}
+              / 05 /{' '}
+              <Link href="/explorations/06" className={styles.link}>
+                06
+                <IconArrowRight />
               </Link>
             </>
           }

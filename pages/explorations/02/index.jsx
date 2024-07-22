@@ -63,7 +63,7 @@ export default function Page() {
                 <IconArrowLeft />
                 01
               </Link>{' '}
-              /{' '}
+              / 02 /{' '}
               <Link href="/explorations/03" className={styles.link}>
                 03
                 <IconArrowRight />
