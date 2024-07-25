@@ -56,7 +56,7 @@ export const drawPoints = (canvas, petalCount) => {
         ctx.fillStyle = fill;
         ctx.fill();
         ctx.strokeStyle = stroke;
-        ctx.lineWidth = progress * 3 + 2;
+        ctx.lineWidth = progress * 4 + 1;
         ctx.stroke();
 
         const shadow = `lch(40 100 ${hue} / ${lerp(40, 0, progress)}%)`;
