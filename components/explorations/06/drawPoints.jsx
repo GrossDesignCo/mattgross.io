@@ -33,7 +33,8 @@ export const drawPoints = (canvas, petalCount) => {
         const lightness = lerp(100, 50, progress);
 
         const fill = `lch(${lightness} ${chroma} ${hue})`;
-        const stroke = `lch(${lightness - 30} ${chroma} ${hue + 15})`;
+        // const stroke = `lch(${lightness - 30} ${chroma} ${hue + 15})`;
+        const stroke = `lch(${(lightness - 50) / 2} ${chroma / 2} ${hue + 15})`;
 
         // Scale function by the chart dimensions
         ctx.beginPath();
@@ -55,6 +56,7 @@ export const drawPoints = (canvas, petalCount) => {
         ctx.fillStyle = fill;
         ctx.fill();
         ctx.strokeStyle = stroke;
+        ctx.lineWidth = progress * 3 + 2;
         ctx.stroke();
 
         const shadow = `lch(40 100 ${hue} / ${lerp(40, 0, progress)}%)`;
