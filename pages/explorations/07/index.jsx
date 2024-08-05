@@ -6,14 +6,14 @@ import { Favicon } from '../../../components/favicon';
 import { IconArrowLeft } from '../../../components/icons/arrow-left';
 import { IconArrowRight } from '../../../components/icons/arrow-right';
 import { DoubleSlash } from '../../../components/double-slash';
-import { Canvas } from '../../../components/explorations/06/canvas';
+import { Canvas } from '../../../components/explorations/07/canvas';
 
 export default function Page() {
   return (
     <div>
       <Head>
-        <title>Exploration 06 - Matt Gross</title>
-        <meta name="description" content="Dahlia" />
+        <title>Exploration 07 - Matt Gross</title>
+        <meta name="description" content="Spirograph / Fourier Patterns" />
         <Favicon />
       </Head>
 
@@ -26,10 +26,21 @@ export default function Page() {
           className={styles.meta}
           title={
             <>
-              <strong>Exploration 06</strong>: Dahlia
+              <strong>Exploration 07</strong>: Spirograph / Fourier Patterns
             </>
           }
-          subTitle="Work in Progress, canvas, lerps"
+          subTitle={
+            <>
+              Inspired by{' '}
+              <Link href="https://www.youtube.com/watch?v=spUNpyF58BY">
+                @3Blue1Brown
+              </Link>{' '}
+              &{' '}
+              <Link href="https://www.youtube.com/@WangBaoWei">
+                @WangBaoWei
+              </Link>
+            </>
+          }
           dateCreated="July 2024"
           links={
             <>
@@ -38,15 +49,11 @@ export default function Page() {
                 Main
               </Link>{' '}
               <DoubleSlash />{' '}
-              <Link href="/explorations/05" className={styles.link}>
+              <Link href="/explorations/06" className={styles.link}>
                 <IconArrowLeft />
-                05
+                06
               </Link>{' '}
-              / 06 /{' '}
-              <Link href="/explorations/07" className={styles.link}>
-                07
-                <IconArrowRight />
-              </Link>
+              / 07
             </>
           }
         />
