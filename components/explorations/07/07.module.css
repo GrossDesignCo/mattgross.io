@@ -4,8 +4,8 @@
   position: fixed;
   inset: 0;
   margin: auto;
-  /* opacity: 0; */
-  /* animation: 5s 2s ease canvas-in forwards; */
+  opacity: 0;
+  animation: 5s ease canvas-in forwards;
 }
 
 @keyframes canvas-in {

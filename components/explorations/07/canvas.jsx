@@ -39,6 +39,12 @@ export const Canvas = () => {
   // One pattern per scribe arm
   const patterns = useRef([]);
 
+  // Start animation after a second
+  useEffect(() => {
+    // TODO: Start at play, but lerp to 1x speed over the course of a second
+    setTimeout(() => setPaused(false), 1500);
+  }, []);
+
   // Draw scribe arms as the angle progresses
   useEffect(() => {
     if (scribeArmsCanvas.current && patternCanvas.current) {
