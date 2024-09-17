@@ -9,11 +9,11 @@ export const drawLightness = (canvas, selectedFn) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.save();
 
-    const canvasCenterX = canvas.width / (2 * window.devicePixelRatio);
-    const canvasCenterY = canvas.height / (2 * window.devicePixelRatio);
+    const canvasCenterX = canvas.width / 2;
+    const canvasCenterY = canvas.height / 2;
 
-    const chartWidth = window.innerWidth / 2;
-    const chartHeight = window.innerHeight / 4;
+    const chartWidth = canvas.width / 2;
+    const chartHeight = canvas.height / 2;
 
     // Define start point for visuals,
     // x=0 center screen,
@@ -30,6 +30,7 @@ export const drawLightness = (canvas, selectedFn) => {
         const y = fn(x);
 
         ctx.strokeStyle = `lch(${y * 100} 0 0)`;
+
         ctx.beginPath();
 
         // Scale function by the chart dimensions

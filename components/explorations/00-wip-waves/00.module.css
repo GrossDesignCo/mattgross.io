@@ -1,7 +1,15 @@
+.canvases {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+  max-width: 100vw;
+}
+
 .canvas {
-  height: clamp(300px, 100vh, 500px);
-  width: 100%;
   display: block;
+  flex-basis: 0;
+  aspect-ratio: 16/9;
+  flex-grow: 1;
 
   /* Flip the canvas vertically so y axis starts at the bottom
   instead of the top */
@@ -9,12 +17,34 @@
 }
 
 .controls {
-  position: absolute;
-  z-index: 1;
   display: flex;
+  align-items: center;
   gap: 0.5em;
   padding: 0.5em;
+}
+
+.controlButton {
+  appearance: none;
+  height: 2em;
+  padding: 0 1em;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
+  background-color: var(--bg-low-contrast);
+  border: none;
+  font: inherit;
+  transition: 0.3s ease;
+}
+
+.controlButton:hover,
+.controlButton:focus {
+  background-color: var(--fg-low-contrast);
+  color: var(--bg);
+}
+
+.controlButton.controlButtonSelected {
+  background-color: var(--fg);
+  color: var(--bg);
 }
 
 .controlIconButton {
@@ -33,4 +63,11 @@
 .controlIconButton:hover,
 .controlIconButton:focus {
   filter: invert();
+}
+
+.hr {
+  border: none;
+  background-color: var(--bg-midtone);
+  height: 1px;
+  width: 100%;
 }

@@ -15,11 +15,11 @@ export const drawWaveFunctions = (canvas, selectedFn) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.save();
 
-    const canvasCenterX = canvas.width / (2 * window.devicePixelRatio);
-    const canvasCenterY = canvas.height / (2 * window.devicePixelRatio);
+    const canvasCenterX = canvas.width / 2;
+    const canvasCenterY = canvas.height / 2;
 
-    const chartWidth = window.innerWidth / 2;
-    const chartHeight = window.innerHeight / 4;
+    const chartWidth = (canvas.width / 2) * 0.9;
+    const chartHeight = (canvas.height / 2) * 0.9;
 
     // Define start point for visuals,
     // x=0 center screen,
@@ -65,7 +65,6 @@ export const drawWaveFunctions = (canvas, selectedFn) => {
 
     // Fill space under line
     ctx.fillStyle = colors.fillUnderLine;
-
     ctx.beginPath();
     ctx.moveTo(0, 0);
     drawFn();
