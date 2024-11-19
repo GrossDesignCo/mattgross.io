@@ -1,0 +1,208 @@
+.canvas {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  opacity: 0;
+  animation: 1s ease canvas-in forwards;
+}
+
+@keyframes canvas-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.armHovered {
+  cursor: pointer;
+  background: lch(from var(--bg) l c h / 60%);
+}
+
+.armClicked {
+  background: lch(from var(--bg) l c h / 60%);
+}
+
+@media (prefers-color-scheme: 'dark') {
+  .armClicked {
+    background: lch(from var(--bg) l c h / 90%);
+  }
+}
+
+/* Make sure the scribe arms can interact with the mouse and the points/pattern can't */
+.scribeArmsCanvas {
+  z-index: 1;
+}
+
+.scribeArmsCanvas.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.patternCanvas {
+  pointer-events: none;
+}
+
+/**
+ * Controls
+ */
+.controls {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 5;
+  /* opacity: 0; */
+  /* transform: translateY(-1em); */
+  display: flex;
+  gap: 0.5em;
+  padding: 0.75em 1em;
+  align-items: center;
+  color: var(--fg-low-contrast);
+  /* animation: 1.5s 1s ease controls-in forwards; */
+}
+
+@keyframes controls-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-1em);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.controls button {
+  color: inherit;
+}
+
+.controls .button {
+  min-width: max-content;
+  transition: 0.3s ease;
+}
+
+.controls .button:hover {
+  color: var(--fg-high-contrast);
+}
+
+.controls hr.vertical {
+  height: 1.5em;
+  width: 1px;
+  display: block;
+  margin-inline: 0.5em;
+  opacity: 0.25;
+}
+
+/**
+ * Individual Control Types
+ */
+.checkbox {
+  appearance: none;
+  user-select: none;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  font: inherit;
+  height: 1em;
+  width: 1em;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  transition: 0.3s ease;
+}
+
+.checkbox input {
+  display: none;
+}
+
+.checkbox:hover {
+  color: var(--fg);
+}
+
+.button {
+  appearance: none;
+  user-select: none;
+  position: relative;
+  color: transparent;
+  border: none;
+  height: 1.25em;
+  width: 1.25em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.button :global(.icon) {
+  width: 1.25em;
+  height: 1.25em;
+}
+
+.button :global(.shape) {
+  stroke: var(--fg-low-contrast);
+  stroke-width: 1px;
+  fill: var(--bg-low-contrast);
+  transition: 0.3s ease;
+}
+
+.button :global(.pause + .pause) {
+  transition-delay: 0.1s;
+}
+
+@media (pointer: fine) {
+  .button:hover :global(.shape) {
+    stroke: var(--fg);
+    fill: var(--fg);
+  }
+}
+
+.button :global(.play .shape.play) {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.button :global(.pause .shape.play) {
+  opacity: 0;
+  transform: translateX(-1em);
+}
+
+.button :global(.pause .shape.pause) {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.button :global(.play .shape.pause) {
+  opacity: 0;
+  transform: translateX(1em);
+}
+
+/* Arm Stats */
+.armStats {
+  position: fixed;
+  z-index: 10;
+  top: calc(var(--arm-y));
+  left: calc(var(--arm-x) + 20px);
+  font-size: 0.75em;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+/* .armStats .length {
+  position: absolute;
+  right: 100%;
+  margin-right: 10px;
+  min-width: max-content;
+}
+
+.armStats .speed {
+  position: absolute;
+  margin-left: 10px;
+  min-width: max-content;
+  transform: rotateZ(var(--arm-speed));
+  transform-origin: var(--arm-speed-transform-origin);
+} */
