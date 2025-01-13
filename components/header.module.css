@@ -1,5 +1,51 @@
 .header {
   padding: var(--frame-inner-padding);
+  position: relative;
+}
+
+.header::before {
+  --notch-size: 0.7em;
+
+  content: '';
+  background-color: var(--caution-yellow);
+  /* Caution stripes? */
+  background: 
+    /* stripe on bottom edge */ repeating-linear-gradient(
+      -45deg,
+      var(--caution-yellow),
+      var(--caution-yellow) 0.6em,
+      transparent 0.6em,
+      transparent 100%
+    ),
+    /* Stripes on horizontal edges */
+      repeating-linear-gradient(
+        90deg,
+        var(--caution-yellow),
+        var(--caution-yellow) 0.15em,
+        transparent 0.15em,
+        transparent calc(var(--notch-size) - 0.25em)
+      ),
+    /* Stripes down middle */
+      repeating-linear-gradient(
+        -135deg,
+        transparent,
+        transparent 0.3em,
+        var(--caution-yellow) 0.3em,
+        var(--caution-yellow) 0.6em
+      );
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  /* Match vertical frame padding */
+  left: -2em;
+  width: var(--notch-size);
+  /* Match vertical header padding */
+  clip-path: polygon(
+    0 0,
+    100% var(--notch-size),
+    100% calc(100% - var(--notch-size)),
+    0 100%
+  );
 }
 
 .tagline {

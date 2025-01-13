@@ -7,6 +7,7 @@ export const getTagline = () => {
     'Serves the Lord',
     'Builds the Internet',
     'Really likes Coffee',
+    'Is going through a big Satisfactory phase',
     'Loves his Wife :)',
   ];
 

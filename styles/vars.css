@@ -13,6 +13,8 @@
   --fg-low-contrast: #777;
   --fg-shadow: #ccc;
 
+  --caution-yellow: lch(70% 132 75);
+
   /* Layout */
   --spacer-half: 0.75em;
   --spacer: 1.5em;

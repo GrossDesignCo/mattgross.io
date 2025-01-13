@@ -3,7 +3,10 @@ import { NavCategory } from './nav-category';
 import { DoubleSlash } from '../double-slash';
 
 export const Nav = () => {
-  const exps = new Array(7).fill(0).map((item, i) => `0${i + 1}`);
+  const explorationCount = 8;
+  const exps = new Array(explorationCount)
+    .fill(0)
+    .map((item, i) => `0${i + 1}`);
 
   return (
     <div className="stack align-start">

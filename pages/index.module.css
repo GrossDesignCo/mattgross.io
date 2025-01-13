@@ -1,2 +1,9 @@
 /* Potential animation idea, rotating polygons, some kind of cool mandala pattern */
 /* Possibly a rotation of the different explorations, very faint & greyscale */
+.index::before {
+  content: '';
+  position: fixed;
+  inset-inline-start: 0;
+  inset-block: 0;
+  border-inline-start: 0.2em solid var(--caution-yellow);
+}
