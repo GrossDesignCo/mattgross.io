@@ -6,42 +6,31 @@ import { Favicon } from '../../../components/favicon';
 import { IconArrowLeft } from '../../../components/icons/arrow-left';
 import { IconArrowRight } from '../../../components/icons/arrow-right';
 import { DoubleSlash } from '../../../components/double-slash';
-import { Canvas } from '../../../components/explorations/07/canvas';
+import { DigitalClock } from '../../../components/explorations/digital';
 
 export default function Page() {
   return (
     <div>
       <Head>
         <title>Exploration 07 - Matt Gross</title>
-        <meta name="description" content="Spirograph / Fourier Patterns" />
+        <meta name="description" content="Digital Clauck" />
         <Favicon />
       </Head>
 
       <div className={styles.root}>
         <div className={styles.frame}>
-          <Canvas />
+          <DigitalClock />
         </div>
 
         <Meta
           className={styles.meta}
           title={
             <>
-              <strong>Exploration 07</strong>: Spirograph / Fourier Patterns
+              <strong>Exploration 07</strong>: Digital Clauck
             </>
           }
-          subTitle={
-            <>
-              Inspired by{' '}
-              <Link href="https://www.youtube.com/watch?v=spUNpyF58BY">
-                @3Blue1Brown
-              </Link>{' '}
-              &{' '}
-              <Link href="https://www.youtube.com/@WangBaoWei">
-                @WangBaoWei
-              </Link>
-            </>
-          }
-          dateCreated="July 2024"
+          subTitle={<>Using Claude AI to iteratively create a digital clock</>}
+          dateCreated="January 2025"
           links={
             <>
               <Link href="/" className={styles.link}>
@@ -49,15 +38,11 @@ export default function Page() {
                 Main
               </Link>{' '}
               <DoubleSlash />{' '}
-              <Link href="/explorations/06" className={styles.link}>
+              <Link href="/explorations/07" className={styles.link}>
                 <IconArrowLeft />
-                06
+                07
               </Link>{' '}
-              / 07 /{' '}
-              <Link href="/explorations/08" className={styles.link}>
-                08
-                <IconArrowRight />
-              </Link>
+              / 08
             </>
           }
         />

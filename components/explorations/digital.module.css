@@ -1,0 +1,82 @@
+.clockContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #000;
+}
+
+.displayRow {
+  display: flex;
+  gap: 8px; /* Increased gap between characters */
+}
+
+.digital-char {
+  display: inline-block;
+  margin: 0 1px;
+}
+
+.digital-row {
+  display: flex;
+  justify-content: center;
+  height: 12px;
+  position: relative;
+}
+
+/* Adjust heights for horizontal segment rows */
+.digital-row:nth-child(1),
+.digital-row:nth-child(3),
+.digital-row:nth-child(5) {
+  height: 2px; /* Thinner height for horizontal segments */
+  margin: 4px 0; /* Add vertical spacing */
+}
+
+.digital-cell {
+  font-family: monospace;
+  font-size: 32px; /* Larger font size */
+  width: 16px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; /* For better positioning control */
+}
+
+/* Adjust horizontal segments */
+.digital-row:nth-child(1) .digital-cell::before,
+.digital-row:nth-child(3) .digital-cell::before,
+.digital-row:nth-child(5) .digital-cell::before {
+  content: '-';
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  line-height: 0;
+  top: -2px; /* Fine-tune vertical position */
+}
+
+/* Vertical segments */
+.digital-row:nth-child(2) .digital-cell::before,
+.digital-row:nth-child(4) .digital-cell::before {
+  content: '|';
+}
+
+/* Special case for colon */
+.digital-row:nth-child(2) .digital-cell:nth-child(2)::before,
+.digital-row:nth-child(4) .digital-cell:nth-child(2)::before {
+  content: '•';
+  font-size: 24px; /* Slightly smaller dots */
+}
+
+.digital-cell-on {
+  color: #fff; /* Changed to white */
+}
+
+.digital-cell-off {
+  color: #131313;
+}
+
+/* Add extra space before AM/PM */
+.digital-char:nth-last-child(2) {
+  margin-left: 12px;
+}
