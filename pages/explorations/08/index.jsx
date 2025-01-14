@@ -12,7 +12,7 @@ export default function Page() {
   return (
     <div>
       <Head>
-        <title>Exploration 07 - Matt Gross</title>
+        <title>Exploration 08 - Matt Gross</title>
         <meta name="description" content="Digital Clauck" />
         <Favicon />
       </Head>
