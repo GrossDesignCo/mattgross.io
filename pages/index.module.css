@@ -5,5 +5,5 @@
   position: fixed;
   inset-inline-start: 0;
   inset-block: 0;
-  border-inline-start: 0.2em solid var(--caution-yellow);
+  border-inline-start: 3px solid var(--caution-yellow);
 }

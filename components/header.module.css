@@ -4,7 +4,7 @@
 }
 
 .header::before {
-  --notch-size: 0.7em;
+  --notch-size: 10px;
 
   content: '';
   background-color: var(--caution-yellow);
@@ -13,26 +13,28 @@
     /* stripe on bottom edge */ repeating-linear-gradient(
       -45deg,
       var(--caution-yellow),
-      var(--caution-yellow) 0.6em,
-      transparent 0.6em,
+      var(--caution-yellow) calc(var(--notch-size)),
+      transparent calc(var(--notch-size)),
       transparent 100%
     ),
     /* Stripes on horizontal edges */
       repeating-linear-gradient(
-        90deg,
+        -90deg,
         var(--caution-yellow),
-        var(--caution-yellow) 0.15em,
-        transparent 0.15em,
-        transparent calc(var(--notch-size) - 0.25em)
+        var(--caution-yellow) 2px,
+        transparent 2px,
+        transparent calc(var(--notch-size) - 2px)
       ),
     /* Stripes down middle */
       repeating-linear-gradient(
-        -135deg,
+        45deg,
         transparent,
-        transparent 0.3em,
-        var(--caution-yellow) 0.3em,
-        var(--caution-yellow) 0.6em
-      );
+        transparent 4px,
+        var(--caution-yellow) 4px,
+        var(--caution-yellow) 8px
+      )
+      0 -2px;
+  transform: translateZ(0);
   position: absolute;
   top: 0;
   bottom: 0;
@@ -51,4 +53,10 @@
 .tagline {
   padding: 0.5em 0;
   color: var(--fg-low-contrast);
+}
+
+@media (max-width: 400px), (max-height: 400px) {
+  .header::before {
+    left: -1em;
+  }
 }
