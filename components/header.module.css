@@ -10,13 +10,21 @@
   background-color: var(--caution-yellow);
   /* Caution stripes? */
   background: 
-    /* stripe on bottom edge */ repeating-linear-gradient(
-      -45deg,
-      var(--caution-yellow),
-      var(--caution-yellow) calc(var(--notch-size)),
-      transparent calc(var(--notch-size)),
-      transparent 100%
+  /* stripe on top edge */ repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent calc(100% - var(--notch-size)),
+      var(--caution-yellow) calc(100% - var(--notch-size)),
+      var(--caution-yellow) 100%
     ),
+    /* stripe on bottom edge */
+      repeating-linear-gradient(
+        -45deg,
+        var(--caution-yellow),
+        var(--caution-yellow) calc(var(--notch-size)),
+        transparent calc(var(--notch-size)),
+        transparent 100%
+      ),
     /* Stripes on horizontal edges */
       repeating-linear-gradient(
         -90deg,

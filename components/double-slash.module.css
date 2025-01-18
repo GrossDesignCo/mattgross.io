@@ -1,5 +1,6 @@
 .doubleSlash {
   text-wrap: nowrap;
+  color: var(--caution-yellow);
 }
 
 .doubleSlash span {

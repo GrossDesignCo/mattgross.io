@@ -1,3 +1,4 @@
 .nav-category {
   padding: var(--frame-inner-padding);
+  font-weight: 500;
 }
