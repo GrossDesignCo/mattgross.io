@@ -18,7 +18,7 @@
 
 /* Meta intro timing */
 .meta {
-  --meta-in-delay: 0s;
+  --meta-in-delay: 5s;
   --meta-in-timing: 2s;
 
   z-index: 5;
