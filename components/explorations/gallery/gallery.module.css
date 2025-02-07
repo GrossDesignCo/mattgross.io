@@ -1,0 +1,277 @@
+/**
+ * Frame / Resizing
+**/
+.resizeableFrame {
+  container-type: size;
+  resize: both;
+  overflow: hidden;
+  height: 50%;
+  width: 50%;
+  padding: 12px;
+  /* 24px concentric radius adjusted for optical-correct-ness */
+  border-radius: 20px;
+
+  box-shadow: 0 0 0 0 lch(50 0 0 / 0%);
+  /* Specific transition for box shadow to not interfere with resize behavior */
+  transition: box-shadow 0.25s ease;
+}
+
+.resizeableFrame:active,
+.resizeableFrame:hover {
+  box-shadow: 0 0 0 2px lch(50 0 0 / 50%);
+}
+
+/**
+ * Gallery
+**/
+.galleryContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.gallery {
+  --bezier: cubic-bezier(0.75, 0, 0, 1);
+
+  gap: 12px;
+
+  /* Grid doesn't handle transitons well cross-browser, so flex is the friend :) */
+  display: flex;
+  flex-wrap: nowrap;
+  height: 100%;
+}
+
+@container (aspect-ratio < 1/1) {
+  .gallery {
+    flex-direction: column;
+  }
+}
+
+/**
+ * Sections
+**/
+.section {
+  --transform-intro-initial: translateY(36px);
+  --transform-intro-done: translateY(0);
+
+  position: relative;
+  min-width: 2em;
+  height: 100%;
+  opacity: 0;
+
+  /* Use widths and flex-grow instead of flex-basis for Safari's sake */
+  flex-grow: 1;
+  transition: transform 0.5s var(--bezier), opacity 0.5s var(--bezier),
+    flex-grow 1s var(--bezier);
+  animation: intro 1s var(--bezier) forwards;
+}
+
+@container (aspect-ratio < 1/1) {
+  .section {
+    --transform-intro-initial: translateX(-36px);
+    --transform-intro-done: translateX(0);
+
+    min-height: 2em;
+    height: auto;
+    width: 100%;
+  }
+}
+
+@keyframes intro {
+  0% {
+    opacity: 0;
+    transform: var(--transform-intro-initial);
+  }
+
+  100% {
+    opacity: 1;
+    transform: var(--transform-intro-done);
+  }
+}
+
+.section:nth-child(1) {
+  animation-delay: 1s;
+}
+
+.section:nth-child(2) {
+  animation-delay: 1.5s;
+}
+
+.section:nth-child(3) {
+  animation-delay: 2s;
+}
+
+.section:nth-child(5) {
+  animation-delay: 2.5s;
+}
+
+.section:nth-child(6) {
+  animation-delay: 3s;
+}
+
+.section.active {
+  flex-grow: 100;
+}
+
+.gallery:has(.section.active) .section:not(.active) {
+  opacity: 0.2;
+}
+
+.image img {
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 50%;
+  margin: auto;
+
+  transition: transform 0.25s ease;
+  transform: translateX(-50%) scale(1.01);
+}
+
+.section:hover img {
+  /* ISSUE: Interference from the buttons, but can't move the buttons outside the gallery because of the resizer issue */
+  transform: translateX(-50%) scale(1.05);
+}
+
+.image {
+  position: absolute;
+  /* Flat grey bg so that when images cross-fade they don't dramatically change opacity mid-transition */
+  background-color: lch(50 0 0);
+  border-radius: 12px;
+  overflow: hidden;
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+
+  transform: translateX(0);
+  transition: 0.5s var(--bezier);
+}
+
+.image label {
+  overflow: hidden;
+}
+
+:where(.section:has(.image.active)) .image {
+  transform: translateX(-24px);
+  opacity: 0;
+}
+
+:where(.section:has(.image.active)) .image:not(.active) {
+  pointer-events: none;
+}
+
+@container (aspect-ratio < 1/1) {
+  :where(.section:has(.image.active)) .image {
+    transform: translateY(-24px);
+  }
+}
+
+.image.active {
+  /* Safari lacks good css counter support in calc's so react + !important is needed */
+  z-index: 100 !important;
+  transform: translateX(0);
+  opacity: 1;
+}
+
+:where(.image.active) ~ .image {
+  /* Swap the transform for images after the active one so the movement feels more natural */
+  transform: translateX(24px);
+}
+
+@container (aspect-ratio < 1/1) {
+  :where(.image.active) ~ .image {
+    transform: translateY(24px);
+  }
+}
+
+/**
+ * Buttons
+**/
+.galleryButton {
+  appearance: none;
+  border: none;
+  color: lch(100 0 0);
+  height: 2.4em;
+  width: 2.4em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25em;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 100;
+
+  background-color: lch(0 0 0 / 80%);
+  opacity: 0;
+  transition: transform 0.5s var(--bezier), opacity 0.5s var(--bezier),
+    background-color 0.25s ease;
+}
+
+.galleryButton :global(.icon) {
+  display: block;
+}
+
+@container (aspect-ratio < 1/1) {
+  .galleryButton :global(.icon) {
+    transform: rotate(90deg);
+  }
+}
+
+.galleryButton:hover {
+  background-color: lch(0 0 0 / 100%);
+}
+
+.galleryContainer:has(.section.active) .galleryButton {
+  opacity: 1;
+  transition: transform 0.5s var(--bezier) 0.5s, opacity 0.5s var(--bezier) 0.5s,
+    background-color 0.25s ease;
+}
+
+.galleryButton.close {
+  transform: translateY(-12px) translateX(12px);
+  /* Logical props help with RTL, since next/prev would map to left/right in RTL langs */
+  inset-block-start: 12px;
+  inset-inline-end: 12px;
+}
+
+.galleryContainer:has(.section.active) .galleryButton.close {
+  transform: translateY(0) translateX(0);
+}
+
+.galleryButton:is(.prev, .next) {
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+}
+
+:where(.galleryContainer:has(.section.active)) .galleryButton:is(.prev, .next) {
+  transform: translateY(-50%) translateX(0);
+}
+
+.galleryButton.prev {
+  transform: translateY(-50%) translateX(-12px);
+  inset-inline-start: 24px;
+}
+
+.galleryButton.next {
+  transform: translateY(-50%) translateX(12px);
+  inset-inline-end: 24px;
+}
+
+@container (aspect-ratio < 1/1) {
+  .galleryButton.prev {
+    inset-inline-start: 50%;
+    transform: translateX(-50%) translateY(-12px);
+    inset-block-start: 24px;
+  }
+
+  .galleryButton.next {
+    inset-block-start: auto;
+    inset-inline-start: 50%;
+    transform: translateX(-50%) translateY(12px);
+    inset-block-end: 24px;
+    inset-inline-end: auto;
+  }
+}

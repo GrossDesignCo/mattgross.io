@@ -3,7 +3,7 @@ import { NavCategory } from './nav-category';
 import { DoubleSlash } from '../double-slash';
 
 export const Nav = () => {
-  const explorationCount = 8;
+  const explorationCount = 9;
   const exps = new Array(explorationCount)
     .fill(0)
     .map((item, i) => `0${i + 1}`);

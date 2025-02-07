@@ -6,31 +6,36 @@ import { Favicon } from '../../../components/favicon';
 import { IconArrowLeft } from '../../../components/icons/arrow-left';
 import { IconArrowRight } from '../../../components/icons/arrow-right';
 import { DoubleSlash } from '../../../components/double-slash';
-import { DigitalClock } from '../../../components/explorations/digital';
+import { Gallery } from '../../../components/explorations/gallery/gallery';
 
 export default function Page() {
   return (
     <div>
       <Head>
-        <title>Exploration 08 - Matt Gross</title>
-        <meta name="description" content="Digital Clauck" />
+        <title>Exploration 09 - Matt Gross</title>
+        <meta name="description" content="The Smoothness" />
         <Favicon />
       </Head>
 
       <div className={styles.root}>
         <div className={styles.frame}>
-          <DigitalClock />
+          {/* Make a gallery inside a container query */}
+          {/* Make it resizeable */}
+          {/* Make labels for each section */}
+          {/* Make them horizontal when not active, vertical when active */}
+          {/* In portrait orientations swap so the sections are a vertical stack instead of columns */}
+          <Gallery />
         </div>
 
         <Meta
           className={styles.meta}
           title={
             <>
-              <strong>Exploration 08</strong>: Digital Clauck
+              <strong>Exploration 09</strong>: The Smoothness
             </>
           }
-          subTitle={<>Using Claude AI to iteratively create a digital clock</>}
-          dateCreated="January 2025"
+          subTitle={<>Multi-section Gallery, Container Queries, Resizing</>}
+          dateCreated="February 2025"
           links={
             <>
               <Link href="/" className={styles.link}>
@@ -38,15 +43,11 @@ export default function Page() {
                 Main
               </Link>{' '}
               <DoubleSlash />{' '}
-              <Link href="/explorations/07" className={styles.link}>
+              <Link href="/explorations/08" className={styles.link}>
                 <IconArrowLeft />
-                07
+                08
               </Link>{' '}
-              / 08 /{' '}
-              <Link href="/explorations/09" className={styles.link}>
-                09
-                <IconArrowRight />
-              </Link>
+              / 09
             </>
           }
         />
