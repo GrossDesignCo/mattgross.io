@@ -159,8 +159,8 @@ const GallerySection = ({ images, groupName, activeImage, setActiveImage }) => {
             {/* Label-wrapping the image allows us to easily treat the image like a button */}
             <label>
               <Image
-                height="800"
-                width="1100"
+                height={800}
+                width={1100}
                 alt=""
                 src={`/explorations/09/${imageSrc}`}
               />

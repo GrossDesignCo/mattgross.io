@@ -1,10 +1,6 @@
 import { Canvas } from '@react-three/fiber';
 import { useState } from 'react';
-import {
-  ColorManagement,
-  LinearDisplayP3ColorSpace,
-  LinearEncoding,
-} from 'three';
+import { ColorManagement, LinearDisplayP3ColorSpace } from 'three';
 import Scene from './scene';
 
 // ColorManagement.legacyMode = false;
