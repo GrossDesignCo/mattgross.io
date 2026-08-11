@@ -23,56 +23,6 @@ const Trajectory = ({ earthRef }) => {
   const prefersDarkMode = usePrefersDarkMode();
 
   /**
-   * Animate progress along the flight path
-   * - Update progress each frame
-   * - Update camera position based on progress
-   */
-  useFrame((state, delta) => {
-    if (playing) {
-      // Update progress
-      setProgress((prevProgress) =>
-        progress >= 1 ? 0 : prevProgress + delta * progressSpeed
-      );
-
-      // Lock camera to the current point along progression
-      const targetPoint = completedPoints[completedPoints.length - 1] ??
-        points[0].position ?? [0, 0, 0];
-
-      const normalizedPoint = new THREE.Vector3(...targetPoint).normalize();
-      const cameraDistance = 2; // Adjust as needed
-
-      // Calculate the direction vector from the origin to the target point
-      const direction = normalizedPoint.clone().normalize();
-
-      // Move the camera back along the direction vector and down to achieve the look-up angle
-      const lookUpAngle = Math.PI / 6; // 30 degrees in radians
-      const yOffset = Math.sin(lookUpAngle) * cameraDistance;
-      const xyOffset = Math.cos(lookUpAngle) * cameraDistance;
-
-      const currentCameraPosition = new THREE.Vector3(...camera.position);
-      const targetCameraPosition = direction.clone().multiplyScalar(xyOffset);
-      targetCameraPosition.y -= yOffset;
-
-      const lerpFactor = 1; // 1 for no inertia to camera, animation is smooth enough and the extra movement of earth is disorienting
-      // Would be better to lerp the rotational angle of the camera instead of it's raw position
-      // so that it stays in place relative to the earth
-      const cameraPosition = currentCameraPosition.lerp(
-        targetCameraPosition,
-        lerpFactor
-      );
-
-      camera.position.set(cameraPosition.x, cameraPosition.y, cameraPosition.z);
-      camera.lookAt(normalizedPoint);
-      controls.current.target.set(
-        normalizedPoint.x,
-        normalizedPoint.y,
-        normalizedPoint.z
-      );
-      controls.current.update();
-    }
-  });
-
-  /**
    * Plot the path of the major events
    */
   const { points, arcPoints, scaledArcPoints } = useMemo(() => {
@@ -128,6 +78,56 @@ const Trajectory = ({ earthRef }) => {
     // Points from current time onward
     return scaledArcPoints.slice(index, totalTimestamp - 1);
   }, [progress, scaledArcPoints]);
+
+  /**
+   * Animate progress along the flight path
+   * - Update progress each frame
+   * - Update camera position based on progress
+   */
+  useFrame((state, delta) => {
+    if (playing) {
+      // Update progress
+      setProgress((prevProgress) =>
+        progress >= 1 ? 0 : prevProgress + delta * progressSpeed
+      );
+
+      // Lock camera to the current point along progression
+      const targetPoint = completedPoints[completedPoints.length - 1] ??
+        points[0].position ?? [0, 0, 0];
+
+      const normalizedPoint = new THREE.Vector3(...targetPoint).normalize();
+      const cameraDistance = 2; // Adjust as needed
+
+      // Calculate the direction vector from the origin to the target point
+      const direction = normalizedPoint.clone().normalize();
+
+      // Move the camera back along the direction vector and down to achieve the look-up angle
+      const lookUpAngle = Math.PI / 6; // 30 degrees in radians
+      const yOffset = Math.sin(lookUpAngle) * cameraDistance;
+      const xyOffset = Math.cos(lookUpAngle) * cameraDistance;
+
+      const currentCameraPosition = new THREE.Vector3(...camera.position);
+      const targetCameraPosition = direction.clone().multiplyScalar(xyOffset);
+      targetCameraPosition.y -= yOffset;
+
+      const lerpFactor = 1; // 1 for no inertia to camera, animation is smooth enough and the extra movement of earth is disorienting
+      // Would be better to lerp the rotational angle of the camera instead of it's raw position
+      // so that it stays in place relative to the earth
+      const cameraPosition = currentCameraPosition.lerp(
+        targetCameraPosition,
+        lerpFactor
+      );
+
+      camera.position.set(cameraPosition.x, cameraPosition.y, cameraPosition.z);
+      camera.lookAt(normalizedPoint);
+      controls.current.target.set(
+        normalizedPoint.x,
+        normalizedPoint.y,
+        normalizedPoint.z
+      );
+      controls.current.update();
+    }
+  });
 
   return (
     <>
