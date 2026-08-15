@@ -1,0 +1,73 @@
+.slot {
+  position: fixed;
+  top: 1.5em;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  padding-left: 2em;
+  pointer-events: none;
+  /* This element's box is always full-width and fixed in place — it
+     never changes size or position, so there's nothing for the view
+     transition to diff/morph, no matter how much the pill inside it
+     grows or shrinks while typing. Putting view-transition-name (and
+     nulling its animation) on the pill itself didn't fully work: even
+     with animation:none on the group, the browser still ran its
+     size/position diff against whatever geometry it had captured for
+     that element, and the pill's own box genuinely does change size
+     every frame while typing. Isolating the named element from the
+     thing that actually resizes is what removes the diff entirely. */
+  view-transition-name: hey-team-eyebrow;
+}
+
+::view-transition-group(hey-team-eyebrow),
+::view-transition-old(hey-team-eyebrow),
+::view-transition-new(hey-team-eyebrow) {
+  animation: none;
+  transition: none;
+}
+
+@media (max-width: 400px), (max-height: 400px) {
+  .slot {
+    top: 1em;
+    padding-left: 1em;
+  }
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: stretch;
+  font-size: 0.85rem;
+  border-radius: 0.3em;
+  overflow: hidden;
+}
+
+.accent {
+  padding: 0.3em 0.6em;
+  font-weight: 700;
+  white-space: pre;
+  /* Bright brass highlight chip — dark text for contrast against it. */
+  color: #17120a;
+  background: var(--hey-team-accent, #b8935a);
+}
+
+.muted {
+  padding: 0.3em 0.7em;
+  white-space: pre;
+  /* Darker bronze fill, derived from the same brass hue — a fixed chip
+     like .accent above, not themed, so its text color is hardcoded too
+     rather than reading --fg-high-contrast (which now flips to near-black
+     for the light theme and would sit unreadable against this dark fill). */
+  color: #f3ece0;
+  background: #4a3a24;
+}
+
+.cursor {
+  display: inline-block;
+  width: 0.5em;
+  margin-left: 0.7em;
+  border-radius: 1px;
+  background: currentColor;
+  align-self: center;
+  height: 1em;
+  vertical-align: -0.15em;
+}

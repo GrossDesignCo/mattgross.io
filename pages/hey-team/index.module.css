@@ -1,0 +1,29 @@
+.root {
+  /* Static fallback only — matches theme.module.css's "light" block,
+     which is whichever theme the deck's first slide (dir: '') uses. The
+     deck itself (components/hey-team/deck.jsx) owns the real, per-section
+     --bg/--fg/etc. override via `.themed[data-hey-team-theme]`, flipping
+     it as sections change; this is just what paints in the sliver outside
+     .deck's box (rubber-band overscroll and the like) before that's
+     resolved. Deliberately not tied to the site's light/dark
+     `prefers-color-scheme` system — the deck's theme is driven by which
+     section you're on, not the viewer's OS setting. */
+  --bg: #f6f3ee;
+  --bg-high-contrast: #ffffff;
+  --bg-low-contrast: #eae5db;
+  --fg: #2a2621;
+  --fg-high-contrast: #171310;
+  --fg-low-contrast: #6f6759;
+  --fg-shadow: #ddd6c8;
+  --hey-team-rule: #ddd6c8;
+  --hey-team-accent: #b8935a;
+
+  min-height: 100dvh;
+  background-color: var(--bg);
+  /* general.css only re-resolves color via var() on elements that set it
+     explicitly (h1/h2 do; plain text doesn't) — everything else just
+     inherits body's already-computed color from *before* this override,
+     which would still be the site's default near-black. Setting color
+     here explicitly breaks that stale inheritance chain. */
+  color: var(--fg);
+}

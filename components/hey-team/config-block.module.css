@@ -1,0 +1,18 @@
+.config {
+  font-size: clamp(1rem, 1.7vw, 1.4rem);
+  line-height: 2;
+}
+
+.row {
+  display: flex;
+}
+
+.key {
+  width: 12ch;
+  flex-shrink: 0;
+  color: var(--hey-team-accent);
+}
+
+.value {
+  color: var(--fg-low-contrast);
+}

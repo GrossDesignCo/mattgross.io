@@ -1,0 +1,5 @@
+.statLine {
+  font-size: 0.8rem;
+  color: var(--fg-low-contrast);
+  letter-spacing: 0.01em;
+}

@@ -1,0 +1,5 @@
+.calloutStat {
+  max-width: 46ch;
+  font-size: 0.95rem;
+  color: var(--hey-team-accent);
+}

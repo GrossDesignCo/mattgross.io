@@ -1,0 +1,10 @@
+.prose {
+  max-width: 46ch;
+  font-size: clamp(1.05rem, 1.6vw, 1.45rem);
+  line-height: 1.6;
+  color: var(--fg);
+}
+
+.prose p + p {
+  margin-top: 0.9em;
+}

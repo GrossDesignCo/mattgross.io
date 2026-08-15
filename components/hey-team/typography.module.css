@@ -1,0 +1,18 @@
+.title {
+  margin: 0;
+  font-weight: 600;
+  color: var(--fg-high-contrast);
+  line-height: 1.05;
+  /* Non-JS fallback only — mirrors FitText's own default bounds
+     (12px floor, 15vw ceiling, no separate vh cap) so there's no visible
+     jump once JS takes over. */
+  font-size: max(12px, 15vw);
+}
+
+.body {
+  margin: 0;
+  color: var(--fg);
+  line-height: 1.3;
+  /* Mirrors SlideBody's FitText override (5vw). */
+  font-size: max(12px, 5vw);
+}

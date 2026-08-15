@@ -1,0 +1,51 @@
+/* One block per section theme (see themes.js for which section uses
+ * which). Applying `.themed` + `data-hey-team-theme="…"` to any element
+ * hands every descendant a full --bg/--fg/etc token set — Slide,
+ * typography, ConfigBlock, chrome, all already read those tokens (see the
+ * comment this replaced in pages/hey-team/index.module.css), so
+ * re-theming the deck is just flipping this one attribute. The same
+ * class also drives the theme-wipe overlay (deck.module.css) so it can
+ * resolve the *incoming* theme's --bg independently of whatever the deck
+ * itself is still showing mid-transition.
+ *
+ * The accent brass stays close to constant across themes on purpose —
+ * it's the deck's one throughline color. Only gold brightens it, since
+ * gold's own background is brass-toned enough that a same-hue accent
+ * would stop popping against it.
+ */
+
+.themed[data-hey-team-theme='light'] {
+  --bg: #f6f3ee;
+  --bg-high-contrast: #ffffff;
+  --bg-low-contrast: #eae5db;
+  --fg: #2a2621;
+  --fg-high-contrast: #171310;
+  --fg-low-contrast: #6f6759;
+  --fg-shadow: #ddd6c8;
+  --hey-team-rule: #ddd6c8;
+  --hey-team-accent: #b8935a;
+}
+
+.themed[data-hey-team-theme='dark'] {
+  --bg: #0a0a0a;
+  --bg-high-contrast: #000;
+  --bg-low-contrast: #141414;
+  --fg: #faf9f9;
+  --fg-high-contrast: #faf9f9;
+  --fg-low-contrast: #8a8a8a;
+  --fg-shadow: #262626;
+  --hey-team-rule: #262626;
+  --hey-team-accent: #b8935a;
+}
+
+.themed[data-hey-team-theme='gold'] {
+  --bg: #180f04;
+  --bg-high-contrast: #0d0700;
+  --bg-low-contrast: #2a1a08;
+  --fg: #f3e2bd;
+  --fg-high-contrast: #fff6e2;
+  --fg-low-contrast: #b99a68;
+  --fg-shadow: #3c2810;
+  --hey-team-rule: #3c2810;
+  --hey-team-accent: #e3b66e;
+}
