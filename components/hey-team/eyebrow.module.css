@@ -39,6 +39,29 @@
   font-size: 0.85rem;
   border-radius: 0.3em;
   overflow: hidden;
+  /* This component only ever mounts once (Deck renders it unconditionally
+     at the top level, never unmounting it), so this plays exactly once,
+     at first paint — the one moment in this deck a scale entrance earns
+     its place. animation-fill-mode: both holds scale(1)/opacity:1
+     afterward, which is a no-op against the pill's own layout. */
+  animation: hey-team-eyebrow-in 180ms var(--bezier) both;
+}
+
+@keyframes hey-team-eyebrow-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyebrow {
+    animation: none;
+  }
 }
 
 .accent {
@@ -48,6 +71,35 @@
   /* Bright brass highlight chip — dark text for contrast against it. */
   color: #17120a;
   background: var(--hey-team-accent, #b8935a);
+}
+
+/* One-shot "you've arrived" pulse the instant a cd sequence executes —
+   replayed by remounting this element (key={flashSeq} in eyebrow.jsx)
+   rather than toggling a class, so back-to-back executes always restart
+   cleanly. A brightness pulse rather than a color swap since .accent's
+   background is a fixed, non-themed brass — this stays correct without
+   needing to know that color. Secondary action: small, on a single chip,
+   never the first thing the eye lands on. */
+.accentFlash {
+  animation: hey-team-execute-flash 180ms var(--bezier);
+}
+
+@keyframes hey-team-execute-flash {
+  0% {
+    filter: brightness(1);
+  }
+  40% {
+    filter: brightness(1.5);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accentFlash {
+    animation: none;
+  }
 }
 
 .muted {
@@ -70,4 +122,29 @@
   align-self: center;
   height: 1em;
   vertical-align: -0.15em;
+}
+
+/* Idle-only — eyebrow.jsx applies this exclusively when isTyping is
+   false, so the blink never runs while a sequence is actively typing/
+   backspacing (that would compete with the text itself). steps(1, end)
+   keeps it a hard terminal-style on/off rather than a soft fade. */
+.cursorBlink {
+  animation: hey-team-cursor-blink 1s steps(1, end) infinite;
+}
+
+@keyframes hey-team-cursor-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursorBlink {
+    animation: none;
+  }
 }

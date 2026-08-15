@@ -85,6 +85,11 @@ export const Deck = ({ slides }) => {
   const lastGoToAtRef = useRef(0);
   // The view transition currently in flight, if any.
   const activeTransitionRef = useRef(null);
+  // Bumped on every real `execute` — Eyebrow re-keys its accent chip off
+  // this to replay a one-shot flash, and skips it entirely at 0 so first
+  // paint doesn't also flash (see the mount-only scale-in in
+  // eyebrow.module.css, which already covers that moment).
+  const [flashSeq, setFlashSeq] = useState(0);
 
   const { wipe, play: playWipe, coverMs, revealMs } = useThemeWipe();
 
@@ -146,10 +151,11 @@ export const Deck = ({ slides }) => {
     const run = pendingRunRef.current;
     pendingRunRef.current = null;
     run?.();
+    setFlashSeq((n) => n + 1);
   }, []);
 
   const eyebrowTarget = slides[announcedIndex].eyebrow;
-  const { prompt, command } = useTerminalEyebrow(eyebrowTarget, {
+  const { prompt, command, isTyping } = useTerminalEyebrow(eyebrowTarget, {
     onExecute: onEyebrowExecute,
     instant: fastTransition,
   });
@@ -247,9 +253,19 @@ export const Deck = ({ slides }) => {
       className={`${styles.deck} ${themeStyles.themed}`}
       data-hey-team-theme={themeFor(slides[index].eyebrow.dir)}
     >
-      <Eyebrow prompt={prompt} command={command} />
+      <Eyebrow prompt={prompt} command={command} isTyping={isTyping} flashSeq={flashSeq} />
 
-      <div className={styles.viewport}>
+      <div
+        className={styles.viewport}
+        // Set for exactly the "revealing" half of a section-crossing wipe
+        // — the same instant runContentSwap's instant path already swaps
+        // in the new slide underneath the wipe's cover panel (see goTo's
+        // pendingRunRef above), so new content and this attribute always
+        // land in the same render. Slide's staggered-reveal keyframes
+        // (slide.module.css) key off this rather than firing on every
+        // same-section crossfade too.
+        data-hey-team-reveal={wipe?.phase === 'revealing' ? 'stagger' : undefined}
+      >
         <Current />
       </div>
 

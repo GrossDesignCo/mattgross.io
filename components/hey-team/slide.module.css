@@ -22,3 +22,53 @@
 .controlsSpace {
   flex: 0 0 var(--hey-team-chrome-height, 4rem);
 }
+
+/*
+ * Staggered reveal for section-landing slides only — Deck sets
+ * data-hey-team-reveal="stagger" on .viewport for exactly the "revealing"
+ * half of the theme wipe (see deck.jsx), so this never fires on the
+ * routine same-section crossfade, which stays a single, fast motion (see
+ * "frequency gates staging" in CLAUDE.md). .content's only direct child
+ * is each slide's own `.stack` wrapper (see slides.jsx), so the stagger
+ * targets *its* children — title, then body content, then tags — rather
+ * than .content itself.
+ */
+:global([data-hey-team-reveal='stagger']) .content > .stack > * {
+  animation: hey-team-reveal 220ms var(--bezier) both;
+}
+
+:global([data-hey-team-reveal='stagger']) .content > .stack > *:nth-child(1) {
+  animation-delay: 0ms;
+}
+:global([data-hey-team-reveal='stagger']) .content > .stack > *:nth-child(2) {
+  animation-delay: 30ms;
+}
+:global([data-hey-team-reveal='stagger']) .content > .stack > *:nth-child(3) {
+  animation-delay: 60ms;
+}
+:global([data-hey-team-reveal='stagger']) .content > .stack > *:nth-child(4) {
+  animation-delay: 90ms;
+}
+:global([data-hey-team-reveal='stagger']) .content > .stack > *:nth-child(5) {
+  animation-delay: 120ms;
+}
+:global([data-hey-team-reveal='stagger']) .content > .stack > *:nth-child(6) {
+  animation-delay: 150ms;
+}
+
+@keyframes hey-team-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :global([data-hey-team-reveal='stagger']) .content > .stack > * {
+    animation: none;
+  }
+}

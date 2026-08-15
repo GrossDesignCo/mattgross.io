@@ -26,6 +26,10 @@ import { buildFrames, promptFor } from './eyebrow-engine';
 // play out in full.
 export function useTerminalEyebrow(target, { onExecute, instant } = {}) {
   const [frame, setFrame] = useState({ prompt: '', command: '' });
+  // Whether a frame sequence is actively playing — false once it's
+  // settled on its last frame with nothing left scheduled. Eyebrow uses
+  // this to gate its idle cursor blink so it never fires mid-typing.
+  const [isTyping, setIsTyping] = useState(false);
   const currentRef = useRef(null);
   const onExecuteRef = useRef(onExecute);
   const instantRef = useRef(instant);
@@ -63,6 +67,7 @@ export function useTerminalEyebrow(target, { onExecute, instant } = {}) {
       // still needs to know a dir change happened so the content/theme
       // swap fires, just without the choreography around it.
       applyFrame({ ...last, execute: !!prev && prev.dir !== target.dir });
+      setIsTyping(false);
       return;
     }
 
@@ -71,12 +76,22 @@ export function useTerminalEyebrow(target, { onExecute, instant } = {}) {
     let i = 0;
 
     const tick = () => {
-      if (cancelled || i >= frames.length) return;
+      if (cancelled) return;
+      // This is also the trailing call scheduled after the last real
+      // frame (see the unconditional setTimeout below) — the point at
+      // which the sequence has actually settled, not just applied its
+      // last frame, so the idle blink doesn't start competing with that
+      // frame's own dwell time.
+      if (i >= frames.length) {
+        setIsTyping(false);
+        return;
+      }
       applyFrame(frames[i]);
       const { delay } = frames[i];
       i += 1;
       timerId = setTimeout(tick, delay);
     };
+    setIsTyping(true);
     tick();
 
     return () => {
@@ -90,5 +105,5 @@ export function useTerminalEyebrow(target, { onExecute, instant } = {}) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [target.dir, target.command]);
 
-  return frame;
+  return { ...frame, isTyping };
 }

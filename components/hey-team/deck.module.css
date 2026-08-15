@@ -97,13 +97,21 @@
   border-radius: 999px;
   background: var(--fg-shadow);
   transition:
-    background-color 0.2s ease,
-    transform 0.2s var(--bezier);
+    background-color 0.2s var(--bezier),
+    /* Trails the dot's own color change and the slide content it tracks —
+       a cheap follow-through cue instead of scaling in lockstep. */
+    transform 0.2s var(--bezier) 70ms;
 }
 
 .dotActive {
   background: var(--fg-high-contrast);
   transform: scale(1.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot {
+    transition: none;
+  }
 }
 
 .srOnly {
