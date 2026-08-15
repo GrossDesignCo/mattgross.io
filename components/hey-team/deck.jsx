@@ -255,17 +255,7 @@ export const Deck = ({ slides }) => {
     >
       <Eyebrow prompt={prompt} command={command} isTyping={isTyping} flashSeq={flashSeq} />
 
-      <div
-        className={styles.viewport}
-        // Set for exactly the "revealing" half of a section-crossing wipe
-        // — the same instant runContentSwap's instant path already swaps
-        // in the new slide underneath the wipe's cover panel (see goTo's
-        // pendingRunRef above), so new content and this attribute always
-        // land in the same render. Slide's staggered-reveal keyframes
-        // (slide.module.css) key off this rather than firing on every
-        // same-section crossfade too.
-        data-hey-team-reveal={wipe?.phase === 'revealing' ? 'stagger' : undefined}
-      >
+      <div className={styles.viewport}>
         <Current />
       </div>
 

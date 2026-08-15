@@ -24,39 +24,38 @@
 }
 
 /*
- * Staggered reveal for section-landing slides only — Deck sets
- * data-hey-team-reveal="stagger" on .viewport for exactly the "revealing"
- * half of the theme wipe (see deck.jsx), so this never fires on the
- * routine same-section crossfade, which stays a single, fast motion (see
- * "frequency gates staging" in CLAUDE.md). .content's only direct child
- * is each slide's own `.stack` wrapper (see slides.jsx), so the stagger
- * targets *its* children — title, then body content, then tags — rather
- * than .content itself. `.stack` is :global() because it's the shared
- * general.css utility class, not something defined in this module — left
- * bare, CSS Modules would scope/hash it to a class name slides.jsx never
- * actually renders, and the selector would silently never match.
+ * Staggered reveal on every slide mount — fires on any navigation, same-
+ * section or crossing, since each slide is a distinct Component that
+ * fully remounts on index change (see deck.jsx's `Current`). .content's
+ * only direct child is each slide's own `.stack` wrapper (see
+ * slides.jsx), so the stagger targets *its* children — title, then body
+ * content, then tags — rather than .content itself. `.stack` is
+ * :global() because it's the shared general.css utility class, not
+ * something defined in this module — left bare, CSS Modules would
+ * scope/hash it to a class name slides.jsx never actually renders, and
+ * the selector would silently never match.
  */
-:global([data-hey-team-reveal='stagger']) .content > :global(.stack) > * {
+.content > :global(.stack) > * {
   animation: hey-team-reveal 220ms var(--bezier) both;
 }
 
-:global([data-hey-team-reveal='stagger']) .content > :global(.stack) > *:nth-child(1) {
+.content > :global(.stack) > *:nth-child(1) {
   animation-delay: 0ms;
 }
-:global([data-hey-team-reveal='stagger']) .content > :global(.stack) > *:nth-child(2) {
-  animation-delay: 30ms;
+.content > :global(.stack) > *:nth-child(2) {
+  animation-delay: 100ms;
 }
-:global([data-hey-team-reveal='stagger']) .content > :global(.stack) > *:nth-child(3) {
-  animation-delay: 60ms;
+.content > :global(.stack) > *:nth-child(3) {
+  animation-delay: 200ms;
 }
-:global([data-hey-team-reveal='stagger']) .content > :global(.stack) > *:nth-child(4) {
-  animation-delay: 90ms;
+.content > :global(.stack) > *:nth-child(4) {
+  animation-delay: 300ms;
 }
-:global([data-hey-team-reveal='stagger']) .content > :global(.stack) > *:nth-child(5) {
-  animation-delay: 120ms;
+.content > :global(.stack) > *:nth-child(5) {
+  animation-delay: 400ms;
 }
-:global([data-hey-team-reveal='stagger']) .content > :global(.stack) > *:nth-child(6) {
-  animation-delay: 150ms;
+.content > :global(.stack) > *:nth-child(6) {
+  animation-delay: 500ms;
 }
 
 @keyframes hey-team-reveal {
@@ -71,7 +70,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :global([data-hey-team-reveal='stagger']) .content > :global(.stack) > * {
+  .content > :global(.stack) > * {
     animation: none;
   }
 }
