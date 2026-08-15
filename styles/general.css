@@ -150,3 +150,24 @@ h2 {
 ::view-transition-new(root) {
   animation: 0.5s ease both default-in;
 }
+
+/* The hey-team deck (components/hey-team/deck.jsx) names only its own
+ * .viewport for the View Transition API, so its background falls into
+ * this root pair too — and the default-in/default-out crossfade above
+ * would fade *through* this element's own background for that ~0.5s,
+ * showing <html>'s (site-wide light/dark, not the deck's per-section
+ * theme). This can't be scoped from deck.module.css: `root` is the API's
+ * reserved name for the implicit group, not something declared in that
+ * file, but CSS Modules scopes every bare identifier there regardless,
+ * and a pseudo-element function argument has no :global() escape (the
+ * CSS parser only accepts a <custom-ident> there). [data-hey-team-theme]
+ * is deck.jsx's own root attribute — plain HTML, so untouched by that
+ * scoping — making it the one thing this plain stylesheet and that CSS
+ * module can still agree on. No space before `::view-transition-*`: these
+ * pseudo-elements chain directly off their originating selector (same as
+ * the bare rules above), a descendant combinator here just fails to
+ * match anything rather than erroring. */
+:root:has([data-hey-team-theme])::view-transition-old(root),
+:root:has([data-hey-team-theme])::view-transition-new(root) {
+  animation: none;
+}

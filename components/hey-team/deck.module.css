@@ -151,14 +151,21 @@
  * only costs a brief partially-transparent window — long enough for
  * <html>'s own background (styles/general.css, tracks the site-wide
  * color-scheme, not this deck's per-section theme) to show through behind
- * it. Killing the root group's animation swaps the two snapshots instantly
- * instead, closing that window.
+ * it.
+ *
+ * The override that kills the root group's animation can't live here,
+ * tempting as that is: `root` isn't a name declared in this file, it's
+ * the View Transition API's reserved name for the implicit snapshot
+ * group, but CSS Modules scopes every bare identifier in a .module.css
+ * file regardless — same root cause as the .stack fix in
+ * slide.module.css — and unlike a class selector, a pseudo-element
+ * function argument has nowhere a :global() escape can legally sit (the
+ * CSS parser rejects it: `<custom-ident>` only). So this file can only
+ * ever produce a selector like `::view-transition-old(deck-module__…)`,
+ * which the browser's real `root` group can never match. The actual
+ * override lives in styles/general.css instead, gated on
+ * `[data-hey-team-theme]` — see the comment there.
  */
-::view-transition-group(root),
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-}
 
 @keyframes hey-team-slide-out {
   to {
