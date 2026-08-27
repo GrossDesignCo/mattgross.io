@@ -5,6 +5,12 @@ import themeStyles from './theme.module.css';
 // is currently in. Carries its own data-hey-team-theme (the *incoming*
 // theme) rather than inheriting the deck's, so it can resolve --bg on its
 // own regardless of what the deck itself is still showing mid-sweep.
+// data-hey-team-wipe is a bare marker with no styling purpose of its own
+// — general.css's :root:has() override for <html>'s own background needs
+// something to distinguish this element's data-hey-team-theme from
+// .deck's (data-hey-team-deck) so the two rule sets tie in specificity
+// and this one can deterministically win by source order while a wipe is
+// in flight — see that file.
 //
 // Also sets --hey-team-wipe-direction itself, from its own `direction`
 // prop, rather than reading the .viewport crossfade's shared
@@ -26,6 +32,7 @@ export const ThemeWipe = ({ wipe, coverMs, revealMs }) => {
     <div
       aria-hidden
       className={`${styles.themeWipe} ${themeStyles.themed} ${phaseClass}`}
+      data-hey-team-wipe
       data-hey-team-theme={theme}
       style={{
         background: 'var(--bg)',

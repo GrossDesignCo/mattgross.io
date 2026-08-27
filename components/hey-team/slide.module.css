@@ -24,53 +24,106 @@
 }
 
 /*
- * Staggered reveal on every slide mount — fires on any navigation, same-
- * section or crossing, since each slide is a distinct Component that
- * fully remounts on index change (see deck.jsx's `Current`). .content's
- * only direct child is each slide's own `.stack` wrapper (see
- * slides.jsx), so the stagger targets *its* children — title, then body
- * content, then tags — rather than .content itself. `.stack` is
- * :global() because it's the shared general.css utility class, not
- * something defined in this module — left bare, CSS Modules would
- * scope/hash it to a class name slides.jsx never actually renders, and
- * the selector would silently never match.
+ * Shared stagger choreography for slide content — three flavors on one
+ * rhythm (150ms apart, up to 6 items, 220ms each, var(--bezier)),
+ * differing only in which edge the motion reads from:
+ *
+ *  - 'exiting': the outgoing slide's own items leaving, rendered in
+ *    Deck's exit overlay (use-stagger-transition.js) — horizontal,
+ *    direction-aware.
+ *  - 'entering': the incoming slide's items arriving for a same-section
+ *    move (use-stagger-transition.js again) — horizontal, direction-
+ *    aware, the other half of the same handoff, mirroring 'exiting' so
+ *    "next"/"back" stay opposite motions (see CLAUDE.md).
+ *  - 'revealing': the incoming slide's items arriving after a section-
+ *    crossing wipe (deck.jsx sets this directly during the wipe's
+ *    reveal phase) — vertical only. The wipe's own sweep already
+ *    carries the directional cue; a competing horizontal motion on the
+ *    content underneath would fight it rather than cooperate with it.
+ *
+ * .content's only direct child is each slide's own `.stack` wrapper (see
+ * slides.jsx), so the stagger targets *its* children — title first, then
+ * body content, then tags — rather than .content itself.
+ *
+ * --hey-team-slide-direction is set inline directly on the relevant
+ * wrapper by deck.jsx / use-stagger-transition.js — a normal custom
+ * property on a real ancestor element, no view-transition pseudo-tree
+ * inheritance trick needed now that nothing here uses that API.
  */
-.content > :global(.stack) > * {
-  animation: hey-team-reveal 220ms var(--bezier) both;
+:global([data-hey-team-phase='exiting']) .content > :global(.stack) > *,
+:global([data-hey-team-phase='entering']) .content > :global(.stack) > *,
+:global([data-hey-team-phase='revealing']) .content > :global(.stack) > * {
+  animation-duration: 220ms;
+  animation-timing-function: var(--bezier);
+  animation-fill-mode: both;
 }
 
-.content > :global(.stack) > *:nth-child(1) {
+:global([data-hey-team-phase='exiting']) .content > :global(.stack) > * {
+  animation-name: hey-team-stagger-out;
+}
+:global([data-hey-team-phase='entering']) .content > :global(.stack) > * {
+  animation-name: hey-team-stagger-in-horizontal;
+}
+:global([data-hey-team-phase='revealing']) .content > :global(.stack) > * {
+  animation-name: hey-team-stagger-in-vertical;
+}
+
+:global([data-hey-team-phase='exiting']) .content > :global(.stack) > *:nth-child(1),
+:global([data-hey-team-phase='entering']) .content > :global(.stack) > *:nth-child(1),
+:global([data-hey-team-phase='revealing']) .content > :global(.stack) > *:nth-child(1) {
   animation-delay: 0ms;
 }
-.content > :global(.stack) > *:nth-child(2) {
-  animation-delay: 100ms;
+:global([data-hey-team-phase='exiting']) .content > :global(.stack) > *:nth-child(2),
+:global([data-hey-team-phase='entering']) .content > :global(.stack) > *:nth-child(2),
+:global([data-hey-team-phase='revealing']) .content > :global(.stack) > *:nth-child(2) {
+  animation-delay: 150ms;
 }
-.content > :global(.stack) > *:nth-child(3) {
-  animation-delay: 200ms;
-}
-.content > :global(.stack) > *:nth-child(4) {
+:global([data-hey-team-phase='exiting']) .content > :global(.stack) > *:nth-child(3),
+:global([data-hey-team-phase='entering']) .content > :global(.stack) > *:nth-child(3),
+:global([data-hey-team-phase='revealing']) .content > :global(.stack) > *:nth-child(3) {
   animation-delay: 300ms;
 }
-.content > :global(.stack) > *:nth-child(5) {
-  animation-delay: 400ms;
+:global([data-hey-team-phase='exiting']) .content > :global(.stack) > *:nth-child(4),
+:global([data-hey-team-phase='entering']) .content > :global(.stack) > *:nth-child(4),
+:global([data-hey-team-phase='revealing']) .content > :global(.stack) > *:nth-child(4) {
+  animation-delay: 450ms;
 }
-.content > :global(.stack) > *:nth-child(6) {
-  animation-delay: 500ms;
+:global([data-hey-team-phase='exiting']) .content > :global(.stack) > *:nth-child(5),
+:global([data-hey-team-phase='entering']) .content > :global(.stack) > *:nth-child(5),
+:global([data-hey-team-phase='revealing']) .content > :global(.stack) > *:nth-child(5) {
+  animation-delay: 600ms;
+}
+:global([data-hey-team-phase='exiting']) .content > :global(.stack) > *:nth-child(6),
+:global([data-hey-team-phase='entering']) .content > :global(.stack) > *:nth-child(6),
+:global([data-hey-team-phase='revealing']) .content > :global(.stack) > *:nth-child(6) {
+  animation-delay: 750ms;
 }
 
-@keyframes hey-team-reveal {
+@keyframes hey-team-stagger-out {
+  to {
+    opacity: 0;
+    transform: translateX(calc(var(--hey-team-slide-direction, 1) * -6%));
+  }
+}
+
+@keyframes hey-team-stagger-in-horizontal {
+  from {
+    opacity: 0;
+    transform: translateX(calc(var(--hey-team-slide-direction, 1) * 6%));
+  }
+}
+
+@keyframes hey-team-stagger-in-vertical {
   from {
     opacity: 0;
     transform: translateY(6px);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .content > :global(.stack) > * {
+  :global([data-hey-team-phase='exiting']) .content > :global(.stack) > *,
+  :global([data-hey-team-phase='entering']) .content > :global(.stack) > *,
+  :global([data-hey-team-phase='revealing']) .content > :global(.stack) > * {
     animation: none;
   }
 }

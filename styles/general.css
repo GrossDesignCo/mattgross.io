@@ -151,23 +151,47 @@ h2 {
   animation: 0.5s ease both default-in;
 }
 
-/* The hey-team deck (components/hey-team/deck.jsx) names only its own
- * .viewport for the View Transition API, so its background falls into
- * this root pair too — and the default-in/default-out crossfade above
- * would fade *through* this element's own background for that ~0.5s,
- * showing <html>'s (site-wide light/dark, not the deck's per-section
- * theme). This can't be scoped from deck.module.css: `root` is the API's
- * reserved name for the implicit group, not something declared in that
- * file, but CSS Modules scopes every bare identifier there regardless,
- * and a pseudo-element function argument has no :global() escape (the
- * CSS parser only accepts a <custom-ident> there). [data-hey-team-theme]
- * is deck.jsx's own root attribute — plain HTML, so untouched by that
- * scoping — making it the one thing this plain stylesheet and that CSS
- * module can still agree on. No space before `::view-transition-*`: these
- * pseudo-elements chain directly off their originating selector (same as
- * the bare rules above), a descendant combinator here just fails to
- * match anything rather than erroring. */
-:root:has([data-hey-team-theme])::view-transition-old(root),
-:root:has([data-hey-team-theme])::view-transition-new(root) {
-  animation: none;
+/* The hey-team deck (components/hey-team/deck.jsx) themes itself via
+ * data-hey-team-theme, but <html>'s own background above only ever reads
+ * the site-wide light/dark --bg — it has no way to know about a per-
+ * section theme scoped to a descendant. That gap shows on mobile Safari:
+ * the deck's section-crossing wipe is `position: fixed`, and rubber-band
+ * overscroll can pull the viewport past a fixed element's edge and
+ * reveal whatever's actually behind it, i.e. this element.
+ *
+ * :has() lets :root react to that descendant attribute directly, with no
+ * JS involved — correct from first paint (the attribute is written in
+ * JSX, not an effect) and with no one-commit lag on every theme change
+ * after that, unlike the useEffect-mirroring this replaced. The color
+ * values necessarily duplicate theme.module.css's: --bg only inherits
+ * *down* the tree to a matched element's descendants, never up to an
+ * ancestor like <html>, so :has() is the only way to make the ancestor's
+ * own background agree with a theme set on a descendant.
+ *
+ * Two rule sets, same specificity (two attribute selectors apiece) so
+ * the one declared later always wins on a tie rather than depending on
+ * which theme names happen to match first: .deck's own current theme
+ * (data-hey-team-deck) is the baseline, and the wipe panel's *incoming*
+ * theme (data-hey-team-wipe, theme-wipe.jsx) overrides it for the whole
+ * cover+reveal cycle, matching the wipe panel's own color so an
+ * overscroll peek behind it is never anything else.
+ */
+:root:has([data-hey-team-deck][data-hey-team-theme='light']) {
+  --bg: #f6f3ee;
+}
+:root:has([data-hey-team-deck][data-hey-team-theme='dark']) {
+  --bg: #0a0a0a;
+}
+:root:has([data-hey-team-deck][data-hey-team-theme='gold']) {
+  --bg: #180f04;
+}
+
+:root:has([data-hey-team-wipe][data-hey-team-theme='light']) {
+  --bg: #f6f3ee;
+}
+:root:has([data-hey-team-wipe][data-hey-team-theme='dark']) {
+  --bg: #0a0a0a;
+}
+:root:has([data-hey-team-wipe][data-hey-team-theme='gold']) {
+  --bg: #180f04;
 }

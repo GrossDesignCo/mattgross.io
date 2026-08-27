@@ -25,8 +25,37 @@
   color: var(--fg);
 }
 
+/* position: relative so .exitOverlay (below) can stack exactly over
+   whatever .incoming is currently showing — see use-stagger-transition.js
+   for the exit/enter choreography that renders into these two.
+   min-height: 100dvh matches .slide's own floor (slide.module.css) —
+   without it, .viewport's auto height comes only from .incoming (its one
+   in-flow child; .exitOverlay is position: absolute and contributes
+   nothing to layout), which is empty for the whole 'exiting' phase of a
+   same-section move. .viewport, and .deck above it, would collapse to
+   ~0px for that stretch: .deck's themed background paints just that
+   sliver while the outgoing slide (still visible, its own min-height
+   escaping the collapsed box via normal overflow) floats over
+   pages/hey-team/index.module.css's static light .root fallback showing
+   through everywhere else — a real flash to the wrong color. */
 .viewport {
-  view-transition-name: hey-team-slide;
+  position: relative;
+  min-height: 100dvh;
+}
+
+/* Permanently mounted (Deck never conditionally renders this wrapper
+   itself, only what's inside it) so use-stagger-transition.js's
+   listeners can bind once on mount rather than rebind every transition —
+   see that file's top comment. */
+.exitOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.incoming {
+  position: relative;
 }
 
 .chrome {
@@ -124,71 +153,6 @@
 }
 
 /*
- * Slide transition: content moves opposite the nav direction so "next"
- * and "back" read as mirror opposites (spatial continuity), not a generic
- * crossfade. Kept short (320ms) and subtle (6%) because this fires on
- * every keypress during a live walkthrough — see CLAUDE.md.
- *
- * Direction comes from --hey-team-slide-direction (1 or -1), set on <html>
- * by deck.jsx right before the transition starts and read here via
- * calc(). Custom properties inherit into the view-transition pseudo tree
- * from :root, so this one pair of keyframes covers both directions
- * without needing a selector to match into that tree — the part that
- * turned out not to work reliably in Safari.
- */
-::view-transition-old(hey-team-slide) {
-  animation: hey-team-slide-out 320ms var(--bezier) both;
-}
-::view-transition-new(hey-team-slide) {
-  animation: hey-team-slide-in 320ms var(--bezier) both;
-}
-
-/* Only .viewport gets a name (above) — everything else, including .deck's
- * own themed background, falls into the browser's implicit "root" snapshot
- * pair, which the UA cross-fades by default over ~250ms. .deck's bg is
- * already correct in both the old and new snapshot (the theme attribute
- * flips inside the same flushSync the transition captures), so that fade
- * only costs a brief partially-transparent window — long enough for
- * <html>'s own background (styles/general.css, tracks the site-wide
- * color-scheme, not this deck's per-section theme) to show through behind
- * it.
- *
- * The override that kills the root group's animation can't live here,
- * tempting as that is: `root` isn't a name declared in this file, it's
- * the View Transition API's reserved name for the implicit snapshot
- * group, but CSS Modules scopes every bare identifier in a .module.css
- * file regardless — same root cause as the .stack fix in
- * slide.module.css — and unlike a class selector, a pseudo-element
- * function argument has nowhere a :global() escape can legally sit (the
- * CSS parser rejects it: `<custom-ident>` only). So this file can only
- * ever produce a selector like `::view-transition-old(deck-module__…)`,
- * which the browser's real `root` group can never match. The actual
- * override lives in styles/general.css instead, gated on
- * `[data-hey-team-theme]` — see the comment there.
- */
-
-@keyframes hey-team-slide-out {
-  to {
-    transform: translateX(calc(var(--hey-team-slide-direction, 1) * -6%));
-    opacity: 0;
-  }
-}
-
-@keyframes hey-team-slide-in {
-  from {
-    transform: translateX(calc(var(--hey-team-slide-direction, 1) * 6%));
-    opacity: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(hey-team-slide),
-  ::view-transition-new(hey-team-slide) {
-    animation: none;
-  }
-}
-
-/*
  * Section-crossing ceremony: a solid panel sweeps in to fully cover the
  * screen, the real content + theme swap happens invisibly underneath at
  * that exact covered instant (see Deck's onExecute -> useThemeWipe.play),
@@ -197,14 +161,13 @@
  * is what makes the next slide read as animating in.
  *
  * Reads --hey-team-wipe-direction, set inline by theme-wipe.jsx from its
- * own `direction` prop rather than the .viewport crossfade's
- * --hey-team-slide-direction — that property is shared global state Deck
- * can rewrite mid-sweep, which raced this animation's direction out from
- * under it (see theme-wipe.jsx's comment) — deliberately NOT built on the
- * View Transition API like .viewport above; this project already hit
- * real Safari matching bugs leaning on that API once (see the comment at
- * the top of deck.jsx) and a plain transform + timeout doesn't carry that
- * risk for something this simple.
+ * own `direction` prop rather than the stagger transition's
+ * --hey-team-slide-direction — that property is shared, mutable state
+ * Deck can rewrite mid-sweep, which raced this animation's direction out
+ * from under it (see theme-wipe.jsx's comment) — a plain transform +
+ * timeout, not CSS animation events, since REVEAL_MS/COVER_MS are fixed
+ * and don't need the per-item event-driven handoff use-stagger-
+ * transition.js needs.
  */
 .themeWipe {
   position: fixed;

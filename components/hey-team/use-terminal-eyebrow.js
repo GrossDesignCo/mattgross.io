@@ -16,29 +16,37 @@ import { buildFrames, promptFor } from './eyebrow-engine';
 // not from a state that was never actually shown.
 //
 // `onExecute` fires synchronously the instant a frame flagged
-// `execute: true` is applied — that's Deck's hook for firing the content
-// swap and theme wipe at the exact moment the prompt "runs".
+// `execute: true` is applied — that's Deck's hook for firing the theme
+// wipe at the exact moment a section-crossing `cd` "runs".
+//
+// `onSettle` fires once the whole frame sequence has finished playing —
+// the universal "typing is done" signal Deck gates every slide content
+// transition on (not just section crossings), per CLAUDE.md's
+// entering/exiting-has-a-purpose rule: the eyebrow's own typing motion
+// is the anticipation beat, the content transition is the payoff.
 //
 // `instant` collapses the sequence straight to its final frame, same as
-// prefers-reduced-motion below — Deck sets it for a section crossing that
-// followed another goTo within FAST_REPEAT_MS, so skimming/holding a key
-// through several sections doesn't force each one's cd/pause/execute to
-// play out in full.
-export function useTerminalEyebrow(target, { onExecute, instant } = {}) {
+// prefers-reduced-motion below — Deck sets it whenever a goTo lands
+// while the previous one is still in flight (typing or the content
+// transition it gates), so scrubbing through several slides doesn't
+// force each one's full choreography to play out.
+export function useTerminalEyebrow(target, { onExecute, onSettle, instant } = {}) {
   const [frame, setFrame] = useState({ prompt: '', command: '' });
   // Whether a frame sequence is actively playing — false once it's
   // settled on its last frame with nothing left scheduled. Eyebrow uses
-  // this to gate its idle cursor blink so it never fires mid-typing.
+  // this to gate its idle cursor fade so it never fires mid-typing.
   const [isTyping, setIsTyping] = useState(false);
   const currentRef = useRef(null);
   const onExecuteRef = useRef(onExecute);
+  const onSettleRef = useRef(onSettle);
   const instantRef = useRef(instant);
 
   // Keep the refs in sync outside of render (mutating them during render
   // trips react-hooks/refs) without making the main effect below depend
-  // on onExecute's/instant's identity.
+  // on onExecute's/onSettle's/instant's identity.
   useEffect(() => {
     onExecuteRef.current = onExecute;
+    onSettleRef.current = onSettle;
     instantRef.current = instant;
   });
 
@@ -68,6 +76,7 @@ export function useTerminalEyebrow(target, { onExecute, instant } = {}) {
       // swap fires, just without the choreography around it.
       applyFrame({ ...last, execute: !!prev && prev.dir !== target.dir });
       setIsTyping(false);
+      onSettleRef.current?.();
       return;
     }
 
@@ -84,6 +93,7 @@ export function useTerminalEyebrow(target, { onExecute, instant } = {}) {
       // frame's own dwell time.
       if (i >= frames.length) {
         setIsTyping(false);
+        onSettleRef.current?.();
         return;
       }
       applyFrame(frames[i]);

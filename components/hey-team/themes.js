@@ -4,8 +4,8 @@
 // a palette.
 export const SECTION_THEME = {
   '': 'light',
-  tesla: 'dark',
-  zscaler: 'light',
+  constraints: 'dark',
+  transmission: 'light',
   vision: 'gold',
 };
 

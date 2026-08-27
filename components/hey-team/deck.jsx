@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { flushSync } from 'react-dom';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Eyebrow } from './eyebrow';
 import { ThemeWipe } from './theme-wipe';
 import { useTerminalEyebrow } from './use-terminal-eyebrow';
 import { useThemeWipe } from './use-theme-wipe';
+import { useStaggerTransition } from './use-stagger-transition';
 import { themeFor } from './themes';
 import styles from './deck.module.css';
 import themeStyles from './theme.module.css';
@@ -14,180 +14,201 @@ import themeStyles from './theme.module.css';
 const RIGHT_KEYS = ['ArrowRight', 'ArrowDown', ' ', 'PageDown', 'End'];
 const LEFT_KEYS = ['ArrowLeft', 'ArrowUp', 'PageUp', 'Home'];
 
-// Below this gap between keypresses, a section crossing is treated as
-// someone skimming/holding a key rather than deliberately watching a
-// crossing — the cd/wipe choreography is a flourish for the latter, not
-// something that should slow down the former. Comfortably above OS key
-// -repeat's inter-repeat interval (~30-50ms) and comfortably below the
-// gap between two deliberate taps (~250ms+), so it separates the two
-// reliably without needing to special-case "held" vs. "mashed."
-const FAST_REPEAT_MS = 200;
-
-// Orchestrates slide state + keyboard nav. Transitions use the browser's
-// native View Transitions API (same-document mode) so the crossfade/slide
-// is GPU-composited with zero animation-library weight. Direction is
-// written to a CSS custom property on <html> before the transition starts;
-// deck.module.css reads it via calc() inside a single unconditional
-// keyframe so "next"/"back" mirror each other instead of playing a
-// generic fade — see "directional transitions carry meaning" in
-// CLAUDE.md. (Two earlier versions relied on selector-matching into the
-// view-transition pseudo-element tree — a `data-*` attribute + descendant
-// combinator, then `:active-view-transition-type()` — and neither matched
-// reliably in Safari. Custom-property *inheritance* into that tree is a
-// far more basic mechanism and isn't affected by that gap.)
+// Orchestrates slide state + keyboard nav. One pipeline drives every
+// move, same-section or section-crossing: the eyebrow always types the
+// destination's command first, and only once it settles does the slide
+// content actually transition — see useTerminalEyebrow's onSettle below.
+// A second keypress that lands before the previous move has fully
+// settled (typing still playing, or the content transition/wipe still
+// animating — see `busyRef`) shortcuts straight to the target instead of
+// queuing up the full cd/typing choreography, so holding/tapping a key
+// scrubs through slides rather than forcing every crossing's full
+// sequence to play. The content swap itself is still instant either way
+// — what the shortcut skips is the eyebrow's typing and (for a same-
+// section move) the outgoing slide's exit; the incoming slide still
+// plays its real entrance (use-stagger-transition.js's `snap`), so
+// `busyRef` keeps correctly reading "in flight" for as long as that
+// entrance is actually still on screen, and a burst of rapid presses
+// stays in shortcut mode the whole time instead of alternating back into
+// the slow typing-gated path between presses.
 //
-// Three pieces of index state now, each answering a different question:
-//   - `index` — what's actually in .viewport. Only ever set inside the
-//     flushSync that startViewTransition() captures as its before/after
-//     pair. The deck's theme (see the .deck className below) is derived
-//     directly from this, so a section-crossing theme flip lands at
-//     exactly the same instant as the content swap it's paired with.
-//   - `displayIndex` — what .chrome (page count / dots) shows. Set after
-//     transition.ready resolves, same as before.
+// Same-section moves and section crossings differ only in what plays
+// once typing settles:
+//   - same-section: use-stagger-transition.js's exit/enter handoff (the
+//     outgoing slide's items stagger out; the moment the last one starts
+//     leaving, the incoming slide's items start staggering in over it).
+//   - crossing: the existing cd/pause/execute choreography
+//     (eyebrow-engine.js) fires the full-page theme wipe mid-sequence
+//     (via onExecute, not onSettle — the wipe needs to start the instant
+//     the `cd` resolves, not wait for a section-landing slide's typing to
+//     fully finish, though for the slides here those two land on the
+//     same frame anyway since landing slides have no command to type).
+//     The actual content swap happens invisibly at the wipe's fully-
+//     covered midpoint, same as before; the reveal half sets the same
+//     data-hey-team-phase attribute the stagger transition's own
+//     entrance uses (slide.module.css), just with a vertical rather than
+//     horizontal variant, since the wipe's sweep already carries the
+//     directional cue.
+//
+// Three pieces of index state, each answering a different question:
+//   - `index` — what's actually in .viewport's .incoming wrapper. Only
+//     ever set inside applySwap, at the exact instant the content
+//     transition's own handoff (stagger's onSwap, or the wipe's
+//     onMidpoint) says the swap should happen.
+//   - `displayIndex` — what .chrome (page count / dots) shows. Updated
+//     in the same applySwap call as `index`, since both mechanisms now
+//     already resolve "when did the new slide actually appear" for us.
 //   - `announcedIndex` — what the eyebrow is currently typing toward.
-//     Unlike the other two, this updates *immediately* on every goTo
-//     call, same-section or not — it's what lets a section-crossing cd
-//     sequence start typing the instant you press a key, while `index`/
-//     `displayIndex` (and the actual view transition) stay frozen on the
-//     old slide until the sequence executes.
+//     Updates immediately on every goTo call, same-section or not — it's
+//     what lets typing start the instant a key is pressed while `index`/
+//     `displayIndex` stay frozen on the old slide until the transition
+//     that's gated on that typing actually fires.
 //
-// Same-section moves are unchanged from before: goTo runs the content
-// swap immediately, non-blocking, exactly like a normal keypress always
-// has here. Section-crossing moves defer that same content-swap function
-// until useTerminalEyebrow's onExecute fires — see the cd/pause/execute
-// choreography in eyebrow-engine.js — and pair it with a theme wipe
-// (theme-wipe.jsx / use-theme-wipe.js). Redirecting mid-sequence (a new
-// key press before execute) just overwrites the pending closure and lets
-// useTerminalEyebrow's own redirect handling (see its comment) keep the
-// typing smooth; nothing here needs to know a redirect happened.
-//
-// goTo calls closer together than FAST_REPEAT_MS skip that choreography
-// entirely (see the `fast` check below) — holding a key or tapping
-// through several sections shouldn't force each crossing's cd/pause/
-// execute sequence to play out.
+// A fourth piece, `targetIndexRef`, isn't state — it's what every goTo
+// call computes its destination *from*, instead of `indexRef`. Keypresses
+// arrive faster than a transition can commit, so `indexRef.current` (the
+// last committed slide) can still read as the *previous* destination when
+// the next keydown fires. Computing off it would make consecutive presses
+// collide on the same target — a shortcut-snap mid-transition would land
+// exactly where the transition it just cancelled was already headed,
+// silently dropping one keypress's worth of advance. `targetIndexRef`
+// instead tracks the cumulative destination of every goTo call as soon as
+// it's requested, so each keypress always lands one slide past whatever
+// the one before it asked for, whether or not that one has visually
+// caught up yet — the 1:1 between keypress and slide change this whole
+// pipeline exists to guarantee.
 export const Deck = ({ slides }) => {
   const [index, setIndex] = useState(0);
   const [displayIndex, setDisplayIndex] = useState(0);
   const [announcedIndex, setAnnouncedIndex] = useState(0);
-  // Whether the section crossing announcedIndex is currently heading
-  // toward should skip its choreography — see FAST_REPEAT_MS.
-  const [fastTransition, setFastTransition] = useState(false);
+  // Whether the eyebrow sequence announcedIndex is heading toward should
+  // skip straight to its final frame — see the busy/shortcut logic in
+  // goTo below.
+  const [instantTransition, setInstantTransition] = useState(false);
+  // Sign for --hey-team-slide-direction (slide.module.css) — set once
+  // per goTo call, read by whichever stagger keyframes end up playing.
+  const [direction, setDirection] = useState(1);
   // Currently-held nav keys, so the mock keycaps in .chrome can visually
   // depress in step with the real keyboard — a Set (not two booleans) so
   // holding one key while tapping another doesn't drop the first.
   const [heldKeys, setHeldKeys] = useState(() => new Set());
   const total = slides.length;
   const indexRef = useRef(index);
-  // What to run when the in-flight section-crossing sequence executes.
-  // Overwritten wholesale on redirect — only the latest survives.
-  const pendingRunRef = useRef(null);
-  // Timestamp of the last goTo call, for the FAST_REPEAT_MS check below.
-  const lastGoToAtRef = useRef(0);
-  // The view transition currently in flight, if any.
-  const activeTransitionRef = useRef(null);
+  // The cumulative destination of every goTo call so far — see the
+  // top-of-file comment on why this, not indexRef, is what goTo computes
+  // a new keypress's target from.
+  const targetIndexRef = useRef(index);
+  // What to run when the in-flight sequence reaches the relevant signal.
+  // Exactly one of these is armed per goTo call (see goTo); overwritten
+  // wholesale on redirect — only the latest survives.
+  const pendingExecuteRunRef = useRef(null);
+  const pendingSettleRunRef = useRef(null);
+  // Whether *anything* in the pipeline (typing, stagger, or wipe) is
+  // still in flight — synced from render state below, read synchronously
+  // by goTo at keypress time to decide shortcut vs. full choreography.
+  const busyRef = useRef(false);
   // Bumped on every real `execute` — Eyebrow re-keys its accent chip off
   // this to replay a one-shot flash, and skips it entirely at 0 so first
   // paint doesn't also flash (see the mount-only scale-in in
   // eyebrow.module.css, which already covers that moment).
   const [flashSeq, setFlashSeq] = useState(0);
 
-  const { wipe, play: playWipe, coverMs, revealMs } = useThemeWipe();
+  const { wipe, play: playWipe, cancel: cancelWipe, coverMs, revealMs } = useThemeWipe();
+  const {
+    stagger,
+    overlayRef,
+    incomingRef,
+    play: playStagger,
+    snap: snapStagger,
+  } = useStaggerTransition();
 
-  // `instant` skips .viewport's own crossfade entirely — used for a
-  // section-crossing swap, which happens while the wipe's cover panel is
-  // fully opaque. That crossfade would be invisible at the moment it
-  // starts, but nothing forces its ~320ms to fit inside the wipe's own
-  // reveal timing; on a slow frame (or after either duration gets tuned
-  // independently) its tail can run past the reveal and become visible
-  // as the wipe finishes uncovering. The wipe's sweep already *is* the
-  // transition's motion here, so the fix is to not run a second,
-  // redundant one underneath it rather than chase a timing margin.
-  const runContentSwap = useCallback((clamped, direction, { instant } = {}) => {
-    indexRef.current = clamped;
+  // <html>'s own background (styles/general.css) tracks the site-wide
+  // color-scheme, not this deck's per-section theme, and the section-
+  // crossing wipe is `position: fixed` — mobile Safari's rubber-band
+  // overscroll can still pull the viewport past a fixed element's edge
+  // and reveal whatever's behind it. Rather than mirror the theme onto
+  // <html> from an effect (which can't win the very first paint, and
+  // lags one commit behind on every theme change after that), a pure
+  // `:root:has([data-hey-team-deck]…)` rule in general.css reads
+  // .deck's/ThemeWipe's own data-hey-team-theme attributes directly —
+  // see that file for the full rationale.
 
-    // --hey-team-slide-direction is one shared property on <html>, read
-    // *live* by whichever crossfade keyframes are currently animating.
-    // Calling startViewTransition() again while one's still in flight
-    // does auto-skip the old one, but not necessarily before this next
-    // line flips the property — catch that ourselves so the outgoing
-    // transition's animation is fully torn down before its direction
-    // changes out from under it. Losing that race is what let a still-
-    // exiting slide suddenly reverse direction mid-flight, only really
-    // reachable now that the fast-repeat path (above) makes firing two
-    // transitions this close together easy.
-    activeTransitionRef.current?.skipTransition();
-
-    if (instant || typeof document === 'undefined' || !document.startViewTransition) {
-      activeTransitionRef.current = null;
-      setIndex(clamped);
-      setDisplayIndex(clamped);
-      return;
-    }
-
-    document.documentElement.style.setProperty(
-      '--hey-team-slide-direction',
-      direction === 'forward' ? '1' : '-1'
-    );
-
-    // Only .viewport's index is inside the transitioned callback.
-    const transition = document.startViewTransition(() => {
-      flushSync(() => setIndex(clamped));
-    });
-    activeTransitionRef.current = transition;
-    transition.finished.finally(() => {
-      if (activeTransitionRef.current === transition) {
-        activeTransitionRef.current = null;
-      }
-    });
-    // indexRef.current (not the closed-over `clamped`) so rapid presses
-    // that resolve out of order still converge on the true current slide.
-    const syncDisplay = () => setDisplayIndex(indexRef.current);
-    // A skipped transition rejects `ready` — still sync, that's expected
-    // whenever a press interrupts one already in flight.
-    transition.ready.then(syncDisplay, syncDisplay);
+  // The one place `index`/`displayIndex` actually change — called at
+  // whatever instant the active content transition says the new slide
+  // should appear (stagger's handoff, the wipe's covered midpoint, or
+  // immediately for a shortcut).
+  const applySwap = useCallback((next) => {
+    indexRef.current = next;
+    setIndex(next);
+    setDisplayIndex(next);
   }, []);
 
   const onEyebrowExecute = useCallback(() => {
-    const run = pendingRunRef.current;
-    pendingRunRef.current = null;
+    const run = pendingExecuteRunRef.current;
+    pendingExecuteRunRef.current = null;
     run?.();
     setFlashSeq((n) => n + 1);
+  }, []);
+
+  const onEyebrowSettle = useCallback(() => {
+    const run = pendingSettleRunRef.current;
+    pendingSettleRunRef.current = null;
+    run?.();
   }, []);
 
   const eyebrowTarget = slides[announcedIndex].eyebrow;
   const { prompt, command, isTyping } = useTerminalEyebrow(eyebrowTarget, {
     onExecute: onEyebrowExecute,
-    instant: fastTransition,
+    onSettle: onEyebrowSettle,
+    instant: instantTransition,
+  });
+
+  // useLayoutEffect, not useEffect: this must be current by the time the
+  // *next* keydown fires, including an OS key-repeat only ~30-50ms after
+  // this render — a plain effect's async scheduling isn't guaranteed to
+  // win that race, but a layout effect flushes synchronously before the
+  // browser can dispatch another event.
+  useLayoutEffect(() => {
+    busyRef.current = isTyping || stagger !== null || wipe !== null;
   });
 
   const goTo = useCallback(
     (next) => {
       const clamped = Math.max(0, Math.min(total - 1, next));
-      if (clamped === indexRef.current) return;
+      if (clamped === targetIndexRef.current) return;
+      targetIndexRef.current = clamped;
 
-      const now = typeof performance !== 'undefined' ? performance.now() : Date.now();
-      const fast = now - lastGoToAtRef.current < FAST_REPEAT_MS;
-      lastGoToAtRef.current = now;
-
-      const direction = clamped > indexRef.current ? 'forward' : 'backward';
+      const shortcut = busyRef.current;
+      const dir = clamped > indexRef.current ? 'forward' : 'backward';
       const crossesSection = slides[clamped].eyebrow.dir !== slides[indexRef.current].eyebrow.dir;
+      const Outgoing = slides[indexRef.current].Component;
 
       setAnnouncedIndex(clamped);
-      setFastTransition(fast);
+      setInstantTransition(shortcut);
+      setDirection(dir === 'forward' ? 1 : -1);
 
-      if (!crossesSection || fast) {
-        pendingRunRef.current = null;
-        runContentSwap(clamped, direction);
+      if (shortcut) {
+        pendingExecuteRunRef.current = null;
+        pendingSettleRunRef.current = null;
+        cancelWipe();
+        snapStagger(() => applySwap(clamped));
         return;
       }
 
-      pendingRunRef.current = () => {
-        playWipe(direction, themeFor(slides[clamped].eyebrow.dir), () => {
-          runContentSwap(clamped, direction, { instant: true });
-        });
+      if (crossesSection) {
+        pendingSettleRunRef.current = null;
+        pendingExecuteRunRef.current = () => {
+          playWipe(dir, themeFor(slides[clamped].eyebrow.dir), () => applySwap(clamped));
+        };
+        return;
+      }
+
+      pendingExecuteRunRef.current = null;
+      pendingSettleRunRef.current = () => {
+        playStagger(Outgoing, () => applySwap(clamped));
       };
     },
-    [total, slides, runContentSwap, playWipe]
+    [total, slides, playWipe, playStagger, snapStagger, cancelWipe, applySwap]
   );
 
   useEffect(() => {
@@ -198,13 +219,13 @@ export const Deck = ({ slides }) => {
         case ' ':
         case 'PageDown':
           event.preventDefault();
-          goTo(indexRef.current + 1);
+          goTo(targetIndexRef.current + 1);
           break;
         case 'ArrowLeft':
         case 'ArrowUp':
         case 'PageUp':
           event.preventDefault();
-          goTo(indexRef.current - 1);
+          goTo(targetIndexRef.current - 1);
           break;
         case 'Home':
           event.preventDefault();
@@ -247,16 +268,33 @@ export const Deck = ({ slides }) => {
   const Current = slides[index].Component;
   const rightPressed = RIGHT_KEYS.some((key) => heldKeys.has(key));
   const leftPressed = LEFT_KEYS.some((key) => heldKeys.has(key));
+  // Which entrance the .incoming wrapper's children should play, if any
+  // — same-section stagger and the post-wipe reveal both land here, just
+  // with different keyframes (slide.module.css) for the reason in the
+  // top comment.
+  const incomingPhase =
+    stagger?.phase === 'entering' ? 'entering' : wipe?.phase === 'revealing' ? 'revealing' : undefined;
 
   return (
     <div
       className={`${styles.deck} ${themeStyles.themed}`}
+      data-hey-team-deck
       data-hey-team-theme={themeFor(slides[index].eyebrow.dir)}
     >
       <Eyebrow prompt={prompt} command={command} isTyping={isTyping} flashSeq={flashSeq} />
 
-      <div className={styles.viewport}>
-        <Current />
+      <div className={styles.viewport} style={{ '--hey-team-slide-direction': direction }}>
+        <div
+          ref={overlayRef}
+          className={styles.exitOverlay}
+          data-hey-team-phase={stagger?.Outgoing ? 'exiting' : undefined}
+        >
+          {stagger?.Outgoing && <stagger.Outgoing />}
+        </div>
+
+        <div ref={incomingRef} className={styles.incoming} data-hey-team-phase={incomingPhase}>
+          {stagger?.phase !== 'exiting' && <Current />}
+        </div>
       </div>
 
       <div className={styles.chrome}>

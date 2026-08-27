@@ -44,5 +44,14 @@ export function useThemeWipe() {
     }, COVER_MS);
   }, []);
 
-  return { wipe, play, coverMs: COVER_MS, revealMs: REVEAL_MS };
+  // Hard-stops an in-flight wipe without ever calling the pending
+  // onMidpoint — used when a goTo lands mid-wipe (see FAST_REPEAT_MS's
+  // replacement in deck.jsx): the caller does its own plain instant swap
+  // instead, so the wipe's own content-swap must simply never fire.
+  const cancel = useCallback(() => {
+    clearTimeout(timerRef.current);
+    setWipe(null);
+  }, []);
+
+  return { wipe, play, cancel, coverMs: COVER_MS, revealMs: REVEAL_MS };
 }

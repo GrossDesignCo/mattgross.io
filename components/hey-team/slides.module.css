@@ -1,0 +1,22 @@
+.calloutStat {
+  max-width: 46ch;
+  font-size: 0.95rem;
+  color: var(--hey-team-accent);
+}
+
+.quote {
+  margin: 0;
+  max-width: 52ch;
+}
+
+.quote p {
+  margin: 0;
+}
+
+.mechanismProtects {
+  margin-block-start: 0.15em;
+  padding-inline-start: 1.25em;
+  font-size: 0.9em;
+  color: var(--fg-muted, var(--fg));
+  opacity: 0.85;
+}

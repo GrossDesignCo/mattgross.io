@@ -6,24 +6,6 @@
   z-index: 10;
   padding-left: 2em;
   pointer-events: none;
-  /* This element's box is always full-width and fixed in place — it
-     never changes size or position, so there's nothing for the view
-     transition to diff/morph, no matter how much the pill inside it
-     grows or shrinks while typing. Putting view-transition-name (and
-     nulling its animation) on the pill itself didn't fully work: even
-     with animation:none on the group, the browser still ran its
-     size/position diff against whatever geometry it had captured for
-     that element, and the pill's own box genuinely does change size
-     every frame while typing. Isolating the named element from the
-     thing that actually resizes is what removes the diff entirely. */
-  view-transition-name: hey-team-eyebrow;
-}
-
-::view-transition-group(hey-team-eyebrow),
-::view-transition-old(hey-team-eyebrow),
-::view-transition-new(hey-team-eyebrow) {
-  animation: none;
-  transition: none;
 }
 
 @media (max-width: 400px), (max-height: 400px) {
@@ -125,26 +107,28 @@
 }
 
 /* Idle-only — eyebrow.jsx applies this exclusively when isTyping is
-   false, so the blink never runs while a sequence is actively typing/
-   backspacing (that would compete with the text itself). steps(1, end)
-   keeps it a hard terminal-style on/off rather than a soft fade. */
-.cursorBlink {
-  animation: hey-team-cursor-blink 1s steps(1, end) infinite;
+   false, so the fade never runs while a sequence is actively typing/
+   backspacing (that would compete with the text itself). A soft
+   ease-in-out fade rather than a hard on/off blink — "soft-code" over
+   terminal-authentic. Plain ease-in-out, not the site's --bezier: this
+   is a symmetric idle oscillation, not an entrance/exit or a
+   drag-reposition, so neither of those two buckets fits. */
+.cursorFade {
+  animation: hey-team-cursor-fade 1.2s ease-in-out infinite;
 }
 
-@keyframes hey-team-cursor-blink {
+@keyframes hey-team-cursor-fade {
   0%,
-  50% {
+  100% {
     opacity: 1;
   }
-  50.01%,
-  100% {
+  50% {
     opacity: 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cursorBlink {
+  .cursorFade {
     animation: none;
   }
 }

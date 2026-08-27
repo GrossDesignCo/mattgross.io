@@ -1,7 +1,9 @@
 .title {
   margin: 0;
+  margin-inline-start: -0.25rem;
   font-weight: 600;
   color: var(--fg-high-contrast);
+  text-box-trim: trim-both;
   line-height: 1.05;
   /* Non-JS fallback only — mirrors FitText's own default bounds
      (12px floor, 15vw ceiling, no separate vh cap) so there's no visible
