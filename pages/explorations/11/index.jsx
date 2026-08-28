@@ -4,38 +4,32 @@ import { Link } from '../../../components/link';
 import { Meta } from '../../../components/meta';
 import { Favicon } from '../../../components/favicon';
 import { IconArrowLeft } from '../../../components/icons/arrow-left';
-import { IconArrowRight } from '../../../components/icons/arrow-right';
 import { DoubleSlash } from '../../../components/double-slash';
-import { Gallery } from '../../../components/explorations/gallery/gallery';
+import { Demo } from '../../../components/explorations/11/Demo';
 
 export default function Page() {
   return (
     <div>
       <Head>
-        <title>Exploration 09 - Matt Gross</title>
-        <meta name="description" content="The Smoothness" />
+        <title>Exploration 11 - Matt Gross</title>
+        <meta name="description" content="Dynamic Heading" />
         <Favicon />
       </Head>
 
       <div className={styles.root}>
         <div className={styles.frame}>
-          {/* Make a gallery inside a container query */}
-          {/* Make it resizeable */}
-          {/* Make labels for each section */}
-          {/* Make them horizontal when not active, vertical when active */}
-          {/* In portrait orientations swap so the sections are a vertical stack instead of columns */}
-          <Gallery />
+          <Demo />
         </div>
 
         <Meta
           className={styles.meta}
           title={
             <>
-              <strong>Exploration 09</strong>: The Smoothness
+              <strong>Exploration 11</strong>: Dynamic Heading
             </>
           }
-          subTitle={<>Multi-section Gallery, Container Queries, Resizing</>}
-          dateCreated="February 2025"
+          subTitle={<>Typography, Adaptive Design</>}
+          dateCreated="August 2026"
           links={
             <>
               <Link href="/" className={styles.link}>
@@ -43,15 +37,11 @@ export default function Page() {
                 Main
               </Link>{' '}
               <DoubleSlash />{' '}
-              <Link href="/explorations/08" className={styles.link}>
-                <IconArrowLeft />
-                08
-              </Link>{' '}
-              / 09 /{' '}
               <Link href="/explorations/10" className={styles.link}>
+                <IconArrowLeft />
                 10
-                <IconArrowRight />
-              </Link>
+              </Link>{' '}
+              / 11
             </>
           }
         />

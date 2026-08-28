@@ -2,11 +2,21 @@ import { NavLink } from './nav-link';
 import { NavCategory } from './nav-category';
 import { DoubleSlash } from '../double-slash';
 
-export const Nav = () => {
-  const explorationCount = 9;
-  const exps = new Array(explorationCount)
+const getExplorationNumber = (index, maxLength) => {
+  return index.toString().padStart(maxLength.toString().length, '0');
+};
+
+const getExplorationArray = (count) => {
+  return new Array(count)
     .fill(0)
-    .map((item, i) => `0${i + 1}`);
+    .map((item, i) => {
+      return getExplorationNumber(i + 1, count);
+    });
+};
+
+export const Nav = () => {
+  const explorationCount = 10;
+  const exps = getExplorationArray(explorationCount);
 
   return (
     <div className="stack align-start">
