@@ -1,36 +1,51 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useContext, useLayoutEffect } from 'react';
 import { resizeCanvas } from './resizeCanvas';
 import { drawWaves } from './drawWaves';
+import { SettingsContext } from './control-context';
 import styles from './10.module.css';
 import { usePrefersReducedMotion } from '../../../hooks/usePrefersReducedMotion';
 
 export const Canvas = () => {
   const canvas = useRef();
   const prefersReducedMotion = usePrefersReducedMotion();
+  const { layout, harmonicCount } = useContext(SettingsContext);
+  const layoutRef = useRef(layout);
+  const harmonicCountRef = useRef(harmonicCount);
+
+  useLayoutEffect(() => {
+    layoutRef.current = layout;
+  }, [layout]);
+
+  useLayoutEffect(() => {
+    harmonicCountRef.current = harmonicCount;
+  }, [harmonicCount]);
 
   useEffect(() => {
     if (!canvas.current) return;
 
     let frameId;
     let phase = prefersReducedMotion ? 1.2 : 0;
-    let harmonicCount = 1;
 
-    const render = () => {
-      drawWaves(canvas.current, { phase, harmonicCount });
+    const draw = () => {
+      drawWaves(canvas.current, {
+        phase,
+        harmonicCount: harmonicCountRef.current,
+        layout: layoutRef.current,
+      });
+    };
+
+    const tick = () => {
+      draw();
 
       if (!prefersReducedMotion) {
         phase += 0.018;
-
-        if (harmonicCount < 7) {
-          harmonicCount += (7 - harmonicCount) * 0.0025;
-        }
       }
 
-      frameId = requestAnimationFrame(render);
+      frameId = requestAnimationFrame(tick);
     };
 
-    render();
-    const cleanupResize = resizeCanvas(canvas.current, render);
+    frameId = requestAnimationFrame(tick);
+    const cleanupResize = resizeCanvas(canvas.current, draw);
 
     return () => {
       cancelAnimationFrame(frameId);

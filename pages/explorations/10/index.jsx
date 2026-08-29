@@ -7,6 +7,8 @@ import { IconArrowLeft } from '../../../components/icons/arrow-left';
 import { DoubleSlash } from '../../../components/double-slash';
 import { Canvas } from '../../../components/explorations/10/canvas';
 import { IconArrowRight } from '../../../components/icons/arrow-right';
+import { SettingsProvider } from '../../../components/explorations/10/control-context';
+import { ControlPanel } from '../../../components/explorations/10/control-panel';
 
 export default function Page() {
   return (
@@ -17,12 +19,15 @@ export default function Page() {
         <Favicon />
       </Head>
 
-      <div className={styles.root}>
-        <div className={styles.frame}>
-          <Canvas />
-        </div>
+      <SettingsProvider>
+        <div className={styles.root}>
+          <div className={styles.frame}>
+            <Canvas />
+          </div>
 
-        <Meta
+          <ControlPanel />
+
+          <Meta
           className={styles.meta}
           title={
             <>
@@ -49,8 +54,9 @@ export default function Page() {
               </Link>
             </>
           }
-        />
-      </div>
+          />
+        </div>
+      </SettingsProvider>
     </div>
   );
 }

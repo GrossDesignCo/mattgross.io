@@ -15,7 +15,7 @@ const getExplorationArray = (count) => {
 };
 
 export const Nav = () => {
-  const explorationCount = 10;
+  const explorationCount = 11;
   const exps = getExplorationArray(explorationCount);
 
   return (

@@ -23,3 +23,142 @@
     opacity: 1;
   }
 }
+
+.controlPanel {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  opacity: 0;
+  transform: translateY(-1em);
+  background-color: var(--bg-overlay);
+  backdrop-filter: blur(12px);
+  padding: 0.25em 0.5em;
+  animation: 1.5s 1.5s var(--bezier) controls-in forwards;
+}
+
+@keyframes controls-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-1em);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .controlPanel {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.controlGroup {
+  display: flex;
+}
+
+.controlGroup .control {
+  padding: 0.5em;
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+  cursor: pointer;
+}
+
+.controlGroup .control input {
+  appearance: none;
+  height: 1.5em;
+  width: 1.5em;
+  box-shadow:
+    0 0 0 2px transparent,
+    0 0 0 3px transparent;
+  border-radius: 1em;
+  position: relative;
+  transition: 0.3s ease;
+}
+
+.controlGroup .control input:checked {
+  box-shadow:
+    0 0 0 2px var(--bg),
+    0 0 0 3px currentColor;
+}
+
+.controlGroup .control.linear input {
+  background: linear-gradient(to right, transparent, var(--fg));
+}
+
+.controlGroup .control.radial input {
+  background: radial-gradient(transparent, var(--fg));
+}
+
+.harmonicControl {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  min-width: 0;
+}
+
+.harmonicLabel {
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.85em;
+  color: var(--fg-low-contrast);
+}
+
+.rangeWrapper {
+  --thumbSize: 0.75em;
+
+  width: 6rem;
+  position: relative;
+}
+
+.range {
+  width: 100%;
+  appearance: none;
+  background-color: transparent;
+  cursor: ew-resize;
+  position: relative;
+  font: inherit;
+  display: block;
+}
+
+.range::-webkit-slider-container {
+  display: flex;
+  align-items: center;
+}
+
+.range::-webkit-slider-runnable-track {
+  background-color: var(--bg-low-contrast);
+  height: calc(var(--thumbSize) / 2);
+  border-radius: 1em;
+  transition: 0.3s ease;
+}
+
+.range::-webkit-slider-thumb {
+  appearance: none;
+  border: 1px solid var(--fg-low-contrast);
+  background-color: var(--bg-low-contrast);
+  width: var(--thumbSize);
+  height: var(--thumbSize);
+  border-radius: 1em;
+  margin-top: calc(var(--thumbSize) * -0.25);
+  box-shadow: none;
+  transition: 0.3s ease;
+}
+
+@media (pointer: fine) {
+  .range:hover::-webkit-slider-runnable-track {
+    background-color: var(--bg-midtone);
+  }
+
+  .range:hover::-webkit-slider-thumb {
+    border: 1px solid var(--fg);
+    background-color: var(--fg);
+  }
+}
