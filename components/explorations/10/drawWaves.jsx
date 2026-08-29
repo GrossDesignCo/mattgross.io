@@ -1,10 +1,14 @@
 import { MAX_HARMONICS } from './control-context';
+import { harmonicWeight, peakHarmonicSum, WEIGHT_EPSILON } from './harmonics';
 
 const STEPS = 480;
 const CYCLES = 2;
 const EDGE_INSET = 0.985;
 
 const harmonicAt = (t, n, phase) => Math.sin(n * t + phase) / n;
+
+const weightedHarmonicAt = (t, n, phase, displayCount) =>
+  harmonicWeight(n, displayCount) * harmonicAt(t, n, phase);
 
 const HARMONIC_LINE_WIDTH_MAX = 3;
 const HARMONIC_LINE_WIDTH_MIN = 0.65;
@@ -58,27 +62,32 @@ const harmonicLineWidth = (n) => {
   return Math.round(width * 100) / 100;
 };
 
-const harmonicStroke = (n, isDark) => {
+const harmonicStroke = (n, isDark, weight = 1, opacityScale = 1) => {
   const { l, c, h } = sampleGradient(
     isDark ? HARMONIC_GRADIENT.dark : HARMONIC_GRADIENT.light,
     harmonicProgress(n)
   );
+  const alpha = Math.round(
+    Math.min(1, Math.max(0, weight)) * opacityScale * 100
+  );
 
-  return `lch(${l} ${c} ${h})`;
+  return `lch(${l} ${c} ${h} / ${alpha}%)`;
 };
 
-const peakHarmonicSum = (harmonicCount = MAX_HARMONICS) => {
-  let total = 0;
-  for (let n = 1; n <= harmonicCount; n++) {
-    total += 1 / n;
-  }
-  return total;
+
+const sumStrokeColor = (isDark, opacity = 1) => {
+  const alpha = Math.round(Math.min(1, Math.max(0, opacity)) * 100);
+  return isDark
+    ? `lch(92 18 95 / ${alpha}%)`
+    : `lch(18 12 280 / ${alpha}%)`;
 };
 
-const sumAt = (t, harmonicCount, phase) => {
+const sumAt = (t, displayCount, phase) => {
   let total = 0;
-  for (let n = 1; n <= harmonicCount; n++) {
-    total += harmonicAt(t, n, phase);
+  for (let n = 1; n <= MAX_HARMONICS; n++) {
+    const weight = harmonicWeight(n, displayCount);
+    if (weight < WEIGHT_EPSILON) continue;
+    total += weight * harmonicAt(t, n, phase);
   }
   return total;
 };
@@ -106,8 +115,7 @@ const drawRadialCurve = (
   if (close) ctx.closePath();
 };
 
-const drawLinearWaves = (ctx, { width, height, phase, harmonicCount, isDark }) => {
-  const count = Math.round(harmonicCount);
+const drawLinearWaves = (ctx, { width, height, phase, displayCount, isDark }) => {
   const peak = peakHarmonicSum(MAX_HARMONICS);
   const centerY = height * 0.5;
   const amplitude = (height * 0.5 * EDGE_INSET) / peak;
@@ -123,18 +131,23 @@ const drawLinearWaves = (ctx, { width, height, phase, harmonicCount, isDark }) =
   ctx.lineWidth = 1;
   ctx.stroke();
 
-  for (let n = 1; n <= count; n++) {
+  for (let n = 1; n <= MAX_HARMONICS; n++) {
+    const weight = harmonicWeight(n, displayCount);
+    if (weight < WEIGHT_EPSILON) continue;
+
     ctx.beginPath();
     for (let i = 0; i <= STEPS; i++) {
       const progress = i / STEPS;
       const x = sampleX(progress);
-      const y = normalize(harmonicAt(sampleT(progress), n, phase));
+      const y = normalize(weightedHarmonicAt(sampleT(progress), n, phase, displayCount));
 
       if (i === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     }
-    ctx.strokeStyle = harmonicStroke(n, isDark);
-    ctx.lineWidth = harmonicLineWidth(n);
+    const stroke = harmonicStroke(n, isDark, weight);
+    const lineWidth = harmonicLineWidth(n);
+    ctx.strokeStyle = stroke;
+    ctx.lineWidth = lineWidth;
     ctx.stroke();
   }
 
@@ -142,18 +155,17 @@ const drawLinearWaves = (ctx, { width, height, phase, harmonicCount, isDark }) =
   for (let i = 0; i <= STEPS; i++) {
     const progress = i / STEPS;
     const x = sampleX(progress);
-    const y = normalize(sumAt(sampleT(progress), count, phase));
+    const y = normalize(sumAt(sampleT(progress), displayCount, phase));
 
     if (i === 0) ctx.moveTo(x, y);
     else ctx.lineTo(x, y);
   }
-  ctx.strokeStyle = isDark ? 'lch(92 18 95)' : 'lch(18 12 280)';
+  ctx.strokeStyle = sumStrokeColor(isDark);
   ctx.lineWidth = SUM_LINE_WIDTH;
   ctx.stroke();
 };
 
-const drawRadialWaves = (ctx, { width, height, phase, harmonicCount, isDark }) => {
-  const count = Math.round(harmonicCount);
+const drawRadialWaves = (ctx, { width, height, phase, displayCount, isDark }) => {
   const cx = width * 0.5;
   const cy = height * 0.5;
   const peak = peakHarmonicSum(MAX_HARMONICS);
@@ -167,16 +179,21 @@ const drawRadialWaves = (ctx, { width, height, phase, harmonicCount, isDark }) =
   ctx.lineWidth = 1;
   ctx.stroke();
 
-  for (let n = 1; n <= count; n++) {
+  for (let n = 1; n <= MAX_HARMONICS; n++) {
+    const weight = harmonicWeight(n, displayCount);
+    if (weight < WEIGHT_EPSILON) continue;
+
     drawRadialCurve(ctx, {
       cx,
       cy,
       baseRadius,
       amplitude,
-      valueAt: (theta) => harmonicAt(theta, n, phase),
+      valueAt: (theta) => weightedHarmonicAt(theta, n, phase, displayCount),
     });
-    ctx.strokeStyle = harmonicStroke(n, isDark);
-    ctx.lineWidth = harmonicLineWidth(n);
+    const stroke = harmonicStroke(n, isDark, weight);
+    const lineWidth = harmonicLineWidth(n);
+    ctx.strokeStyle = stroke;
+    ctx.lineWidth = lineWidth;
     ctx.stroke();
   }
 
@@ -185,16 +202,16 @@ const drawRadialWaves = (ctx, { width, height, phase, harmonicCount, isDark }) =
     cy,
     baseRadius,
     amplitude,
-    valueAt: (theta) => sumAt(theta, count, phase),
+    valueAt: (theta) => sumAt(theta, displayCount, phase),
   });
-  ctx.strokeStyle = isDark ? 'lch(92 18 95)' : 'lch(18 12 280)';
+  ctx.strokeStyle = sumStrokeColor(isDark);
   ctx.lineWidth = SUM_LINE_WIDTH;
   ctx.stroke();
 };
 
 export const drawWaves = (
   canvas,
-  { phase = 0, harmonicCount = MAX_HARMONICS, layout = 'radial' } = {}
+  { phase = 0, displayCount = MAX_HARMONICS, layout = 'radial' } = {}
 ) => {
   if (!canvas) return;
 
@@ -205,7 +222,7 @@ export const drawWaves = (
 
   ctx.clearRect(0, 0, width, height);
 
-  const props = { width, height, phase, harmonicCount, isDark };
+  const props = { width, height, phase, displayCount, isDark };
 
   if (layout === 'linear') {
     drawLinearWaves(ctx, props);
