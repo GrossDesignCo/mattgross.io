@@ -1,4 +1,5 @@
 import { NavLink } from './nav-link';
+import { NavLinkGroup } from './nav-link-group';
 import { NavCategory } from './nav-category';
 import { DoubleSlash } from '../double-slash';
 
@@ -26,19 +27,21 @@ export const Nav = () => {
 
       <div className="row">
         <NavCategory>Explorations</NavCategory> <DoubleSlash />{' '}
-        <div>
+        <NavLinkGroup orientation="row">
           {exps.map((number) => (
             <NavLink key={number} href={`/explorations/${number}`}>
               {number}
             </NavLink>
           ))}
-        </div>
+        </NavLinkGroup>
       </div>
 
-      <NavLink href="https://www.linkedin.com/in/m-gross/">LinkedIn</NavLink>
-      <NavLink href="https://github.com/GrossDesignCo">GitHub</NavLink>
-      <NavLink href="https://codepen.io/mattgrosswork">CodePen</NavLink>
-      <NavLink href="https://x.com/GrossDesignCo">X</NavLink>
+      <NavLinkGroup orientation="column">
+        <NavLink href="https://www.linkedin.com/in/m-gross/">LinkedIn</NavLink>
+        <NavLink href="https://github.com/GrossDesignCo">GitHub</NavLink>
+        <NavLink href="https://codepen.io/mattgrosswork">CodePen</NavLink>
+        <NavLink href="https://x.com/GrossDesignCo">X</NavLink>
+      </NavLinkGroup>
     </div>
   );
 };

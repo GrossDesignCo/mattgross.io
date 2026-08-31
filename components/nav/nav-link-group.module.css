@@ -1,0 +1,65 @@
+.link-group {
+  display: flex;
+  gap: 0;
+}
+
+.link-group[data-orientation='column'] {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.link-group[data-orientation='row'] {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.link-group:has(:global(.nav-link:is(:hover, :focus-visible)))
+  :global(.nav-link:not(:is(:hover, :focus-visible))) {
+  filter: blur(0.6px);
+  opacity: 0.55;
+}
+
+.link-group[data-orientation='row']:has(
+    :global(.nav-link:is(:hover, :focus-visible))
+  )
+  :global(
+    .nav-link:has(~ .nav-link:is(:hover, :focus-visible)):not(
+        :is(:hover, :focus-visible)
+      )
+  ) {
+  transform: translateX(-3px) skewX(2deg);
+}
+
+.link-group[data-orientation='row']:has(
+    :global(.nav-link:is(:hover, :focus-visible))
+  )
+  :global(.nav-link:is(:hover, :focus-visible) ~ .nav-link) {
+  transform: translateX(3px) skewX(-2deg);
+}
+
+.link-group[data-orientation='column']:has(
+    :global(.nav-link:is(:hover, :focus-visible))
+  )
+  :global(
+    .nav-link:has(~ .nav-link:is(:hover, :focus-visible)):not(
+        :is(:hover, :focus-visible)
+      )
+  ) {
+  transform: translateY(-3px) skewY(2deg);
+}
+
+.link-group[data-orientation='column']:has(
+    :global(.nav-link:is(:hover, :focus-visible))
+  )
+  :global(.nav-link:is(:hover, :focus-visible) ~ .nav-link) {
+  transform: translateY(3px) skewY(-2deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link-group:has(:global(.nav-link:is(:hover, :focus-visible)))
+    :global(.nav-link:not(:is(:hover, :focus-visible))) {
+    filter: none;
+    transform: none;
+  }
+}

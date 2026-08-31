@@ -5,7 +5,11 @@
   text-decoration: none;
   padding: var(--frame-inner-padding);
   border-radius: 4px;
-  transition: 0.3s ease;
+  transition:
+    transform 120ms var(--bezier),
+    filter 120ms var(--bezier),
+    opacity 120ms var(--bezier),
+    box-shadow 120ms var(--bezier);
 }
 
 .nav-link:is(:hover, :focus) {
